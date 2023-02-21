@@ -3,11 +3,27 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const { restoreUser } = require('../../utils/auth.js');
 
+const spotRouter = require('./spots.js');
+const bookingRouter = require('./bookings.js');
+const reviewRouter = require('./reviews.js');
+const spotImageRouter = require('./spotImages.js');
+const reviewImageRouter = require('./reviewImages.js');
+
 router.use(restoreUser);
 
 router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
+
+router.use('/spots', spotRouter);
+
+router.use('/bookings', bookingRouter);
+
+router.use('/reviews', reviewRouter);
+
+router.use('/spot-images', spotImageRouter);
+
+router.use('/review-images', reviewImageRouter);
 
 // router.post('/test', function(req, res) {
 //     res.json({ requestBody: req.body });
