@@ -310,4 +310,59 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
 });
 
+router.get('/:spotId/reviews', async (req, res) => {
+
+});
+
+const validateCreateReview = [
+    check('review')
+      .exists({ checkFalsy: true })
+      .withMessage('Review text is required'),
+    check('stars')
+      .exists({ checkFalsy: true })
+      .isNumeric()
+      .isInt({min: 1, max:5})
+      .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
+router.post('/:spotId/reviews', requireAuth, validateCreateReview, async (req, res) => {
+
+    const { review, stars } = req.body;
+    const currentUserId = req.user.id;
+
+    const spotFound = await Spot.findByPk(req.params.spotId)
+
+    if (!spotFound) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    //check if user already post a review
+    const reviewFromUser = await Review.findOne({
+        where:{
+            [Op.and]:[{spotId: spotFound.id},{userId: currentUserId}]
+        }
+    })
+
+    if (reviewFromUser) {
+        return res.status(403).json({
+            "message": "User already has a review for this spot",
+            "statusCode": 403
+        })
+    }
+
+    //create new review
+    let newReview = await Review.create({
+        review, stars,
+        spotId: spotFound.id,
+        userId: currentUserId
+    })
+
+    const reviewFound = await Review.findByPk(newReview.id);
+
+    res.status(201).json(reviewFound);
+});
 module.exports = router;
