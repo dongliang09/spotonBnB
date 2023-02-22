@@ -42,6 +42,35 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Review',
+    scopes: {
+      imageNoTime() {
+        const { ReviewImage } = require('../models');
+        return {
+          include: {
+            model: ReviewImage,
+            attributes: { exclude: ['reviewId', "createdAt", "updatedAt"] }
+          }
+        }
+      },
+      userPublic() {
+        const { User } = require('../models');
+        return {
+          include: {
+            model: User,
+            attributes: { exclude: ["hashedPassword",'username', 'email', "createdAt", "updatedAt"] }
+          }
+        }
+      },
+      spotReview() {
+        const { Spot } = require('../models');
+        return {
+          include: {
+            model: Spot,
+            attributes: { exclude: ["description", "createdAt", "updatedAt"] }
+          }
+        }
+      }
+    }
   });
   return Review;
 };
