@@ -164,9 +164,11 @@ const validateCreateSpot = [
       .withMessage('Country is required'),
     check('lat')
       .exists({ checkFalsy: true })
+      .isNumeric()
       .withMessage('Latitude is not valid'),
     check('lng')
       .exists({ checkFalsy: true })
+      .isNumeric()
       .withMessage('Longitude is not valid'),
     check('name')
       .exists({ checkFalsy: true })
@@ -177,6 +179,7 @@ const validateCreateSpot = [
       .withMessage('Description is required'),
     check('price')
       .exists({ checkFalsy: true })
+      .isNumeric()
       .withMessage('Price per day is required'),
     handleValidationErrors
 ];
@@ -203,10 +206,17 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 
     const spotFound = await Spot.findByPk(req.params.spotId)
 
-    if (!spotFound || spotFound.ownerId !== currentId) {
-        return res.status(400).json({
+    if (!spotFound) {
+        return res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
+        })
+    }
+
+    if (spotFound.ownerId !== currentId) {
+        return res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
         })
     }
 
@@ -221,13 +231,69 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 
 });
 
-router.put('/:spotId', requireAuth, async (req, res) => {
+router.put('/:spotId', requireAuth, validateCreateSpot, async (req, res) => {
     // Require proper authorization: Spot must belong to the current user
+    const currentId = req.user.id;
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    const spotFound = await Spot.findByPk(req.params.spotId);
+
+    if (!spotFound) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    if (spotFound.ownerId !== currentId) {
+        return res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    if (address) spotFound.address = address;
+    if (city) spotFound.city = city;
+    if (state) spotFound.state = state;
+    if (country) spotFound.country = country;
+    if (lat) spotFound.lat = lat;
+    if (lng) spotFound.lng = lng;
+    if (name) spotFound.name = name;
+    if (description) spotFound.description = description;
+    if (price) spotFound.price = price;
+
+    await spotFound.save();
+
+    res.json(spotFound);
 
 });
 
 router.delete('/:spotId', requireAuth, async (req, res) => {
     // Require proper authorization: Spot must belong to the current user
+    const currentId = req.user.id;
+
+    const spotFound = await Spot.findByPk(req.params.spotId);
+
+    if (!spotFound) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    if (spotFound.ownerId !== currentId) {
+        return res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    await spotFound.destroy();
+
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
 
 });
 
