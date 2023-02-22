@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'ReviewImage',
     scopes: {
       noTimeStamp: {
-        attributes: { exclude: ["createdAt", "updatedAt"] }
+        attributes: { exclude: ['reviewId',"createdAt", "updatedAt"] }
       }
     }
   });
