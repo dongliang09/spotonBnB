@@ -2,6 +2,7 @@ const express = require('express');
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { Spot, Review, SpotImage, User, sequelize  } = require('../../db/models');
+const { Op } = require("sequelize");
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -22,31 +23,32 @@ router.get('/', async (req, res) => {
         spotsList.push(spot.toJSON());
     });
 
-    spotsList.forEach(spot => {
+    for (let i = 0; i < spotsList.length; i++) {
 
-        if (spot.Reviews.length === 0) spot.avgRating = 0.0;
+        let spot = spotsList[i];
+
+        if (spot.Reviews.length === 0) spot.avgRating = null;
         else {
-            let ratingSum = 0;
-            spot.Reviews.forEach(review => {
-                ratingSum += review.stars;
+            let reviewData = await Review.findByPk(spot.id, {
+                attributes: [
+                    [sequelize.fn("AVG", sequelize.col("stars")),"avgRating"]
+                ]
             })
-            spot.avgRating = ratingSum / spot.Reviews.length;
+            spot.avgRating = reviewData.toJSON().avgRating;
         }
         delete spot.Reviews;
 
         if (spot.SpotImages.length === 0) spot.previewImage = null;
         else {
-            let previewCount = 0;
             spot.SpotImages.forEach(image => {
                 if (image.preview) {
                     spot.previewImage = image.url;
-                    previewCount++;
                 }
             })
-            if (previewCount === 0) spot.previewImage = null
+            if (!spot.previewImage) spot.previewImage = null
         }
         delete spot.SpotImages;
-    })
+    }
     res.json({"Spot" : spotsList})
 });
 
@@ -68,31 +70,33 @@ router.get('/current', requireAuth, async (req, res) => {
         spotsList.push(spot.toJSON());
     });
 
-    spotsList.forEach(spot => {
+    for (let i = 0; i < spotsList.length; i++) {
 
-        if (spot.Reviews.length === 0) spot.avgRating = 0.0;
+        let spot = spotsList[i];
+
+        if (spot.Reviews.length === 0) spot.avgRating = null;
         else {
-            let ratingSum = 0;
-            spot.Reviews.forEach(review => {
-                ratingSum += review.stars;
+            let reviewData = await Review.findByPk(spot.id, {
+                attributes: [
+                    [sequelize.fn("AVG", sequelize.col("stars")),"avgRating"]
+                ]
             })
-            spot.avgRating = ratingSum / spot.Reviews.length;
+            spot.avgRating = reviewData.toJSON().avgRating;
         }
         delete spot.Reviews;
 
         if (spot.SpotImages.length === 0) spot.previewImage = null;
         else {
-            let previewCount = 0;
+
             spot.SpotImages.forEach(image => {
                 if (image.preview) {
                     spot.previewImage = image.url;
-                    previewCount++;
                 }
             })
-            if (previewCount === 0) spot.previewImage = null
+            if (!spot.previewImage) spot.previewImage = null
         }
         delete spot.SpotImages;
-    })
+    }
     res.json({"Spot" : spotsList})
 });
 
@@ -115,14 +119,8 @@ router.get('/:spotId', async (req, res) => {
                     exclude: ['username', "hashedPassword", "email", "createdAt", "updatedAt"]
                 }
             }
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn("AVG", sequelize.col("stars")),"avgRating"]
-            ]
-        }
+        ]
     })
-
 
     if (!spotFound) {
         return res.status(404).json({
@@ -134,14 +132,15 @@ router.get('/:spotId', async (req, res) => {
     let spot = spotFound.toJSON();
 
     if (spot.Reviews.length === 0) {
-        spot.avgRating = 0.0;
+        spot.avgRating = null;
         spot.numReviews = 0;
     } else {
-        // let ratingSum = 0;
-        // spot.Reviews.forEach(review => {
-        //     ratingSum += review.stars;
-        // })
-        // spot.avgStarRating = ratingSum / spot.Reviews.length;
+        let reviewData = await Review.findByPk(spot.id, {
+            attributes: [
+                [sequelize.fn("AVG", sequelize.col("stars")),"avgRating"]
+            ]
+        })
+        spot.avgRating = reviewData.toJSON().avgRating;
         spot.numReviews = spot.Reviews.length;
     }
     delete spot.Reviews;
@@ -218,6 +217,20 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
             "message": "Forbidden",
             "statusCode": 403
         })
+    }
+
+    // If we already have preview true, set old preview to false
+    if (preview) {
+
+        const spotImagePreview = await SpotImage.findOne({
+            where: {
+                [Op.and]:[{spotId: spotFound.id},{preview: true}]
+            }
+        });
+        if (spotImagePreview) {
+            spotImagePreview.preview = false;
+            await spotImagePreview.save();
+        }
     }
 
     let newSpotImage = await SpotImage.create({
