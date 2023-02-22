@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Spot, Review, SpotImage, User, sequelize  } = require('../../db/models');
+const {  Review, ReviewImage, Spot, SpotImage, User, sequelize  } = require('../../db/models');
 const { Op } = require("sequelize");
 
 const { check } = require('express-validator');
@@ -312,6 +312,27 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
 router.get('/:spotId/reviews', async (req, res) => {
 
+    const spotFound = await Spot.findByPk(req.params.spotId)
+
+    if (!spotFound) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    const reviews = await Review.scope(['userPublic',"imageNoTime"]).findAll({
+        where: {
+            spotId: spotFound.id
+        },
+        include: [
+            {model: User}, {model: ReviewImage}
+        ]
+    })
+
+    res.json({
+        "Reviews": reviews
+    })
 });
 
 const validateCreateReview = [
@@ -365,4 +386,5 @@ router.post('/:spotId/reviews', requireAuth, validateCreateReview, async (req, r
 
     res.status(201).json(reviewFound);
 });
+
 module.exports = router;
