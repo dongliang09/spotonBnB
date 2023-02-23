@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const {  Review, ReviewImage, Spot, SpotImage, User, sequelize  } = require('../../db/models');
+const {  Booking, Review, ReviewImage, Spot, SpotImage, User, sequelize  } = require('../../db/models');
 const { Op } = require("sequelize");
 
 const { check } = require('express-validator');
@@ -385,6 +385,47 @@ router.post('/:spotId/reviews', requireAuth, validateCreateReview, async (req, r
     const reviewFound = await Review.findByPk(newReview.id);
 
     res.status(201).json(reviewFound);
+});
+
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+
+    const currentUserId = req.user.id;
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    const spotOwnerId = spot.ownerId;
+    let bookings;
+
+    if (currentUserId === spotOwnerId) {
+        bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            include: {model: User}
+        })
+    } else {
+        bookings = await Booking.scope("nonOwnerBooking").findAll({
+            where: {
+                spotId: spot.id
+            }
+        })
+    }
+
+    res.json({
+        "Bookings": bookings
+    })
+});
+
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+    // Require proper authorization: Spot must NOT belong to the current user
+
 });
 
 module.exports = router;
