@@ -26,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     startDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false
     },
     endDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isAfter: this.startDate
@@ -39,6 +39,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Booking',
+    scopes: {
+      nonOwnerBooking: {
+        attributes: { exclude: ['id','userId', "createdAt", "updatedAt"] }
+      }
+    }
   });
   return Booking;
 };

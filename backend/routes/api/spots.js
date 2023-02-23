@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const {  Review, ReviewImage, Spot, SpotImage, User, sequelize  } = require('../../db/models');
+const {  Booking, Review, ReviewImage, Spot, SpotImage, User, sequelize  } = require('../../db/models');
 const { Op } = require("sequelize");
 
 const { check } = require('express-validator');
@@ -385,6 +385,85 @@ router.post('/:spotId/reviews', requireAuth, validateCreateReview, async (req, r
     const reviewFound = await Review.findByPk(newReview.id);
 
     res.status(201).json(reviewFound);
+});
+
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+
+    const currentUserId = req.user.id;
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    const spotOwnerId = spot.ownerId;
+    let bookings;
+
+    if (currentUserId === spotOwnerId) {
+        bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            include: {model: User}
+        })
+    } else {
+        bookings = await Booking.scope("nonOwnerBooking").findAll({
+            where: {
+                spotId: spot.id
+            }
+        })
+    }
+
+    res.json({
+        "Bookings": bookings
+    })
+});
+
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+    // Require proper authorization: Spot must NOT belong to the current user
+
+    const currentUserId = req.user.id;
+    const { startDate, endDate } = req.body;
+
+    const startDateInMS = new Date(startDate);
+    const endDateInMS = new Date(endDate);
+
+    if (startDateInMS - endDateInMS >= 0) {
+        return res.status(400).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+              "endDate": "endDate cannot be on or before startDate"
+            }
+        })
+    }
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    if (spot.ownerId === currentUserId) {
+        return res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    //check if new booking conflicts with any old bookings
+    const bookings = await Booking.findAll({
+        where: {spotId: req.params.spotId}
+    })
+
+
 });
 
 module.exports = router;
