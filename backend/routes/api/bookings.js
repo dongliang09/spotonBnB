@@ -32,6 +32,30 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 router.delete('/:bookingId', requireAuth, async (req, res) => {
     // Require proper authorization: Booking must belong to the current user
 
+    const currentUserId = req.user.id;
+    const bookingFound = await Booking.findByPk(req.params.bookingId);
+
+    if (!bookingFound) {
+        return res.status(404).json({
+            "message": "Booking couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    if (bookingFound.userId !== currentUserId) {
+        return res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    await bookingFound.destroy()
+
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
+
 });
 
 module.exports = router;
