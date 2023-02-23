@@ -453,9 +453,14 @@ router.post('/:spotId/bookings', requireAuth, validateCreateBooking, async (req,
         })
     }
 
-    if (currentDateInMS - startDateInMS >= 0 || currentDateInMS - endDateInMS >= 0) {
+    if (currentDateInMS - startDateInMS >= 0 ) {
         validateErrorArr.push({
-            "endDate": "Cannot make a booking in the past"
+            "startDate": "Cannot set startDate in the past"
+        })
+    }
+    if (currentDateInMS - endDateInMS >= 0) {
+        validateErrorArr.push({
+            "endDate": "Cannot set endDate in the past"
         })
     }
 

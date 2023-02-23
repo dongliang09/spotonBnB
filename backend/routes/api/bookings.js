@@ -42,18 +42,34 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
     const { startDate, endDate } = req.body;
 
     //validate input
+    let validateErrorArr = [];
     const startDateInMS = new Date(startDate).getTime();
     const endDateInMS = new Date(endDate).getTime();
 
     const currentDateInMS = new Date().getTime();
 
     if (startDateInMS - endDateInMS >= 0) {
+        validateErrorArr.push({
+            "endDate": "endDate cannot come before startDate"
+        })
+    }
+
+    if (currentDateInMS - startDateInMS >= 0 ) {
+        validateErrorArr.push({
+            "startDate": "Cannot set startDate in the past"
+        })
+    }
+    if (currentDateInMS - endDateInMS >= 0) {
+        validateErrorArr.push({
+            "endDate": "Cannot set endDate in the past"
+        })
+    }
+
+    if (validateErrorArr.length !== 0 ) {
         return res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
-            "errors": {
-                "endDate": "endDate cannot come before startDate"
-            }
+            "errors": validateErrorArr
         })
     }
 
@@ -75,16 +91,15 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
     }
 
     // check timeline of booking
-    // if (currentDateInMS > bookingEndDateInMS) {
-    //     return res.status(403).json({
-    //         "message": "Past bookings can't be modified",
-    //         "statusCode": 403
-    //     })
-    // }
+    let bookingEndDateInMS = new Date(bookingFound.endDate).getTime();
+    if (currentDateInMS > bookingEndDateInMS) {
+        return res.status(403).json({
+            "message": "Past bookings can't be modified",
+            "statusCode": 403
+        })
+    }
 
     //check if new edit conflicts with any old bookings
-    // let editBookingStartDate = new Date(bookingFound.startDate).getTime();
-    // let editBookingEndDateInMS = new Date(bookingFound.endDate).getTime();
     let bookingSpotId = bookingFound.spotId;
 
     const bookings = await Booking.findAll({
@@ -96,8 +111,9 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
     let checkBookingArr = [];
 
     bookings.forEach(booking => {
-        checkBookingArr.push(booking.toJSON());
-        console.log(booking.toJSON())
+        if (booking.id !== bookingFound.id) {
+            checkBookingArr.push(booking.toJSON());
+        }
     })
 
     for (let i = 0; i < checkBookingArr.length; i++) {
@@ -109,9 +125,6 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
             (startDateInMS >= bookingStartDate && startDateInMS <= bookingEndDate) ||
             (endDateInMS >= bookingStartDate && endDateInMS <= bookingEndDate)
         ) {
-            // console.log(i, currentBooking.id)
-            // console.log("current booking",bookingStartDate, bookingEndDate)
-            // console.log("edit booking",bookingStartDate, bookingEndDate)
             return res.json({
                 "message": "Sorry, this spot is already booked for the specified dates",
                 "statusCode": 403,
