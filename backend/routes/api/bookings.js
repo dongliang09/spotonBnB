@@ -41,6 +41,32 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
     const currentUserId = req.user.id;
     const { startDate, endDate } = req.body;
 
+    //check current booking
+    const bookingFound = await Booking.findByPk(req.params.bookingId);
+
+    if (!bookingFound) {
+        return res.status(404).json({
+            "message": "Booking couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    if (bookingFound.userId !== currentUserId) {
+        return res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    // check timeline of booking
+    let bookingEndDateInMS = new Date(bookingFound.endDate).getTime();
+    if (currentDateInMS > bookingEndDateInMS) {
+        return res.status(403).json({
+            "message": "Past bookings can't be modified",
+            "statusCode": 403
+        })
+    }
+
     //validate input
     let validateErrorArr = [];
     const startDateInMS = new Date(startDate).getTime();
@@ -70,32 +96,6 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
             "message": "Validation error",
             "statusCode": 400,
             "errors": validateErrorArr
-        })
-    }
-
-    //check current booking
-    const bookingFound = await Booking.findByPk(req.params.bookingId);
-
-    if (!bookingFound) {
-        return res.status(404).json({
-            "message": "Booking couldn't be found",
-            "statusCode": 404
-        })
-    }
-
-    if (bookingFound.userId !== currentUserId) {
-        return res.status(403).json({
-            "message": "Forbidden",
-            "statusCode": 403
-        })
-    }
-
-    // check timeline of booking
-    let bookingEndDateInMS = new Date(bookingFound.endDate).getTime();
-    if (currentDateInMS > bookingEndDateInMS) {
-        return res.status(403).json({
-            "message": "Past bookings can't be modified",
-            "statusCode": 403
         })
     }
 
