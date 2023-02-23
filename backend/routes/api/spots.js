@@ -426,6 +426,44 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     // Require proper authorization: Spot must NOT belong to the current user
 
+    const currentUserId = req.user.id;
+    const { startDate, endDate } = req.body;
+
+    const startDateInMS = new Date(startDate);
+    const endDateInMS = new Date(endDate);
+
+    if (startDateInMS - endDateInMS >= 0) {
+        return res.status(400).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+              "endDate": "endDate cannot be on or before startDate"
+            }
+        })
+    }
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        return res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    if (spot.ownerId === currentUserId) {
+        return res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+        })
+    }
+
+    //check if new booking conflicts with any old bookings
+    const bookings = await Booking.findAll({
+        where: {spotId: req.params.spotId}
+    })
+
+
 });
 
 module.exports = router;
