@@ -190,7 +190,7 @@ router.get('/:spotId', async (req, res) => {
     let spot = spotFound.toJSON();
 
     if (spot.Reviews.length === 0) {
-        spot.avgRating = null;
+        spot.avgStarRating = null;
         spot.numReviews = 0;
     } else {
         let reviewData = await Review.findByPk(spot.id, {
@@ -198,7 +198,7 @@ router.get('/:spotId', async (req, res) => {
                 [sequelize.fn("AVG", sequelize.col("stars")),"avgRating"]
             ]
         })
-        spot.avgRating = reviewData.toJSON().avgRating;
+        spot.avgStarRating = reviewData.toJSON().avgRating;
         spot.numReviews = spot.Reviews.length;
     }
     delete spot.Reviews;
