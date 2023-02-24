@@ -69,7 +69,7 @@ router.get('/', validateQuerySpots, async (req, res) => {
             {model: SpotImage}
         ],
         where,
-        pagination
+        ...pagination
     });
     let spotsList = [];
 
