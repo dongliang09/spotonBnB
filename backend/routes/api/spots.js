@@ -9,13 +9,67 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+const validateQuerySpots = [
+    check('page')
+      .exists({ checkFalsy: true })
+      .isInt({ min: 1, max: 10 })
+      .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+      .exists({ checkFalsy: true })
+      .isInt({ min: 1, max: 20 })
+      .withMessage('Size must be greater than or equal to 1'),
+    check('maxLat')
+      .optional()
+      .isFloat({min: -90, max: 90})
+      .withMessage('Maximum latitude is invalid'),
+    check('minLat')
+      .optional()
+      .isFloat({min: -90, max: 90})
+      .withMessage('Minimum latitude is invalid'),
+    check('maxLng')
+      .optional()
+      .isFloat({min: -180, max: 180})
+      .withMessage('Maximum longitude is invalid'),
+    check('minLng')
+      .optional()
+      .isFloat({min: -180, max: 180})
+      .withMessage('Minimum longitude is invalid'),
+    check('maxPrice')
+      .optional()
+      .isFloat({ min: 0 })
+      .withMessage('Maximum price must be greater than or equal to 0'),
+    check('minPrice')
+      .optional()
+      .isFloat({ min: 0 })
+      .withMessage('Minimum price must be greater than or equal to 0'),
+    handleValidationErrors
+];
 
-router.get('/', async (req, res) => {
+router.get('/', validateQuerySpots, async (req, res) => {
+
+    let {page, size, maxLat, minLat, maxLng, minLng, maxPrice, minPrice} = req.query;
+
+    let pagination = {};
+    if (size > 10) size = 20;
+    if (page > 10) page = 1;
+    pagination.limit = size;
+    pagination.offset = size * (page - 1);
+
+    let where = {};
+    if (maxLat) where.lat = {[Op.lte]: maxLat}
+    if (minLat) where.lat = {[Op.gte]: minLat}
+    if (maxLng) where.lng = {[Op.lte]: maxLng}
+    if (minLng) where.lng = {[Op.gte]: minLng}
+    if (maxPrice) where.price = {[Op.lte]: maxPrice}
+    if (minPrice) where.price = {[Op.gte]: minPrice}
+
     const spots = await Spot.findAll({
         include: [
             {model: Review},
             {model: SpotImage}
-        ]
+        ],
+        where,
+        pagination
     });
     let spotsList = [];
 
@@ -49,7 +103,11 @@ router.get('/', async (req, res) => {
         }
         delete spot.SpotImages;
     }
-    res.json({"Spot" : spotsList})
+    res.json({
+        "Spot" : spotsList,
+        "page": page,
+        "size": size
+    })
 });
 
 router.get('/current', requireAuth, async (req, res) => {
