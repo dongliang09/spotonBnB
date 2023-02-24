@@ -41,6 +41,11 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
     const currentUserId = req.user.id;
     const { startDate, endDate } = req.body;
 
+    const startDateInMS = new Date(startDate).getTime();
+    const endDateInMS = new Date(endDate).getTime();
+
+    const currentDateInMS = new Date().getTime();
+
     //check current booking
     const bookingFound = await Booking.findByPk(req.params.bookingId);
 
@@ -69,10 +74,6 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
 
     //validate input
     let validateErrorArr = [];
-    const startDateInMS = new Date(startDate).getTime();
-    const endDateInMS = new Date(endDate).getTime();
-
-    const currentDateInMS = new Date().getTime();
 
     if (startDateInMS - endDateInMS >= 0) {
         validateErrorArr.push({
