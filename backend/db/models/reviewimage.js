@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       noTimeStamp: {
         attributes: { exclude: ['reviewId',"createdAt", "updatedAt"] }
+      },
+      excludeTime: {
+        attributes: { exclude: ["createdAt", "updatedAt"] }
       }
     }
   });
