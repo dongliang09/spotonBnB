@@ -20,7 +20,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
             "statusCode": 404
         })
     }
-    console.log(imageFound.toJSON())
+
     const spotFound = await Spot.findByPk(imageFound.spotId);
 
     if (spotFound.ownerId !== currentUserId) {
