@@ -220,12 +220,10 @@ const validateCreateSpot = [
       .exists({ checkFalsy: true })
       .withMessage('Country is required'),
     check('lat')
-      .exists({ checkFalsy: true })
-      .isNumeric()
+      .isFloat({min: -90, max: 90})
       .withMessage('Latitude is not valid'),
     check('lng')
-      .exists({ checkFalsy: true })
-      .isNumeric()
+      .isFloat({min: -180, max: 180})
       .withMessage('Longitude is not valid'),
     check('name')
       .exists({ checkFalsy: true })
@@ -235,8 +233,7 @@ const validateCreateSpot = [
       .exists({ checkFalsy: true })
       .withMessage('Description is required'),
     check('price')
-      .exists({ checkFalsy: true })
-      .isNumeric()
+      .isFloat({ min: 0.01 })
       .withMessage('Price per day is required'),
     handleValidationErrors
 ];

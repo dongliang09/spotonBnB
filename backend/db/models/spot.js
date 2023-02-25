@@ -64,7 +64,8 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.DECIMAL,
       allowNull: false,
       validate: {
-        isNumeric: true
+        isNumeric: true,
+        min: 0.01
       }
     },
     ownerId: {
