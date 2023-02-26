@@ -494,7 +494,7 @@ const validateCreateBooking = [
 
 router.post('/:spotId/bookings', requireAuth, validateCreateBooking, async (req, res) => {
     // Require proper authorization: Spot must NOT belong to the current user
-    let validateErrorArr = [];
+    let validateErrorArr = {};
 
     const currentUserId = req.user.id;
     const { startDate, endDate } = req.body;
@@ -505,23 +505,23 @@ router.post('/:spotId/bookings', requireAuth, validateCreateBooking, async (req,
     const currentDateInMS = new Date().getTime();
 
     if (startDateInMS - endDateInMS >= 0) {
-        validateErrorArr.push({
-            "endDate": "endDate cannot be on or before startDate"
+        return res.status(400).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+              "endDate": "endDate cannot be on or before startDate"
+            }
         })
     }
 
     if (currentDateInMS - startDateInMS >= 0 ) {
-        validateErrorArr.push({
-            "startDate": "Cannot set startDate in the past"
-        })
+        validateErrorArr.startDate = "Cannot set startDate in the past";
     }
     if (currentDateInMS - endDateInMS >= 0) {
-        validateErrorArr.push({
-            "endDate": "Cannot set endDate in the past"
-        })
+        validateErrorArr.endDate = "Cannot set endDate in the past";
     }
 
-    if (validateErrorArr.length !== 0 ) {
+    if (Object.entries(validateErrorArr).length !== 0) {
         return res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
