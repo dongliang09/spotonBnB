@@ -226,9 +226,11 @@ const validateCreateSpot = [
       .isFloat({min: -180, max: 180})
       .withMessage('Longitude is not valid'),
     check('name')
-      .exists({ checkFalsy: true })
       .isLength({ max: 50 })
       .withMessage('Name must be less than 50 characters'),
+    check('name')
+      .exists({ checkFalsy: true })
+      .withMessage('Please provide a name'),
     check('description')
       .exists({ checkFalsy: true })
       .withMessage('Description is required'),
