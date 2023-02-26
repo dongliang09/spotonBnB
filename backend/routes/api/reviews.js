@@ -51,13 +51,13 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const { url } = req.body;
 
     if (!url) {
-        return res.json(400).json({
+        return res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
               "url": "url is required"
             }
-          })
+        })
     }
 
     const reviewData = await Review.findByPk(req.params.reviewId, {
