@@ -53,12 +53,17 @@ router.get('/', validateQuerySpots, async (req, res) => {
     pagination.offset = size * (page - 1);
 
     let where = {};
-    if (maxLat) where.lat = {[Op.lte]: maxLat}
-    if (minLat) where.lat = {[Op.gte]: minLat}
-    if (maxLng) where.lng = {[Op.lte]: maxLng}
-    if (minLng) where.lng = {[Op.gte]: minLng}
-    if (maxPrice) where.price = {[Op.lte]: maxPrice}
-    if (minPrice) where.price = {[Op.gte]: minPrice}
+    if (maxLat && minLat) where.lat = {[Op.between]: [minLat,maxLat]}
+    else if (maxLat) where.lat = {[Op.lte]: maxLat}
+    else if (minLat) where.lat = {[Op.gte]: minLat}
+
+    if (maxLng && minLng) where.lng = {[Op.between]: [minLng,maxLng]}
+    else if (maxLng) where.lng = {[Op.lte]: maxLng}
+    else if (minLng) where.lng = {[Op.gte]: minLng}
+
+    if (maxPrice && minPrice) where.price = {[Op.between]: [minPrice,maxPrice]}
+    else if (maxPrice) where.price = {[Op.lte]: maxPrice}
+    else if (minPrice) where.price = {[Op.gte]: minPrice}
 
     const spots = await Spot.findAll({
         include: [
