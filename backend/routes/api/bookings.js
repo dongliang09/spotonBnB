@@ -14,10 +14,10 @@ router.get('/current', requireAuth, async (req, res) => {
     const currentUserId = req.user.id;
 
     const bookings = await Booking.scope("bookingSpot").findAll({
+        include: { model: Spot },
         where: {
             userId: currentUserId
-        },
-        include: { model: Spot }
+        }
     })
 
     let bookingList = [];
