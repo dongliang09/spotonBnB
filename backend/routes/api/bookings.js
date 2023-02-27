@@ -28,13 +28,12 @@ router.get('/current', requireAuth, async (req, res) => {
     for (let i = 0; i < bookingList.length; i++) {
         let currentBooking = bookingList[i];
         let currentSpotId = currentBooking.Spot.id;
-        const previewData = await SpotImage.findByPk(currentSpotId, {
+        const preview = await SpotImage.findByPk(currentSpotId, {
             where: {
                 preview: true
             }
         })
-        let preview = previewData.toJSON();
-        if (preview) currentBooking.Spot.previewImage = preview.url;
+        if (preview) currentBooking.Spot.previewImage = preview.toJSON().url;
         else currentBooking.Spot.previewImage = null;
         delete currentBooking.Spot.createdAt;
         delete currentBooking.Spot.updatedAt;
