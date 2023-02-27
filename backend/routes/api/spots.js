@@ -168,7 +168,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }
         delete spot.SpotImages;
     }
-    res.json({"Spot" : spotsList})
+    res.json({"Spots" : spotsList})
 });
 
 router.get('/:spotId', async (req, res) => {
