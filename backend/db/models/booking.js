@@ -39,6 +39,15 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       nonOwnerBooking: {
         attributes: { exclude: ['id','userId', "createdAt", "updatedAt"] }
+      },
+      bookingSpot() {
+        const { Spot } = require('../models');
+        return {
+          include: {
+            model: Spot,
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+          }
+        }
       }
     }
   });
