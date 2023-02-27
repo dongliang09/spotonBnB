@@ -85,12 +85,18 @@ router.get('/', validateQuerySpots, async (req, res) => {
 
         if (spot.Reviews.length === 0) spot.avgRating = null;
         else {
-            let reviewData = await Review.findByPk(spot.id, {
+            let reviewData = await Review.findAll({
+                where: {
+                    spotId: spot.id,
+                },
                 attributes: [
                     [sequelize.fn("AVG", sequelize.col("stars")),"avgRating"]
                 ]
             })
-            spot.avgRating = reviewData.toJSON().avgRating;
+            reviewData.forEach(review=> {
+                spot.avgRating = review.toJSON().avgRating;
+            })
+            // spot.avgRating = reviewData.toJSON().avgRating;
         }
         delete spot.Reviews;
 
@@ -136,12 +142,17 @@ router.get('/current', requireAuth, async (req, res) => {
 
         if (spot.Reviews.length === 0) spot.avgRating = null;
         else {
-            let reviewData = await Review.findByPk(spot.id, {
+            let reviewData = await Review.findAll({
+                where: {
+                    spotId: spot.id,
+                },
                 attributes: [
                     [sequelize.fn("AVG", sequelize.col("stars")),"avgRating"]
                 ]
             })
-            spot.avgRating = reviewData.toJSON().avgRating;
+            reviewData.forEach(review=> {
+                spot.avgRating = review.toJSON().avgRating;
+            })
         }
         delete spot.Reviews;
 
@@ -195,12 +206,17 @@ router.get('/:spotId', async (req, res) => {
         spot.avgStarRating = null;
         spot.numReviews = 0;
     } else {
-        let reviewData = await Review.findByPk(spot.id, {
+        let reviewData = await Review.findAll({
+            where: {
+                spotId: spot.id,
+            },
             attributes: [
                 [sequelize.fn("AVG", sequelize.col("stars")),"avgRating"]
             ]
         })
-        spot.avgStarRating = reviewData.toJSON().avgRating;
+        reviewData.forEach(review=> {
+            spot.avgStarRating = review.toJSON().avgRating;
+        })
         spot.numReviews = spot.Reviews.length;
     }
     delete spot.Reviews;
