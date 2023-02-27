@@ -120,7 +120,7 @@ router.get('/', validateQuerySpots, async (req, res) => {
         delete spot.SpotImages;
     }
     res.json({
-        "Spot" : spotsList,
+        "Spots" : spotsList,
         "page": page,
         "size": size
     })
