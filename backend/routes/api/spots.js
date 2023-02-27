@@ -10,14 +10,14 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateQuerySpots = [
-    check('page')
-      .exists({ checkFalsy: true })
-      .isInt({ min: 1, max: 10 })
-      .withMessage('Page must be greater than or equal to 1'),
-    check('size')
-      .exists({ checkFalsy: true })
-      .isInt({ min: 1, max: 20 })
-      .withMessage('Size must be greater than or equal to 1'),
+    // check('page')
+    //   .exists({ checkFalsy: true })
+    //   .isInt({ min: 1, max: 10 })
+    //   .withMessage('Page must be greater than or equal to 1'),
+    // check('size')
+    //   .exists({ checkFalsy: true })
+    //   .isInt({ min: 1, max: 20 })
+    //   .withMessage('Size must be greater than or equal to 1'),
     check('maxLat')
       .optional()
       .isFloat({min: -90, max: 90})
@@ -50,8 +50,13 @@ router.get('/', validateQuerySpots, async (req, res) => {
     let {page, size, maxLat, minLat, maxLng, minLng, maxPrice, minPrice} = req.query;
 
     let pagination = {};
-    if (size > 10) size = 20;
-    if (page > 10) page = 1;
+
+    if (!page) page = 1;
+    else if (page > 10) page = 1;
+
+    if (!size) size = 20;
+    else if (size > 10) size = 20;
+
     pagination.limit = size;
     pagination.offset = size * (page - 1);
 
