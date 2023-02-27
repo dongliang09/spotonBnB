@@ -82,12 +82,13 @@ router.post('/',validateSignup,async (req, res) => {
       let newUserFound = await User.scope('currentUser').findByPk(newUser.id);
       let token = await setTokenCookie(res, newUserFound);
 
-      user = newUserFound.toJSON();
+      let user = newUserFound.toJSON();
+      console.log(user)
       user.token = token;
 
-      return res.json({
-        user: user
-      });
+      return res.json(
+        user
+      );
     }
   );
 
