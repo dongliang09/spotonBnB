@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { requireAuth } = require('../../utils/auth');
-const { Booking, Spot } = require('../../db/models');
+const { Booking, Spot, SpotImage } = require('../../db/models');
 const { Op } = require("sequelize");
 
 const { check } = require('express-validator');
@@ -13,14 +13,36 @@ router.get('/current', requireAuth, async (req, res) => {
 
     const currentUserId = req.user.id;
 
-    const bookings = await Booking.findAll({
+    const bookings = await Booking.scope("bookingSpot").findAll({
         where: {
             userId: currentUserId
-        }
+        },
+        include: { model: Spot }
     })
 
+    let bookingList = [];
+    bookings.forEach(booking => {
+        bookingList.push(booking.toJSON());
+    })
+
+    for (let i = 0; i < bookingList.length; i++) {
+        let currentBooking = bookingList[i];
+        let currentSpotId = currentBooking.Spot.id;
+        const previewData = await SpotImage.findByPk(currentSpotId, {
+            where: {
+                preview: true
+            }
+        })
+        let preview = previewData.toJSON();
+        if (preview) currentBooking.Spot.previewImage = preview.url;
+        else currentBooking.Spot.previewImage = null;
+        delete currentBooking.Spot.createdAt;
+        delete currentBooking.Spot.updatedAt;
+        delete currentBooking.Spot.description;
+    }
+
     res.json({
-        "Bookings": bookings
+        "Bookings": bookingList
     })
 });
 
@@ -73,26 +95,27 @@ router.put('/:bookingId', requireAuth, validateCreateBooking, async (req, res) =
     }
 
     //validate input
-    let validateErrorArr = [];
+    let validateErrorArr = {};
 
     if (startDateInMS - endDateInMS >= 0) {
-        validateErrorArr.push({
-            "endDate": "endDate cannot come before startDate"
+        return res.status(400).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+              "endDate": "endDate cannot come before startDate"
+            }
         })
     }
 
     if (currentDateInMS - startDateInMS >= 0 ) {
-        validateErrorArr.push({
-            "startDate": "Cannot set startDate in the past"
-        })
-    }
-    if (currentDateInMS - endDateInMS >= 0) {
-        validateErrorArr.push({
-            "endDate": "Cannot set endDate in the past"
-        })
+        validateErrorArr.startDate = "Cannot set startDate in the past"
     }
 
-    if (validateErrorArr.length !== 0 ) {
+    if (currentDateInMS - endDateInMS >= 0) {
+        validateErrorArr,endDate = "Cannot set endDate in the past"
+    }
+
+    if (Object.entries(validateErrorArr).length !== 0) {
         return res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
