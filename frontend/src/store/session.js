@@ -22,8 +22,7 @@ export const login = (user) => async (dispatch) => {
   const response = await csrfFetch('/api/session', {
     method: 'POST',
     body: JSON.stringify({
-      credential,
-      password,
+      credential,password,
     }),
   });
   const data = await response.json();
@@ -43,11 +42,7 @@ export const signup = (user) => async (dispatch) => {
   const response = await csrfFetch("/api/users", {
     method: "POST",
     body: JSON.stringify({
-      username,
-      firstName,
-      lastName,
-      email,
-      password,
+      username,firstName,lastName,email,password,
     }),
   });
   const data = await response.json();
@@ -55,6 +50,16 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
+export const logout = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE',
+  });
+  dispatch(removeUser());
+  return response;
+};
+
+
+//======================== reducer =================
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
