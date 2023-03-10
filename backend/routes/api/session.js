@@ -21,10 +21,8 @@ const validateLogin = [
 
 
 // Log in
-router.post(
-    '/',
-    validateLogin,
-    async (req, res, next) => {
+router.post('/',validateLogin, async (req, res, next) => {
+
       const { credential, password } = req.body;
 
       const user = await User.login({ credential, password });
@@ -46,16 +44,15 @@ router.post(
   );
 
 // Log out
-router.delete(
-    '/',
-    (_req, res) => {
+router.delete('/', (_req, res) => {
       res.clearCookie('token');
       return res.json({ message: 'success' });
     }
 );
 
 // Restore session user
-router.get('/', requireAuth, restoreUser, (req, res) => {
+// remove require Auth 03/10/2013
+router.get('/', restoreUser, (req, res) => {
       const { user } = req;
       if (user) {
         return res.json({

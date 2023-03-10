@@ -85,9 +85,9 @@ router.post('/',validateSignup,async (req, res) => {
       let user = newUserFound.toJSON();
       user.token = token;
 
-      return res.json(
-        user
-      );
+      return res.json({
+        "user": user
+      });
     }
   );
 
