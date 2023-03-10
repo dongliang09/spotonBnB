@@ -5,6 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import App from './App';
 import configureStore from './store';
+import * as sessionActions from './store/session';
 import './index.css';
 
 const store = configureStore();
@@ -14,6 +15,7 @@ if (process.env.NODE_ENV !== "production") {
 
   window.csrfFetch = csrfFetch;
   window.store = store;
+  window.sessionActions = sessionActions;
 }
 
 function Root() {
