@@ -83,12 +83,11 @@ router.post('/',validateSignup,async (req, res) => {
       let token = await setTokenCookie(res, newUserFound);
 
       let user = newUserFound.toJSON();
-      console.log(user)
       user.token = token;
 
-      return res.json(
-        user
-      );
+      return res.json({
+        "user": user
+      });
     }
   );
 
