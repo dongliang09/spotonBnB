@@ -5,7 +5,7 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import * as sessionActions from '../../store/session';
+// import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
