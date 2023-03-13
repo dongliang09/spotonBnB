@@ -16,7 +16,6 @@ function LandingPage() {
         dispatch(thunkGetAllSpots())
     }, [dispatch])
 
-
     return (
         <div className="spotContainer">
             {spots.map(element => {

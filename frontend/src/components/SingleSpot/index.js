@@ -1,24 +1,25 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetAllSpots } from '../../store/spot';
+import { thunkGetOneSpot } from '../../store/spot';
 import './SingleSpot.css'
 
 function SingleSpot() {
+    const { spotId } = useParams();
     const dispatch = useDispatch();
-    const spotObj = useSelector(state=>state.spots.singleSpot)
-    const oneSpot =  Object.values(spotObj);
-    console.log(oneSpot)
+    const oneSpot = useSelector(state=>state.spots.singleSpot)
+    // const oneSpot =  Object.values(spotObj);
+    // console.log(oneSpot)
 
-    //load the info from GET all spots when the page load
     useEffect(()=> {
-        dispatch("thunk action")
+        dispatch(thunkGetOneSpot(spotId))
     }, [dispatch])
 
 
     return (
-      <div className="singleSpotContainer">
-
+      <div className="oneSpotContainer">
+        <h1>{oneSpot.name}</h1>
+        <h3>{oneSpot.city}, {oneSpot.state}, {oneSpot.country}</h3>
       </div>
     )
 }
