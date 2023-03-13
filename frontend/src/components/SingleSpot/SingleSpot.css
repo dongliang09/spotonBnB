@@ -1,3 +1,20 @@
 .oneSpotContainer {
   max-width: 1000px;
 }
+
+.oneSpotImgContainer {
+  display: flex;
+}
+
+.oneSpotPreviewImgDiv {
+  width: 500px;
+  height: 500px;
+}
+.oneSpotPreviewImg {
+  width: 100%;
+}
+
+.oneSpotOtherImgs {
+  height: 500px;
+  display: flex;
+}

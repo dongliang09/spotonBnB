@@ -28,7 +28,6 @@
 
 .spotContainer {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   /*need to change responsive width min 1 one image width, max 4 columns*/
 }
