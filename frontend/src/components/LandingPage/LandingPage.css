@@ -1,9 +1,29 @@
 .spotCard {
   margin: 15px;
+  position: relative;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px gray;
 }
 
 .spotCard:hover{
   cursor: pointer;
+}
+
+.spotCard .spotCardTooltip {
+  position: absolute;
+  z-index: -1;
+  visibility: hidden;
+  background-color: black;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 10%;
+  bottom: 300px;
+  text-align: center;
+}
+
+.spotCard:hover .spotCardTooltip{
+  visibility: visible;
 }
 
 .spotContainer {
@@ -18,16 +38,15 @@
   height: 300px;
   display: flex;
   align-items: center;
-  border: 2px solid red;
+  /* border: 2px solid red; */
   /*add some shadow maybe ?*/
 }
 
 .spotCardImg {
   width: 100%;
-  position: relative;
 }
 
-.spotCardImgContainer::before {
+/* .spotCardImgContainer::before {
   content: attr(data-tool-tip);
   position: absolute;
   display:inline block;
@@ -47,7 +66,7 @@
 .spotCardImgContainer::before:hover {
   transform: scale(1) translateX(30%);;
   bottom: 100%;
-}
+} */
 
 .spotCardGeoRating {
   display: flex;

@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 // import LoginFormPage from "./components/LoginFormModal";
 // import SignupFormPage from "./components/SignupFormModal";
 import LandingPage from "./components/LandingPage";
+import SingleSpot from './components/SingleSpot';
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -23,6 +24,9 @@ function App() {
         <Switch>
           <Route path="/">
             <LandingPage />
+          </Route>
+          <Route path="/spots/:id">
+            <SingleSpot />
           </Route>
         </Switch>
       )}

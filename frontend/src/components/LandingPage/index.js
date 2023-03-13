@@ -9,7 +9,7 @@ function LandingPage() {
     const dispatch = useDispatch();
     const spotsObj = useSelector(state=>state.spots.allSpots)
     const spots =  Object.values(spotsObj);
-    console.log(spots)
+    // console.log(spots)
 
     //load the info from GET all spots when the page load
     useEffect(()=> {
