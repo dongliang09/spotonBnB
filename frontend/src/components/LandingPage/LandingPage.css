@@ -1,0 +1,60 @@
+.spotCard {
+  margin: 15px;
+}
+
+.spotCard:hover{
+  cursor: pointer;
+}
+
+.spotContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /*need to change responsive width min 1 one image width, max 4 columns*/
+}
+
+.spotCardImgContainer {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  border: 2px solid red;
+  /*add some shadow maybe ?*/
+}
+
+.spotCardImg {
+  width: 100%;
+  position: relative;
+}
+
+.spotCardImgContainer::before {
+  content: attr(data-tool-tip);
+  position: absolute;
+  display:inline block;
+  background-color: black;
+  padding: 1em 1.5em;
+  color: white;
+  border-radius: 5px;
+  font-size: 0.8em;
+  bottom: 0;
+  right: 0;
+  transform: scale(0);
+  transition: transform ease-out 50ms, bottom ease-out 50ms;
+  white-space: normal;
+  width:10rem;
+}
+
+.spotCardImgContainer::before:hover {
+  transform: scale(1) translateX(30%);;
+  bottom: 100%;
+}
+
+.spotCardGeoRating {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spotCardGeo{
+  display: flex;
+  /*If it is too long, then need to wrap the text around*/
+}
