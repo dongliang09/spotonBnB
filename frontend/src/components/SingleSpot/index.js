@@ -72,8 +72,9 @@ function SingleSpot() {
           <h1><i className="fas fa-star"></i> {oneSpot.avgStarRating === null ?
                 "New" : Number(oneSpot.avgStarRating).toFixed(2)} - {oneSpot.numReviews} reviews</h1>
           {spotReview.map(element=> <div>
-              <h3>{element.User===undefined ? null :element.User.firstName}</h3>
-              <h4>{month[new Date(element.createdAt).getMonth()]} {new Date(element.createdAt).getFullYear()}</h4>
+              <h3 className="mrg-b-5">{element.User===undefined ? null :element.User.firstName}</h3>
+              <h4 className="mrg-t-b-0">{month[new Date(element.createdAt).getMonth()]} {new Date(element.createdAt).getFullYear()}</h4>
+              <p>{element.review}</p>
             </div>)}
         </div>
       </div>
