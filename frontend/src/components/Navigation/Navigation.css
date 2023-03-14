@@ -1,3 +1,11 @@
+.navContainer {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 15px;
+}
+
 .hidden {
     display: none;
 }
