@@ -6,8 +6,7 @@ function SpotCard({spot}) {
   let defaultImgSrc = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
   const [imgSrc, setImgSrc] = useState(spot.previewImage === null ?
                                         defaultImgSrc : spot.previewImage)
-  const avgRating = spot.avgRating === null ? 0 : spot.avgRating;
-  const avgRating2 = avgRating.toFixed(2);
+  const avgRating = spot.avgRating === null ? "None" : Number(spot.avgRating).toFixed(2);
 
   function spotDetail() {
     //go to spot detail route
@@ -28,7 +27,7 @@ function SpotCard({spot}) {
         <div className="spotCardGeo">
           {spot.city},{spot.state}
         </div>
-        <div><i className="fas fa-star"></i> {avgRating2}</div>
+        <div><i className="fas fa-star"></i> {avgRating}</div>
       </div>
       ${spot.price} night
       <span className="spotCardTooltip">{spot.name}</span>

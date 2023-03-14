@@ -18,3 +18,7 @@
   height: 500px;
   display: flex;
 }
+
+.oneSpotInfo {
+  display: flex;
+}

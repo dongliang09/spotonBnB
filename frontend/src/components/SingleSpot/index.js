@@ -9,21 +9,29 @@ function SingleSpot() {
     const dispatch = useDispatch();
     const oneSpot = useSelector(state=>state.spots.singleSpot)
 
-    let previewImg;
-    let previewUrl;
-    let otherSpotImgArr;
-    let owner;
-    if (oneSpot.SpotImages !== undefined) {
-        previewImg = oneSpot.SpotImages.find(element => {
-          return element.preview === true
-        });
-        previewUrl = previewImg.url;
-        otherSpotImgArr = oneSpot.SpotImages.find(element => {
-          return element.preview === false
-        });
-    }
+    console.log(oneSpot)
+    const checkOneSpotExist = Object.values(oneSpot).length === 0;
 
-    // if (oneSpot.Owner !== undefined) owner = oneSpot.owner;
+
+    // need to check if SpotImage.length === 0
+
+    const previewImg = checkOneSpotExist ? null : oneSpot.SpotImages.find(element => {
+      //find return the first element
+      return element.preview === true
+    });
+    // const previewUrl = "abc"
+    const previewUrl= previewImg.url;
+    // console.log(previewUrl)
+    const otherSpotImgArr = checkOneSpotExist ? null : oneSpot.SpotImages.filter(element => {
+      // filter return an array
+      return element.preview === false
+    });
+    const hostFirstName = checkOneSpotExist ? null : oneSpot.Owner.firstName;
+    const hostLastName = checkOneSpotExist ? null : oneSpot.Owner.lastName;
+    const description = checkOneSpotExist ? null : oneSpot.description;
+    const price = checkOneSpotExist ? null : Number(oneSpot.price).toFixed(2);
+    const rating = checkOneSpotExist ? null : Number(oneSpot.avgStarRating).toFixed(2);
+    const numReview = checkOneSpotExist ? null : oneSpot.numReviews;
 
     useEffect(()=> {
         dispatch(thunkGetOneSpot(spotId))
@@ -45,7 +53,14 @@ function SingleSpot() {
         </div>
         <div className="oneSpotInfo">
           <div>
-            <h1>Hosted by {oneSpot.owner?.firstName} {oneSpot.owner?.lastName}</h1>
+            <h1>Hosted by {hostFirstName} {hostLastName}</h1>
+            <p>{description}</p>
+          </div>
+          <div>
+            <div>
+              ${price}night  <i className="fas fa-star"></i> {rating} {numReview} reviews
+            </div>
+            <button onClick={()=>alert('Feature coming soon')}>Reserve</button>
           </div>
 
         </div>
