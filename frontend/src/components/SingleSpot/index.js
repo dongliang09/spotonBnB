@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetOneSpot } from '../../store/spot';
@@ -8,59 +8,64 @@ function SingleSpot() {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const oneSpot = useSelector(state=>state.spots.singleSpot)
+    let defaultImgSrc = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
 
     console.log(oneSpot)
-    const checkOneSpotExist = Object.values(oneSpot).length === 0;
 
+    // function findPreview() {
+    //     let previewResult = oneSpot.SpotImages.find(element => {
+    //       //find return the first element
+    //       return element.preview === true
+    //     })
+    //    if (Object.values(oneSpot.SpotImages).length !== 0 && previewResult )
+    //     setPreview(previewResult.url);
 
-    // need to check if SpotImage.length === 0
-
-    const previewImg = checkOneSpotExist ? null : oneSpot.SpotImages.find(element => {
-      //find return the first element
-      return element.preview === true
-    });
-    // const previewUrl = "abc"
-    const previewUrl= previewImg.url;
-    // console.log(previewUrl)
-    const otherSpotImgArr = checkOneSpotExist ? null : oneSpot.SpotImages.filter(element => {
-      // filter return an array
-      return element.preview === false
-    });
-    const hostFirstName = checkOneSpotExist ? null : oneSpot.Owner.firstName;
-    const hostLastName = checkOneSpotExist ? null : oneSpot.Owner.lastName;
-    const description = checkOneSpotExist ? null : oneSpot.description;
-    const price = checkOneSpotExist ? null : Number(oneSpot.price).toFixed(2);
-    const rating = checkOneSpotExist ? null : Number(oneSpot.avgStarRating).toFixed(2);
-    const numReview = checkOneSpotExist ? null : oneSpot.numReviews;
+    // }
 
     useEffect(()=> {
-        dispatch(thunkGetOneSpot(spotId))
+      dispatch(thunkGetOneSpot(spotId));
     }, [dispatch])
 
+    console.log("render")
 
     return (
-      <div className="oneSpotContainer">
+      <div className="oneSpotContainer mrg-auto">
         <h1>{oneSpot.name}</h1>
         <h3>{oneSpot.city}, {oneSpot.state}, {oneSpot.country}</h3>
-        <div className="oneSpotImgContainer">
+        <div className="grid-50-50">
           <div className="oneSpotPreviewImgDiv">
-            <img className="oneSpotPreviewImg"
-              src ={previewUrl} alt='spot preview'/>
+            <img className="width100"
+              src ={ oneSpot.SpotImages.length === 0 ? defaultImgSrc :
+                oneSpot.SpotImages.find(element => element.preview === true) === undefined ? defaultImgSrc :
+                  oneSpot.SpotImages.find(element => element.preview === true).url}
+              alt='spot preview'/>
           </div>
-          <div className="oneSpotOtherImgs">
-            use mapping for other imgs
+          <div className="oneSpotOtherImgs flx mrg5">
+              {oneSpot.SpotImages.length === 0 ? null :
+                oneSpot.SpotImages.filter(element => element.preview === false)
+                  .map(element=>(
+                    <div className="notPreviewContainer mrg-r-5">
+                      <img src={element.url} className="width100" alt="other images"/>
+                    </div>))}
           </div>
         </div>
-        <div className="oneSpotInfo">
+        <div className="grid oneSpotInfo">
           <div>
-            <h1>Hosted by {hostFirstName} {hostLastName}</h1>
-            <p>{description}</p>
+            <h1>Hosted by {oneSpot.Owner.firstName} {oneSpot.Owner.lastName}</h1>
+            <p>{oneSpot.description}</p>
           </div>
           <div>
-            <div>
-              ${price}night  <i className="fas fa-star"></i> {rating} {numReview} reviews
+            <div className="flx-center-space mrg10">
+              <div>
+                <span className="font15">${oneSpot.price}</span> night
+              </div>
+              <div className="">
+                <i className="fas fa-star"></i> {oneSpot.rating} {oneSpot.numReviews} reviews
+              </div>
             </div>
-            <button onClick={()=>alert('Feature coming soon')}>Reserve</button>
+            <div className="flx-center mrg-auto">
+              <button className="reserveBtn" onClick={()=>alert('Feature coming soon')}>Reserve</button>
+            </div>
           </div>
 
         </div>

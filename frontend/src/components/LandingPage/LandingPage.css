@@ -12,12 +12,12 @@
 
 .spotCard .spotCardTooltip {
   position: absolute;
-  z-index: -1;
+  z-index: 1;
   visibility: hidden;
   background-color: black;
   color: white;
   padding: 0.5rem;
-  border-radius: 10%;
+  border-radius: 5px;
   bottom: 300px;
   text-align: center;
 }
@@ -39,37 +39,6 @@
   align-items: center;
   /* border: 2px solid red; */
   /*add some shadow maybe ?*/
-}
-
-.spotCardImg {
-  width: 100%;
-}
-
-/* .spotCardImgContainer::before {
-  content: attr(data-tool-tip);
-  position: absolute;
-  display:inline block;
-  background-color: black;
-  padding: 1em 1.5em;
-  color: white;
-  border-radius: 5px;
-  font-size: 0.8em;
-  bottom: 0;
-  right: 0;
-  transform: scale(0);
-  transition: transform ease-out 50ms, bottom ease-out 50ms;
-  white-space: normal;
-  width:10rem;
-}
-
-.spotCardImgContainer::before:hover {
-  transform: scale(1) translateX(30%);;
-  bottom: 100%;
-} */
-
-.spotCardGeoRating {
-  display: flex;
-  justify-content: space-between;
 }
 
 .spotCardGeo{

@@ -2,23 +2,29 @@
   max-width: 1000px;
 }
 
-.oneSpotImgContainer {
-  display: flex;
-}
-
 .oneSpotPreviewImgDiv {
   width: 500px;
   height: 500px;
 }
-.oneSpotPreviewImg {
-  width: 100%;
-}
 
 .oneSpotOtherImgs {
+  width: 500px;
   height: 500px;
-  display: flex;
+}
+
+.notPreviewContainer {
+  width: 250px;
 }
 
 .oneSpotInfo {
-  display: flex;
+  grid-template-columns: 5fr 2fr;
+}
+
+.reserveBtn {
+  width: 80%;
+  height: 2.5rem;
+  border-radius: 5px;
+  background-color: rgb(233, 108, 62);
+  color: white;
+  font-weight: 600;
 }
