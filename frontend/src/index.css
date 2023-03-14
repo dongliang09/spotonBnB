@@ -69,6 +69,10 @@
 .mrg-r-5 {
   margin-right: 5px;
 }
+
+.mrg-t-b-10 {
+  margin: 10px auto;
+}
 /*============ width ================*/
 .width100 {
   width: 100%;
