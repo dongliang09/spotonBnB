@@ -23,7 +23,7 @@ function SingleSpot() {
       dispatch(thunkGetReviews(spotId));
     }, [dispatch])
 
-    // console.log("render")
+    // console.log("render", spotReviewVal.find(element => element.userId === sessionUser.id))
 
     return (
       <div className="oneSpotContainer mrg-auto">
@@ -76,10 +76,11 @@ function SingleSpot() {
                 "New" : Number(oneSpot.avgStarRating).toFixed(2)} {oneSpot.numReviews === 0 ? null :
                   oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}</h1>
 
-          {oneSpot !== null &&!(spotReviewVal.find(element => element.userId === sessionUser.id)) &&
+          {oneSpot && oneSpot.Owner && sessionUser && oneSpot.Owner.id !== sessionUser.id &&
+              !(spotReviewVal.find(element => element.userId === sessionUser.id)) &&
               <button>Post Your Review</button>}
 
-          {oneSpot !== null && oneSpot.Owner !== undefined && oneSpot.Owner.id !== sessionUser.id &&
+          {oneSpot && oneSpot.Owner && sessionUser && oneSpot.Owner.id !== sessionUser.id &&
               oneSpot.numReviews === 0 &&
               <p>Be the first to post a review!</p>}
 
