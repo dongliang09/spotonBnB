@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from "../../context/Modal";
@@ -11,11 +11,21 @@ function LoginFormModal() {
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
+  const [disableBtn, setDisable] = useState(true);
   const { closeModal } = useModal();
 
   // if (sessionUser) return (
   //   <Redirect to="/" />
   // );
+  // function checkInputLength() {
+  //   if (credential.length > 3 && password.length > 5) setDisable(false);
+  //   else setDisable(true);
+  // }
+
+  useEffect(()=> {
+    if (credential.length > 3 && password.length > 5) setDisable(false);
+    else setDisable(true);
+  }, [credential, password])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,12 +41,12 @@ function LoginFormModal() {
   }
 
   return (
-    <>
+    <div className='flx-col-center pad15'>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+            <li key={idx} className='user-err'>{error}</li>
           ))}
         </ul>
         <label>
@@ -45,6 +55,7 @@ function LoginFormModal() {
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
+            className = 'dis-block'
             required
           />
         </label>
@@ -54,12 +65,20 @@ function LoginFormModal() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className = 'dis-block'
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={disableBtn}>Log In</button>
+        <div>
+          <button onClick={()=>{
+            setCredential("Demo-lition");
+            setPassword("password");
+          }}>Demo User</button>
+        </div>
       </form>
-    </>
+
+    </div>
   );
 }
 

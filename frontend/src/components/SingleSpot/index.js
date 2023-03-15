@@ -54,7 +54,7 @@ function SingleSpot() {
           <div>
             <div className="flx-center-space mrg10">
               <div>
-                <span className="font15">${oneSpot.price}</span> night
+                <strong className="font15">${oneSpot.price}</strong> night
               </div>
               <div className="">
                 <i className="fas fa-star"></i> {oneSpot.avgStarRating === null ?

@@ -1,11 +1,13 @@
 .navContainer {
     list-style: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 15px;
 }
 
 .hidden {
     display: none;
+}
+
+.profile-dropdown {
+    position: absolute;
+    list-style: none;
+    border: 2px solid red;
 }

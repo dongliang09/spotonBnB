@@ -13,7 +13,7 @@ function Navigation({ isLoaded }){
 
   return (
     <div className='navContainer1'>
-      <ul className='navContainer'>
+      <ul className=' flx-center-space mrg15 navContainer'>
         <li>
           <NavLink exact to="/">Home</NavLink>
         </li>

@@ -2,9 +2,34 @@
 .txt-center {
   text-align: center;
 }
+/*============ customer global className ================*/
+.user-err {
+  color: red;
+}
+
+/*============ background-color ================*/
+.bg-trans {
+  background-color: transparent;
+}
+
+/*============ border-radius ================*/
+.bor-rad-10 {
+  border-radius: 10px;
+}
+
+.bor-rad-15 {
+  border-radius: 15px;
+}
+
+.bor-rad-20 {
+  border-radius: 20px;
+}
 
 
-
+/*============ display ================*/
+.dis-block {
+  display: block;
+}
 /*============ flex ================*/
 .flx {
   display: flex;
@@ -20,6 +45,11 @@
   justify-content: space-between;
 }
 
+.flx-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 /*============ font-size ================*/
 
 .font15 {
@@ -85,6 +115,21 @@
 .mrg-t-b-10 {
   margin: 10px auto;
 }
+
+/*============ padding ================*/
+.pad15 {
+  padding: 15px;
+}
+
+/*============ position ================*/
+.pos-rel {
+  position: relative;
+}
+
+.pos-abs {
+  position: absolute;
+}
+
 /*============ width ================*/
 .width100 {
   width: 100%;
