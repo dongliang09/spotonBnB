@@ -12,7 +12,7 @@ function CreateSpotPage() {
   return (
     <div>
       <h1>Create a new Spot</h1>
-      <form>
+      <form onSubmit={()=>console.log("do something on submit")}>
 
         <button>Create Spot</button>
       </form>
