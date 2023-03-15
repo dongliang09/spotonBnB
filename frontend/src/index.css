@@ -30,6 +30,11 @@
 .dis-block {
   display: block;
 }
+
+.dis-inl-block {
+  display: inline-block;
+}
+
 /*============ flex ================*/
 .flx {
   display: flex;
@@ -80,6 +85,11 @@
 }
 
 /*============ margin ================*/
+.list-none {
+  list-style: none;
+}
+
+/*============ margin ================*/
 .mrg-auto {
   margin: auto;
 }
@@ -100,12 +110,20 @@
   margin-right: 5px;
 }
 
+.mrg-r-15 {
+  margin-right: 15px;
+}
+
 .mrg-b-0 {
   margin-bottom: 0px;
 }
 
 .mrg-b-5 {
   margin-bottom: 5px;
+}
+
+.mrg-t-b-auto {
+  margin: auto 0px auto;
 }
 
 .mrg-t-b-0 {
@@ -116,6 +134,9 @@
   margin: 10px auto;
 }
 
+.mrg-t-b-auto-r-15 {
+  margin: auto 15px auto;
+}
 /*============ padding ================*/
 .pad15 {
   padding: 15px;
