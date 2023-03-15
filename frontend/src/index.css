@@ -122,8 +122,13 @@
   margin-bottom: 5px;
 }
 
+.mrg-t-15 {
+  margin-top: 15px;
+}
+
 .mrg-t-b-auto {
-  margin: auto 0px auto;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .mrg-t-b-0 {
@@ -132,6 +137,10 @@
 
 .mrg-t-b-10 {
   margin: 10px auto;
+}
+
+.mrg-t-b-15 {
+  margin: 15px auto;
 }
 
 .mrg-t-b-auto-r-15 {

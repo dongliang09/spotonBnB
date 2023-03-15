@@ -41,7 +41,6 @@ export const thunkCreateSpot = (spotData) => async dispatch => {
     body: JSON.stringify(spotData)
   });
   const data = await response.json();
-  console.log(data)
   dispatch(thunkGetOneSpot(data.id));
   return data.id;
 };

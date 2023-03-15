@@ -13,7 +13,7 @@ function CreateSpotPage() {
   const [state, setState] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [preview, setPreview] = useState("");
   const [otherImgArr, setOtherImgArr] = useState([]);
   const [otherImg1, setOtherImg1] = useState("");
@@ -29,11 +29,13 @@ function CreateSpotPage() {
   // upon successful submit,
   // jump to the spot detail page for new spot
 
-  function checkInputError(e) {
+  async function checkInputError(e) {
     e.preventDefault();
     if (Object.values(error).length === 0) {
+      // assume it is successful fetch all the time at the moment
       // need to add error handler for fetch request
-      let resultId = dispatch(thunkCreateSpot({
+      // hard code lat and lng right now
+      let resultId = await dispatch(thunkCreateSpot({
         address, city, state, country, name, description, price,
         lat: 0, lng: 0
       }))
@@ -44,13 +46,14 @@ function CreateSpotPage() {
       setState("");
       setDescription("");
       setName("");
-      setPrice(0);
+      setPrice("");
       setPreview("");
       setOtherImgArr([]);
       setOtherImg1("");
       setOtherImg2("");
       setOtherImg3("");
       setOtherImg4("");
+      setSubmitted(false)
       history.push(`/spots/${resultId}`);
 
     } else {
@@ -66,7 +69,7 @@ function CreateSpotPage() {
       setState("");
       setDescription("");
       setName("");
-      setPrice(0);
+      setPrice("");
       setPreview("");
       setOtherImgArr([]);
       setOtherImg1("");
@@ -85,7 +88,7 @@ function CreateSpotPage() {
     if (state.length === 0) errors.state = "State is required";
     if (description.length < 30) errors.description = "Description needs a minimum of 30 characters";
     if (name.length === 0) errors.name = "Name is required";
-    if (price < 0) errors.price = "Price is required";
+    if (price.length === 0) errors.price = "Price is required";
     if (preview.length === 0) errors.preview = "Preview image is required";
     if (otherImg1.length > 0 && (otherImg1.indexOf(".png") === -1 || otherImg1.indexOf(".jpg") === -1 || otherImg1.indexOf(".jpeg") === -1))
         errors.otherImg1 = "Image URL must end in .png, .jpg, or .jpeg";
@@ -98,8 +101,20 @@ function CreateSpotPage() {
     setError(errors);
   },[country, address, city, state, description, name, price, preview, otherImg1, otherImg2, otherImg3, otherImg4])
 
+  function oneKeyTestInfo () {
+      setCountry("USA");
+      setAddress("1000 Boardway Street");
+      setCity("Fun City");
+      setState("NY");
+      setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas condimentum tincidunt venenatis. Donec sit amet diam at dui efficitur suscipit ut in nunc. In eget posuere orci.");
+      setName("Happiness1");
+      setPrice(5);
+      setPreview("https://randompicturegenerator.com/img/national-park-generator/geb0a8f4616b69766ef8aa70c081ed3a1d5e7237b0f5bbffd077d7349335c0eecc3c9b37dade08481fc1a4ad849593885_640.jpg");
+  }
+
   return (
     <div className="flx-col-center">
+      {/* <button onClick={() => oneKeyTestInfo()} >Demo Info</button> */}
       <h1>Create a new Spot</h1>
       <form onSubmit={(e)=>checkInputError(e)}>
 
@@ -129,16 +144,17 @@ function CreateSpotPage() {
             <span className="user-err"> {error.state}</span>}
         <input id="create-state" placeholder="State" className="dis-block"
             value={state} onChange={(e)=>setState(e.target.value)}/>
-        <hr />
+        <hr className="mrg-t-15"/>
 
 
         <h3>Describe your place to guests</h3>
-        <p>Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.</p>
-        <textarea placeholder="Please write at least 30 characters" className="dis-block"
+        <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
+        <textarea placeholder="Please write at least 30 characters"
+            className="dis-block width100"
             value={description} onChange={(e)=>setDescription(e.target.value)}/>
         {submitted && error.description &&
             <span className="user-err"> {error.description}</span>}
-        <hr />
+        <hr  className="mrg-t-15"/>
 
 
         <h3>Create a title for your spot</h3>
@@ -147,7 +163,7 @@ function CreateSpotPage() {
             value={name} onChange={(e)=>setName(e.target.value)}/>
         {submitted && error.name &&
             <span className="user-err"> {error.name}</span>}
-        <hr />
+        <hr  className="mrg-t-15"/>
 
 
         <h3>Set a base price for your spot</h3>
@@ -158,27 +174,27 @@ function CreateSpotPage() {
             value={price} onChange={(e)=>setPrice(e.target.value)}/>
         {submitted && error.price &&
             <span className="user-err dis-block"> {error.price}</span>}
-        <hr />
+        <hr  className="mrg-t-15"/>
 
 
         <h3>Liven up your spot with photos</h3>
         <p>Submit a link to at least one photo to publish your spot.</p>
-        <input  placeholder="Preview Image URL" className="dis-block" type="url"
+        <input  placeholder="Preview Image URL" className="dis-block mrg-b-5" type="url"
             value={preview} onChange={(e)=>setPreview(e.target.value)}/>
         {submitted && error.preview &&
             <span className="user-err"> {error.preview}</span>}
 
-        <input  placeholder="Image URL" className="dis-block" type="url"
+        <input  placeholder="Image URL" className="dis-block mrg-b-5" type="url"
             value={otherImg1} onChange={(e)=>setOtherImg1(e.target.value)}/>
         {submitted && error.otherImg1 &&
             <span className="user-err"> {error.otherImg1}</span>}
 
-        <input  placeholder="Image URL" className="dis-block" type="url"
+        <input  placeholder="Image URL" className="dis-block mrg-b-5" type="url"
             value={otherImg2} onChange={(e)=>setOtherImg2(e.target.value)}/>
         {submitted && error.otherImg2 &&
             <span className="user-err"> {error.otherImg2}</span>}
 
-        <input  placeholder="Image URL" className="dis-block" type="url"
+        <input  placeholder="Image URL" className="dis-block mrg-b-5" type="url"
             value={otherImg3} onChange={(e)=>setOtherImg3(e.target.value)}/>
         {submitted && error.otherImg3 &&
             <span className="user-err"> {error.otherImg3}</span>}
@@ -187,10 +203,12 @@ function CreateSpotPage() {
             value={otherImg4} onChange={(e)=>setOtherImg4(e.target.value)}/>
         {submitted && error.otherImg4 &&
             <span className="user-err"> {error.otherImg4}</span>}
-        <hr />
+        <hr  className="mrg-t-15"/>
 
 
-        <button>Create Spot</button>
+        <div className="flx-center mrg-t-b-15" >
+          <button>Create Spot</button>
+        </div>
       </form>
 
     </div>

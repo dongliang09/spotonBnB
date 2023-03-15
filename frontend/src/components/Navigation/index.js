@@ -20,9 +20,9 @@ function Navigation({ isLoaded }){
         {isLoaded && (
           <li>
             <ul className='flx list-none'>
-              <li className='mrg-t-b-auto-r-15'>
+              {sessionUser&& (<li className='mrg-t-b-auto-r-15'>
                 <NavLink exact to="/spots/new">Create a New Spot</NavLink>
-              </li>
+              </li>)}
               <li>
                 <ProfileButton user={sessionUser} />
               </li>
