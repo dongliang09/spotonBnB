@@ -11,7 +11,8 @@ function SingleSpot() {
     const sessionUser = useSelector(state => state.session.user);
     const oneSpot = useSelector(state=>state.spots.singleSpot);
     const spotReviewObj = useSelector(state=>state.reviews.spot);
-    const spotReview = Object.values(spotReviewObj);
+    const spotReviewVal = Object.values(spotReviewObj);
+    const spotReview = spotReviewVal.sort((a,b)=>( new Date(b.updatedAt) - new Date(a.updatedAt)));
     const defaultImgSrc = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                     'August', 'September', 'October', 'November', 'December'];
@@ -81,7 +82,7 @@ function SingleSpot() {
               <p>{element.review}</p>
             </div>)}
 
-          {oneSpot.Owner.id !== sessionUser.id && oneSpot.numReviews === 0 &&
+          { oneSpot !== null && oneSpot.Owner.id !== sessionUser.id && oneSpot.numReviews === 0 &&
               <p>Be the first to post a review!</p>}
 
         </div>
