@@ -41,7 +41,7 @@ function SingleSpot() {
               { oneSpot.SpotImages === undefined ? null :
                 oneSpot.SpotImages.filter(element => element.preview === false)
                   .map(element=>(
-                    <div className="notPreviewContainer mrg-r-5">
+                    <div className="notPreviewContainer mrg-r-5" key={element.id}>
                       <img src={element.url} className="width100" alt="other images"/>
                     </div>))}
           </div>
@@ -76,14 +76,19 @@ function SingleSpot() {
                 "New" : Number(oneSpot.avgStarRating).toFixed(2)} {oneSpot.numReviews === 0 ? null :
                   oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}</h1>
 
-          {spotReview.map(element=> <div>
+          {oneSpot !== null &&!(spotReviewVal.find(element => element.userId === sessionUser.id)) &&
+              <button>Post Your Review</button>}
+
+          {oneSpot !== null && oneSpot.Owner !== undefined && oneSpot.Owner.id !== sessionUser.id &&
+              oneSpot.numReviews === 0 &&
+              <p>Be the first to post a review!</p>}
+
+          {spotReview.map(element=> <div key={element.id}>
               <h3 className="mrg-b-5">{element.User===undefined ? null :element.User.firstName}</h3>
               <h4 className="mrg-t-b-0">{month[new Date(element.createdAt).getMonth()]} {new Date(element.createdAt).getFullYear()}</h4>
               <p>{element.review}</p>
             </div>)}
 
-          { oneSpot !== null && oneSpot.Owner.id !== sessionUser.id && oneSpot.numReviews === 0 &&
-              <p>Be the first to post a review!</p>}
 
         </div>
       </div>
