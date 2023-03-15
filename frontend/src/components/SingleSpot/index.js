@@ -8,6 +8,7 @@ import './SingleSpot.css'
 function SingleSpot() {
     const { spotId } = useParams();
     const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);
     const oneSpot = useSelector(state=>state.spots.singleSpot);
     const spotReviewObj = useSelector(state=>state.reviews.spot);
     const spotReview = Object.values(spotReviewObj);
@@ -58,7 +59,8 @@ function SingleSpot() {
               </div>
               <div className="">
                 <i className="fas fa-star"></i> {oneSpot.avgStarRating === null ?
-                  "New" : Number(oneSpot.avgStarRating).toFixed(2)} - {oneSpot.numReviews} reviews
+                  "New" : Number(oneSpot.avgStarRating).toFixed(2)} {oneSpot.numReviews === 0 ? null :
+                    oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}
               </div>
             </div>
             <div className="flx-center mrg-auto">
@@ -70,12 +72,18 @@ function SingleSpot() {
         <hr />
         <div>
           <h1><i className="fas fa-star"></i> {oneSpot.avgStarRating === null ?
-                "New" : Number(oneSpot.avgStarRating).toFixed(2)} - {oneSpot.numReviews} reviews</h1>
+                "New" : Number(oneSpot.avgStarRating).toFixed(2)} {oneSpot.numReviews === 0 ? null :
+                  oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}</h1>
+
           {spotReview.map(element=> <div>
               <h3 className="mrg-b-5">{element.User===undefined ? null :element.User.firstName}</h3>
               <h4 className="mrg-t-b-0">{month[new Date(element.createdAt).getMonth()]} {new Date(element.createdAt).getFullYear()}</h4>
               <p>{element.review}</p>
             </div>)}
+
+          {oneSpot.Owner.id !== sessionUser.id && oneSpot.numReviews === 0 &&
+              <p>Be the first to post a review!</p>}
+
         </div>
       </div>
     )
