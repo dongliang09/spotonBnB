@@ -1,1 +1,157 @@
 /* TODO Add site wide styles */
+.txt-center {
+  text-align: center;
+}
+/*============ customer global className ================*/
+.user-err {
+  color: red;
+}
+
+/*============ background-color ================*/
+.bg-trans {
+  background-color: transparent;
+}
+
+/*============ border-radius ================*/
+.bor-rad-10 {
+  border-radius: 10px;
+}
+
+.bor-rad-15 {
+  border-radius: 15px;
+}
+
+.bor-rad-20 {
+  border-radius: 20px;
+}
+
+
+/*============ display ================*/
+.dis-block {
+  display: block;
+}
+
+.dis-inl-block {
+  display: inline-block;
+}
+
+/*============ flex ================*/
+.flx {
+  display: flex;
+}
+
+.flx-center{
+  display: flex;
+  justify-content: center;
+}
+
+.flx-center-space {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flx-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/*============ font-size ================*/
+
+.font15 {
+  font-size: 1.5rem;
+}
+
+.font20 {
+  font-size: 2rem;
+}
+
+.font25 {
+  font-size: 2.5rem;
+}
+
+/*============ grid ================*/
+.grid {
+  display: grid;
+}
+
+.grid-50-50 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid-75-25 {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+/*============ margin ================*/
+.list-none {
+  list-style: none;
+}
+
+/*============ margin ================*/
+.mrg-auto {
+  margin: auto;
+}
+
+.mrg5 {
+  margin: 5px;
+}
+
+.mrg10 {
+  margin: 10px;
+}
+
+.mrg15 {
+  margin: 15px;
+}
+
+.mrg-r-5 {
+  margin-right: 5px;
+}
+
+.mrg-r-15 {
+  margin-right: 15px;
+}
+
+.mrg-b-0 {
+  margin-bottom: 0px;
+}
+
+.mrg-b-5 {
+  margin-bottom: 5px;
+}
+
+.mrg-t-b-auto {
+  margin: auto 0px auto;
+}
+
+.mrg-t-b-0 {
+  margin: 0px auto;
+}
+
+.mrg-t-b-10 {
+  margin: 10px auto;
+}
+
+.mrg-t-b-auto-r-15 {
+  margin: auto 15px auto;
+}
+/*============ padding ================*/
+.pad15 {
+  padding: 15px;
+}
+
+/*============ position ================*/
+.pos-rel {
+  position: relative;
+}
+
+.pos-abs {
+  position: absolute;
+}
+
+/*============ width ================*/
+.width100 {
+  width: 100%;
+}

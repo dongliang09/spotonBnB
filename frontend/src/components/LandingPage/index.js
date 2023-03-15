@@ -19,7 +19,7 @@ function LandingPage() {
     return (
         <div className="spotContainer">
             {spots.map(element => {
-                return <SpotCard spot={element} />
+                return <SpotCard spot={element} key={element.id}/>
             })}
         </div>
     )

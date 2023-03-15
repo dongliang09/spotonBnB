@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 // import SignupFormPage from "./components/SignupFormModal";
 import LandingPage from "./components/LandingPage";
 import SingleSpot from './components/SingleSpot';
+import CreateSpotPage from './components/CreateSpotPage';
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -24,6 +25,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <LandingPage />
+          </Route>
+          <Route exact path="/spots/new">
+            <CreateSpotPage />
           </Route>
           <Route path="/spots/:spotId">
             <SingleSpot />

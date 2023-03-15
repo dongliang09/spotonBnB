@@ -13,13 +13,20 @@ function Navigation({ isLoaded }){
 
   return (
     <div className='navContainer1'>
-      <ul className='navContainer'>
+      <ul className=' flx-center-space mrg15 navContainer'>
         <li>
           <NavLink exact to="/">Home</NavLink>
         </li>
         {isLoaded && (
           <li>
-            <ProfileButton user={sessionUser} />
+            <ul className='flx list-none'>
+              <li className='mrg-t-b-auto-r-15'>
+                <NavLink exact to="/spots/new">Create a New Spot</NavLink>
+              </li>
+              <li>
+                <ProfileButton user={sessionUser} />
+              </li>
+            </ul>
           </li>
         )}
       </ul>
