@@ -1,18 +1,194 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetAllSpots } from '../../store/spot';
+import { thunkCreateSpot } from '../../store/spot';
 
 function CreateSpotPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [preview, setPreview] = useState("");
+  const [otherImgArr, setOtherImgArr] = useState([]);
+  const [otherImg1, setOtherImg1] = useState("");
+  const [otherImg2, setOtherImg2] = useState("");
+  const [otherImg3, setOtherImg3] = useState("");
+  const [otherImg4, setOtherImg4] = useState("");
+  const [error, setError] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+  //hard code long and lat at the moment
+  //need to value-control other image URL
 
   // upon successful submit,
   // jump to the spot detail page for new spot
 
+  function checkInputError(e) {
+    e.preventDefault();
+    if (Object.values(error).length === 0) {
+      // need to add error handler for fetch request
+      let resultId = dispatch(thunkCreateSpot({
+        address, city, state, country, name, description, price,
+        lat: 0, lng: 0
+      }))
+      setError({})
+      setCountry("");
+      setAddress("");
+      setCity("");
+      setState("");
+      setDescription("");
+      setName("");
+      setPrice(0);
+      setPreview("");
+      setOtherImgArr([]);
+      setOtherImg1("");
+      setOtherImg2("");
+      setOtherImg3("");
+      setOtherImg4("");
+      history.push(`/spots/${resultId}`);
+
+    } else {
+      setSubmitted(true)
+    }
+  }
+
+  useEffect(()=> { //clean up input fields before mouting ?
+    return (() => {
+      setCountry("");
+      setAddress("");
+      setCity("");
+      setState("");
+      setDescription("");
+      setName("");
+      setPrice(0);
+      setPreview("");
+      setOtherImgArr([]);
+      setOtherImg1("");
+      setOtherImg2("");
+      setOtherImg3("");
+      setOtherImg4("");
+      setError({});
+    })
+  }, [])
+
+  useEffect(()=>{ //validate input
+    let errors = {};
+    if (country.length === 0) errors.country = "Country is required";
+    if (address.length === 0) errors.address = "Address is required";
+    if (city.length === 0) errors.city = "City is required";
+    if (state.length === 0) errors.state = "State is required";
+    if (description.length < 30) errors.description = "Description needs a minimum of 30 characters";
+    if (name.length === 0) errors.name = "Name is required";
+    if (price < 0) errors.price = "Price is required";
+    if (preview.length === 0) errors.preview = "Preview image is required";
+    if (otherImg1.length > 0 && (otherImg1.indexOf(".png") === -1 || otherImg1.indexOf(".jpg") === -1 || otherImg1.indexOf(".jpeg") === -1))
+        errors.otherImg1 = "Image URL must end in .png, .jpg, or .jpeg";
+    if (otherImg2.length > 0 && (otherImg2.indexOf(".png") === -1 || otherImg2.indexOf(".jpg") === -1 || otherImg2.indexOf(".jpeg") === -1))
+        errors.otherImg2 = "Image URL must end in .png, .jpg, or .jpeg";
+    if (otherImg3.length > 0 && (otherImg3.indexOf(".png") === -1 || otherImg3.indexOf(".jpg") === -1 || otherImg3.indexOf(".jpeg") === -1))
+        errors.otherImg3 = "Image URL must end in .png, .jpg, or .jpeg";
+    if (otherImg4.length > 0 && (otherImg4.indexOf(".png") === -1 || otherImg4.indexOf(".jpg") === -1 || otherImg4.indexOf(".jpeg") === -1))
+        errors.otherImg4 = "Image URL must end in .png, .jpg, or .jpeg";
+    setError(errors);
+  },[country, address, city, state, description, name, price, preview, otherImg1, otherImg2, otherImg3, otherImg4])
+
   return (
-    <div>
+    <div className="flx-col-center">
       <h1>Create a new Spot</h1>
-      <form onSubmit={()=>console.log("do something on submit")}>
+      <form onSubmit={(e)=>checkInputError(e)}>
+
+        <h3>Where's your place located?</h3>
+        <p>Guests will only get your exact address once they booked a reservation.</p>
+
+        <label htmlFor="create-country">Country</label>
+        {submitted && error.country &&
+            <span className="user-err"> {error.country}</span>}
+        <input id="create-country" placeholder="Country" className="dis-block"
+            value={country} onChange={(e)=>setCountry(e.target.value)}/>
+
+        <label htmlFor="create-address">Street Address</label>
+        {submitted && error.address &&
+            <span className="user-err"> {error.address}</span>}
+        <input id="create-address" placeholder="Address" className="dis-block"
+            value={address} onChange={(e)=>setAddress(e.target.value)}/>
+
+        <label htmlFor="create-city">City</label>
+        {submitted && error.city &&
+            <span className="user-err"> {error.city}</span>}
+        <input id="create-city" placeholder="City" className="dis-block"
+            value={city} onChange={(e)=>setCity(e.target.value)}/>
+
+        <label htmlFor="create-state">State</label>
+        {submitted && error.state &&
+            <span className="user-err"> {error.state}</span>}
+        <input id="create-state" placeholder="State" className="dis-block"
+            value={state} onChange={(e)=>setState(e.target.value)}/>
+        <hr />
+
+
+        <h3>Describe your place to guests</h3>
+        <p>Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.</p>
+        <textarea placeholder="Please write at least 30 characters" className="dis-block"
+            value={description} onChange={(e)=>setDescription(e.target.value)}/>
+        {submitted && error.description &&
+            <span className="user-err"> {error.description}</span>}
+        <hr />
+
+
+        <h3>Create a title for your spot</h3>
+        <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+        <input placeholder="Name of your spot" className="dis-block"
+            value={name} onChange={(e)=>setName(e.target.value)}/>
+        {submitted && error.name &&
+            <span className="user-err"> {error.name}</span>}
+        <hr />
+
+
+        <h3>Set a base price for your spot</h3>
+        <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+        <label htmlFor="create-price">$</label>
+        <input id="create-price" placeholder="price per night (USD)"
+            type="number" min="0"
+            value={price} onChange={(e)=>setPrice(e.target.value)}/>
+        {submitted && error.price &&
+            <span className="user-err dis-block"> {error.price}</span>}
+        <hr />
+
+
+        <h3>Liven up your spot with photos</h3>
+        <p>Submit a link to at least one photo to publish your spot.</p>
+        <input  placeholder="Preview Image URL" className="dis-block" type="url"
+            value={preview} onChange={(e)=>setPreview(e.target.value)}/>
+        {submitted && error.preview &&
+            <span className="user-err"> {error.preview}</span>}
+
+        <input  placeholder="Image URL" className="dis-block" type="url"
+            value={otherImg1} onChange={(e)=>setOtherImg1(e.target.value)}/>
+        {submitted && error.otherImg1 &&
+            <span className="user-err"> {error.otherImg1}</span>}
+
+        <input  placeholder="Image URL" className="dis-block" type="url"
+            value={otherImg2} onChange={(e)=>setOtherImg2(e.target.value)}/>
+        {submitted && error.otherImg2 &&
+            <span className="user-err"> {error.otherImg2}</span>}
+
+        <input  placeholder="Image URL" className="dis-block" type="url"
+            value={otherImg3} onChange={(e)=>setOtherImg3(e.target.value)}/>
+        {submitted && error.otherImg3 &&
+            <span className="user-err"> {error.otherImg3}</span>}
+
+        <input  placeholder="Image URL" className="dis-block" type="url"
+            value={otherImg4} onChange={(e)=>setOtherImg4(e.target.value)}/>
+        {submitted && error.otherImg4 &&
+            <span className="user-err"> {error.otherImg4}</span>}
+        <hr />
+
 
         <button>Create Spot</button>
       </form>

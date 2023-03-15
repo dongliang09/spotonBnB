@@ -35,6 +35,17 @@ export const thunkGetOneSpot = (spotId) => async dispatch => {
   return response;
 };
 
+export const thunkCreateSpot = (spotData) => async dispatch => {
+  const response = await csrfFetch('/api/spots', {
+    method: 'POST',
+    body: JSON.stringify(spotData)
+  });
+  const data = await response.json();
+  console.log(data)
+  dispatch(thunkGetOneSpot(data.id));
+  return data.id;
+};
+
 
 //======================== reducer =================
 const initialState = { allSpots: {},  singleSpot:{}};
