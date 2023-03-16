@@ -11,7 +11,7 @@ function ManageSpotPage () {
   const sessionUser = useSelector(state => state.session.user);
   const userSpotObj = useSelector(state=>state.spots.allSpots);
   const userSpot = Object.values(userSpotObj);
-  console.log("userSpot", userSpot)
+  // console.log("userSpot", userSpot)
 
   useEffect(()=> {
     dispatch(thunkCurrentUserSpot());
@@ -26,7 +26,7 @@ function ManageSpotPage () {
       {!userSpot.length && <button><Link to="/spots/new">Create a New Spot</Link></button>}
       <div className='spotContainer'>
         {userSpot.map(element =>
-          <div>
+          <div key={element.id}>
             <SpotCard spot={element} />
             <div>
               <button>Update</button>

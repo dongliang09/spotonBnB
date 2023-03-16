@@ -16,6 +16,14 @@
   background-color: white;
 }
 
+.bg-gray {
+  background-color: gray;
+}
+
+.bg-lgcoral {
+  background-color: lightcoral;
+}
+
 /*============ border-radius ================*/
 .bor-rad-10 {
   border-radius: 10px;
@@ -29,6 +37,10 @@
   border-radius: 20px;
 }
 
+/*============ color ================*/
+.color-white {
+  color:white;
+}
 
 /*============ display ================*/
 .dis-block {
@@ -89,6 +101,14 @@
 }
 
 /*============ height ================*/
+.height2rem {
+  height: 2rem;
+}
+
+.height25rem {
+  height: 2.5rem;
+}
+
 .height3rem {
   height: 3rem;
 }
