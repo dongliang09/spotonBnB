@@ -1,11 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateSpot } from '../../store/spot';
+import { thunkCreateSpot, thunkGetOneSpot, thunkUpdateSpot } from '../../store/spot';
 
-function CreateSpotPage() {
+function CreateSpotPage({formType}) {
   const dispatch = useDispatch();
+  const {spotId} = useParams();
+  const editSpot = useSelector(state=> state.spots.singleSpot);
+  const sessionUser = useSelector(state => state.session.user);
   const history = useHistory();
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
@@ -29,56 +32,62 @@ function CreateSpotPage() {
   // upon successful submit,
   // jump to the spot detail page for new spot
 
+  console.log("editSpot", editSpot)
+
   async function checkInputError(e) {
     e.preventDefault();
     if (Object.values(error).length === 0) {
       // assume it is successful fetch all the time at the moment
       // need to add error handler for fetch request
       // hard code lat and lng right now
-      let resultId = await dispatch(thunkCreateSpot({
+      let resultId;
+      if (formType === "create") {
+        resultId = await dispatch(thunkCreateSpot({
         address, city, state, country, name, description, price,
         lat: 0, lng: 0
-      }))
-      setError({})
-      setCountry("");
-      setAddress("");
-      setCity("");
-      setState("");
-      setDescription("");
-      setName("");
-      setPrice("");
-      setPreview("");
-      setOtherImgArr([]);
-      setOtherImg1("");
-      setOtherImg2("");
-      setOtherImg3("");
-      setOtherImg4("");
-      setSubmitted(false)
-      history.push(`/spots/${resultId}`);
+        }))
+        setError({});
+        setCountry("");
+        setAddress("");
+        setCity("");
+        setState("");
+        setDescription("");
+        setName("");
+        setPrice("");
+        setPreview("");
+        setOtherImgArr([]);
+        setOtherImg1("");
+        setOtherImg2("");
+        setOtherImg3("");
+        setOtherImg4("");
+        setSubmitted(false)
+        history.push(`/spots/${resultId}`);
+      } else {
+        dispatch(thunkUpdateSpot(spotId, {
+            address, city, state, country, name, description, price,
+            lat: 0, lng: 0
+        }));
+        history.push(`/spots/${resultId}`);
+      }
+
 
     } else {
       setSubmitted(true)
     }
   }
 
-  useEffect(()=> { //clean up input fields before mouting ?
-    return (() => {
-      setCountry("");
-      setAddress("");
-      setCity("");
-      setState("");
-      setDescription("");
-      setName("");
-      setPrice("");
-      setPreview("");
-      setOtherImgArr([]);
-      setOtherImg1("");
-      setOtherImg2("");
-      setOtherImg3("");
-      setOtherImg4("");
-      setError({});
-    })
-  }, [])
+  useEffect(()=> {
+    if (formType === "edit" && Object.values(editSpot).length !== 0) {
+        setCountry(editSpot.country);
+        setAddress(editSpot.address);
+        setCity(editSpot.city);
+        setState(editSpot.state);
+        setDescription(editSpot.description);
+        setName(editSpot.name);
+        setPrice(editSpot.price);
+        //   setPreview(editSpot.SpotImages."something find preview true");
+    }
+  }, [editSpot])
 
   useEffect(()=>{ //validate input
     let errors = {};
@@ -101,6 +110,27 @@ function CreateSpotPage() {
     setError(errors);
   },[country, address, city, state, description, name, price, preview, otherImg1, otherImg2, otherImg3, otherImg4])
 
+  useEffect(()=> {
+    if (formType === "edit")
+        dispatch(thunkGetOneSpot(spotId));
+    return (() => { //clean up input fields before mouting ?
+      setCountry("");
+      setAddress("");
+      setCity("");
+      setState("");
+      setDescription("");
+      setName("");
+      setPrice("");
+      setPreview("");
+      setOtherImgArr([]);
+      setOtherImg1("");
+      setOtherImg2("");
+      setOtherImg3("");
+      setOtherImg4("");
+      setError({});
+    })
+  }, [])
+
   function oneKeyTestInfo () {
       setCountry("USA");
       setAddress("1000 Boardway Street");
@@ -112,10 +142,13 @@ function CreateSpotPage() {
       setPreview("https://randompicturegenerator.com/img/national-park-generator/geb0a8f4616b69766ef8aa70c081ed3a1d5e7237b0f5bbffd077d7349335c0eecc3c9b37dade08481fc1a4ad849593885_640.jpg");
   }
 
+  //handle illegal enter
+  if (!sessionUser) return <Redirect to="/" />
+  if (editSpot.ownerId !== sessionUser.id) return <Redirect to="/spots/current" />
   return (
     <div className="flx-col-center">
       {/* <button onClick={() => oneKeyTestInfo()} >Demo Info</button> */}
-      <h1>Create a new Spot</h1>
+      {formType === "edit" ? <h1>Update Your Spot</h1> : <h1>Create a new Spot</h1>}
       <form onSubmit={(e)=>checkInputError(e)}>
 
         <h3>Where's your place located?</h3>

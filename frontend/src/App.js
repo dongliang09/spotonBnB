@@ -28,10 +28,13 @@ function App() {
             <LandingPage />
           </Route>
           <Route exact path="/spots/new">
-            <CreateSpotPage />
+            <CreateSpotPage formType={"create"}/>
           </Route>
           <Route exact path="/spots/current">
             <ManageSpotPage />
+          </Route>
+          <Route path="/spots/:spotId/edit">
+            <CreateSpotPage formType={"edit"}/>
           </Route>
           <Route path="/spots/:spotId">
             <SingleSpot />

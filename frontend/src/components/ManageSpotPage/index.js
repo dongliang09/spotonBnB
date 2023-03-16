@@ -29,7 +29,7 @@ function ManageSpotPage () {
           <div key={element.id}>
             <SpotCard spot={element} />
             <div>
-              <button>Update</button>
+              <button><Link to={`/spots/${element.id}/edit`}>Update</Link></button>
               <OpenModalButton
                 buttonText="Delete"
                 modalComponent={<DeleteSpotModal spotId={element.id}/>}
