@@ -12,6 +12,10 @@
   background-color: transparent;
 }
 
+.bg-white {
+  background-color: white;
+}
+
 /*============ border-radius ================*/
 .bor-rad-10 {
   border-radius: 10px;

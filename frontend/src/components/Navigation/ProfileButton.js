@@ -42,7 +42,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu} className='font15 bor-rad-20 bg-trans pad15 pos-rel'>
+      <button onClick={openMenu} className='font15 bor-rad-20 bg-white pad15 pos-rel'>
         <i className="fas fa-bars mrg-r-5"></i>
         <i className="fas fa-user-circle" />
       </button>
@@ -52,6 +52,7 @@ function ProfileButton({ user }) {
             <li>{user.username}</li>
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
+            <li>Manage Spots</li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
