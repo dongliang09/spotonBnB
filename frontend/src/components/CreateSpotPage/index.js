@@ -148,7 +148,9 @@ function CreateSpotPage({formType}) {
   return (
     <div className="flx-col-center">
       {/* <button onClick={() => oneKeyTestInfo()} >Demo Info</button> */}
-      {formType === "edit" ? <h1>Update Your Spot</h1> : <h1>Create a new Spot</h1>}
+
+      <h1>{formType === "edit" ? "Update Your Spot" : "Create a New Spot"}</h1>
+
       <form onSubmit={(e)=>checkInputError(e)}>
 
         <h3>Where's your place located?</h3>
@@ -240,7 +242,7 @@ function CreateSpotPage({formType}) {
 
 
         <div className="flx-center mrg-t-b-15" >
-          <button>Create Spot</button>
+          <button>{formType === "edit" ? "Update Your Spot" : "Create Spot"}</button>
         </div>
       </form>
 
