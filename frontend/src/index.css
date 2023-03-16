@@ -84,6 +84,15 @@
   grid-template-columns: 3fr 1fr;
 }
 
+/*============ height ================*/
+.height3rem {
+  height: 3rem;
+}
+
+.height5rem {
+  height: 5rem;
+}
+
 /*============ margin ================*/
 .list-none {
   list-style: none;
@@ -122,8 +131,13 @@
   margin-bottom: 5px;
 }
 
+.mrg-t-15 {
+  margin-top: 15px;
+}
+
 .mrg-t-b-auto {
-  margin: auto 0px auto;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .mrg-t-b-0 {
@@ -132,6 +146,10 @@
 
 .mrg-t-b-10 {
   margin: 10px auto;
+}
+
+.mrg-t-b-15 {
+  margin: 15px auto;
 }
 
 .mrg-t-b-auto-r-15 {
@@ -152,6 +170,14 @@
 }
 
 /*============ width ================*/
+.width80 {
+  width: 80%;
+}
+
 .width100 {
   width: 100%;
+}
+
+.width-content {
+  width: fit-content;
 }

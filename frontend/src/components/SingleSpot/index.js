@@ -3,14 +3,18 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetOneSpot } from '../../store/spot';
 import { thunkGetReviews } from '../../store/review';
+import OpenModalButton from '../OpenModalButton/';
+import ReviewFormModal from "../ReviewModal";
 import './SingleSpot.css'
 
 function SingleSpot() {
     const { spotId } = useParams();
     const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);
     const oneSpot = useSelector(state=>state.spots.singleSpot);
     const spotReviewObj = useSelector(state=>state.reviews.spot);
-    const spotReview = Object.values(spotReviewObj);
+    const spotReviewVal = Object.values(spotReviewObj);
+    const spotReview = spotReviewVal.sort((a,b)=>( new Date(b.updatedAt) - new Date(a.updatedAt)));
     const defaultImgSrc = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                     'August', 'September', 'October', 'November', 'December'];
@@ -21,7 +25,7 @@ function SingleSpot() {
       dispatch(thunkGetReviews(spotId));
     }, [dispatch])
 
-    // console.log("render")
+    // console.log("render", spotReviewVal.find(element => element.userId === sessionUser.id))
 
     return (
       <div className="oneSpotContainer mrg-auto">
@@ -39,7 +43,7 @@ function SingleSpot() {
               { oneSpot.SpotImages === undefined ? null :
                 oneSpot.SpotImages.filter(element => element.preview === false)
                   .map(element=>(
-                    <div className="notPreviewContainer mrg-r-5">
+                    <div className="notPreviewContainer mrg-r-5" key={element.id}>
                       <img src={element.url} className="width100" alt="other images"/>
                     </div>))}
           </div>
@@ -58,7 +62,8 @@ function SingleSpot() {
               </div>
               <div className="">
                 <i className="fas fa-star"></i> {oneSpot.avgStarRating === null ?
-                  "New" : Number(oneSpot.avgStarRating).toFixed(2)} - {oneSpot.numReviews} reviews
+                  "New" : Number(oneSpot.avgStarRating).toFixed(2)} {oneSpot.numReviews === 0 ? null :
+                    oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}
               </div>
             </div>
             <div className="flx-center mrg-auto">
@@ -70,12 +75,29 @@ function SingleSpot() {
         <hr />
         <div>
           <h1><i className="fas fa-star"></i> {oneSpot.avgStarRating === null ?
-                "New" : Number(oneSpot.avgStarRating).toFixed(2)} - {oneSpot.numReviews} reviews</h1>
-          {spotReview.map(element=> <div>
+                "New" : Number(oneSpot.avgStarRating).toFixed(2)} {oneSpot.numReviews === 0 ? null :
+                  oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}</h1>
+
+          {oneSpot && oneSpot.Owner && sessionUser && oneSpot.Owner.id !== sessionUser.id &&
+              !(spotReviewVal.find(element => element.userId === sessionUser.id)) &&
+              <p>
+                <OpenModalButton
+                  buttonText="Post Your Review"
+                  modalComponent={<ReviewFormModal />}
+                />
+              </p>}
+
+          {oneSpot && oneSpot.Owner && sessionUser && oneSpot.Owner.id !== sessionUser.id &&
+              oneSpot.numReviews === 0 &&
+              <p>Be the first to post a review!</p>}
+
+          {spotReview.map(element=> <div key={element.id}>
               <h3 className="mrg-b-5">{element.User===undefined ? null :element.User.firstName}</h3>
               <h4 className="mrg-t-b-0">{month[new Date(element.createdAt).getMonth()]} {new Date(element.createdAt).getFullYear()}</h4>
               <p>{element.review}</p>
             </div>)}
+
+
         </div>
       </div>
     )
