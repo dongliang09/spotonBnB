@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetOneSpot } from '../../store/spot';
 import { thunkGetReviews } from '../../store/review';
+import OpenModalButton from '../OpenModalButton/';
+import ReviewFormModal from "../ReviewModal";
 import './SingleSpot.css'
 
 function SingleSpot() {
@@ -78,7 +80,12 @@ function SingleSpot() {
 
           {oneSpot && oneSpot.Owner && sessionUser && oneSpot.Owner.id !== sessionUser.id &&
               !(spotReviewVal.find(element => element.userId === sessionUser.id)) &&
-              <button>Post Your Review</button>}
+              <p>
+                <OpenModalButton
+                  buttonText="Post Your Review"
+                  modalComponent={<ReviewFormModal />}
+                />
+              </p>}
 
           {oneSpot && oneSpot.Owner && sessionUser && oneSpot.Owner.id !== sessionUser.id &&
               oneSpot.numReviews === 0 &&

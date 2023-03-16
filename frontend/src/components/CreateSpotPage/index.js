@@ -150,7 +150,7 @@ function CreateSpotPage() {
         <h3>Describe your place to guests</h3>
         <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
         <textarea placeholder="Please write at least 30 characters"
-            className="dis-block width100"
+            className="dis-block width100 height5rem"
             value={description} onChange={(e)=>setDescription(e.target.value)}/>
         {submitted && error.description &&
             <span className="user-err"> {error.description}</span>}

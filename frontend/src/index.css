@@ -84,6 +84,15 @@
   grid-template-columns: 3fr 1fr;
 }
 
+/*============ height ================*/
+.height3rem {
+  height: 3rem;
+}
+
+.height5rem {
+  height: 5rem;
+}
+
 /*============ margin ================*/
 .list-none {
   list-style: none;
@@ -161,6 +170,14 @@
 }
 
 /*============ width ================*/
+.width80 {
+  width: 80%;
+}
+
 .width100 {
   width: 100%;
+}
+
+.width-content {
+  width: fit-content;
 }

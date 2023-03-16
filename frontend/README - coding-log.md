@@ -14,6 +14,7 @@ final decision, just key into the object that subscribe the state
 spent 1-2 hours figuring out why .map is giving me an error.
 because I didn't follow the structure of the redux store state.
 Once that is figured out, everything went smoothly
+Taking account for if user logged in, if spot belong to user, if user has posted review yet, that is a long conditionalal render
 
 
 ### To do list
