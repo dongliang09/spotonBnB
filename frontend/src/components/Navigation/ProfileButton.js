@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 // import OpenModalButton from '../OpenModalButton';
@@ -52,7 +53,7 @@ function ProfileButton({ user }) {
             <li>{user.username}</li>
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
-            <li>Manage Spots</li>
+            <li><Link to="/spots/current">Manage Spots</Link></li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

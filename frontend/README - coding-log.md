@@ -27,3 +27,5 @@ clean up state after leaving the component, use return function of useEffect
 
 create spot, need to add error handler for fetch request
 create spot, send request to preview image
+
+After clicking manage Spot, profile dropdown should be hidden

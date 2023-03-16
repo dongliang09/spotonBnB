@@ -185,3 +185,11 @@
 .width-content {
   width: fit-content;
 }
+
+.width300p {
+  width: 300px
+}
+
+.width-max-1000 {
+  max-width: 1000px;
+}
