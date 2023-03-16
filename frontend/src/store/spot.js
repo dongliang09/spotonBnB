@@ -2,26 +2,25 @@ import { csrfFetch } from './csrf';
 
 const SET_ALL_SPOTS = 'spots/setAllSpots';
 const SET_ONE_SPOT = 'spots/setOneSpot';
-const SET_USER_SPOT = 'spots/setUserSpot';
+const CLEAR_ALL_SPOT = 'spots/clearAllSpots';
 
-const setAllSpots = (spots) => {
+export const setAllSpots = (spots) => {
   return {
     type: SET_ALL_SPOTS,
     payload: spots
   };
 };
 
-const setOneSpot = (spot) => {
+export const setOneSpot = (spot) => {
   return {
     type: SET_ONE_SPOT,
     payload: spot
   };
 };
 
-const setUserSpots = (spots) => {
+export const clearAllSpot = () => {
   return {
-    type: SET_USER_SPOT,
-    payload: spots
+    type: CLEAR_ALL_SPOT
   };
 };
 
@@ -57,12 +56,22 @@ export const thunkCurrentUserSpot = () => async dispatch => {
   const response = await csrfFetch('/api/spots/current');
   const data = await response.json();
   console.log(data)
-  dispatch(setUserSpots(data.Spots));
+  dispatch(setAllSpots(data.Spots));
+  return data;
+};
+
+export const thunkDeleteSpot = (spotId) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`,{
+    method: 'DELETE'
+  });
+  const data = await response.json();
+  console.log(data)
+  // dispatch(setAllSpots(data.Spots));
   return data;
 };
 
 //======================== reducer =================
-const initialState = { allSpots: {},  singleSpot:{}, userSpot:{}};
+const initialState = { allSpots: {},  singleSpot:{}};
 
 const spotReducer = (state = initialState, action) => {
   let newState;
@@ -75,9 +84,9 @@ const spotReducer = (state = initialState, action) => {
       newState = {...state};
       newState.singleSpot = action.payload;
       return newState;
-    case SET_USER_SPOT:
+    case CLEAR_ALL_SPOT:
       newState = {...state};
-      newState.userSpot = normalizeData(action.payload);
+      newState.allSpots = initialState.allSpots;
       return newState;
     default:
       return state;

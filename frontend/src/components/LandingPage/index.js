@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetAllSpots } from '../../store/spot';
+import { clearAllSpot, thunkGetAllSpots } from '../../store/spot';
 import SpotCard from "./spotCard";
 import './LandingPage.css'
 
@@ -14,6 +14,7 @@ function LandingPage() {
     //load the info from GET all spots when the page load
     useEffect(()=> {
         dispatch(thunkGetAllSpots())
+        return () => dispatch(clearAllSpot());
     }, [dispatch])
 
     return (

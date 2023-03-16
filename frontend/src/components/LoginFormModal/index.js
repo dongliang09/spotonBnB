@@ -70,11 +70,25 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit" disabled={disableBtn}>Log In</button>
-        <div>
+        <div className='flx-col-center mrg-t-15'>
           <button onClick={()=>{
-            setCredential("Demo-lition");
-            setPassword("password");
-          }}>Demo User</button>
+              setCredential("Demo-lition");
+              setPassword("password");
+            }}>
+            Demo User
+          </button>
+          <button onClick={()=>{
+              setCredential("FakeUser1");
+              setPassword("password2");
+            }}>
+            Demo User 2
+          </button>
+          <button onClick={()=>{
+              setCredential("aaaaaa");
+              setPassword("aaaaaa");
+            }}>
+            Demo User 3
+          </button>
         </div>
       </form>
 
