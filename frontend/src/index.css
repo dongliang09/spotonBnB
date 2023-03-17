@@ -220,6 +220,11 @@
   padding: 15px;
 }
 
+.pad-l-r-3rem {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
 /*============ position ================*/
 .pos-rel {
   position: relative;

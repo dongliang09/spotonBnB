@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateSpot, thunkGetOneSpot, thunkUpdateSpot } from '../../store/spot';
+import { thunkCreateSpot, thunkGetOneSpot, thunkUpdateSpot, thunkCreateSpotImg } from '../../store/spot';
 
 function CreateSpotPage({formType}) {
   const dispatch = useDispatch();
@@ -41,9 +41,19 @@ function CreateSpotPage({formType}) {
       let resultId;
       if (formType === "create") {
         resultId = await dispatch(thunkCreateSpot({
-        address, city, state, country, name, description, price,
-        lat: 0, lng: 0
+            address, city, state, country, name, description, price,
+            lat: 0, lng: 0
         }))
+        await dispatch(thunkCreateSpotImg(resultId, {
+            url: preview, preview: true
+        }))
+        .catch(
+            async (res) => {
+              const data = await res.json();
+              console.log(data)
+              if (data && data.errors) setError(...data.errors);
+            }
+          );
         setError({});
         setCountry("");
         setAddress("");
@@ -142,7 +152,7 @@ function CreateSpotPage({formType}) {
 
   //handle illegal enter
   if (!sessionUser) return <Redirect to="/" />
-  if (editSpot.ownerId !== sessionUser.id) return <Redirect to="/spots/current" />
+  if (formType==="edit" && editSpot.ownerId !== sessionUser.id) return <Redirect to="/spots/current" />
   return (
     <div className="flx-col-center">
       {/* <button onClick={() => oneKeyTestInfo()} >Demo Info</button> */}

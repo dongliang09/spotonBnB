@@ -33,7 +33,7 @@ function SignupFormModal() {
   };
 
   return (
-    <>
+    <div className='flx-col-center pad15 pad-l-r-3rem'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <ul>
@@ -42,7 +42,7 @@ function SignupFormModal() {
         <label>
           Email
           <input
-            type="text"
+            type="text" className = 'dis-block'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -51,7 +51,7 @@ function SignupFormModal() {
         <label>
           Username
           <input
-            type="text"
+            type="text" className = 'dis-block'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -60,7 +60,7 @@ function SignupFormModal() {
         <label>
           First Name
           <input
-            type="text"
+            type="text" className = 'dis-block'
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
@@ -69,7 +69,7 @@ function SignupFormModal() {
         <label>
           Last Name
           <input
-            type="text"
+            type="text" className = 'dis-block'
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
@@ -78,7 +78,7 @@ function SignupFormModal() {
         <label>
           Password
           <input
-            type="password"
+            type="password" className = 'dis-block'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -87,15 +87,17 @@ function SignupFormModal() {
         <label>
           Confirm Password
           <input
-            type="password"
+            type="password" className = 'dis-block'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <div className='flx-col-center mrg-t-15'>
+          <button type="submit">Sign Up</button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 
