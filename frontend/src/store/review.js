@@ -20,6 +20,17 @@ export const thunkGetReviews = (spotId) => async dispatch => {
   return response;
 };
 
+export const thunkCreateReviews = (spotId, review) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: 'POST',
+    body: JSON.stringify(review)
+  });
+  if (response.ok) {
+    dispatch(thunkGetReviews(spotId));
+  }
+  return response;
+};
+
 //======================== reducer =================
 const initialState = { spot: {} };
 

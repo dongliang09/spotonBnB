@@ -67,7 +67,7 @@ function CreateSpotPage({formType}) {
             address, city, state, country, name, description, price,
             lat: 0, lng: 0
         }));
-        history.push(`/spots/${resultId}`);
+        history.push(`/spots/${spotId}`);
       }
 
 

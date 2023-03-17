@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import StarRating from './StarRating';
 import { useDispatch } from 'react-redux';
 import { useModal } from "../../context/Modal";
+import { thunkCreateReviews } from '../../store/review';
+import { thunkGetOneSpot } from '../../store/spot';
 
-function ReviewFormModal() {
+function ReviewFormModal({spotId}) {
   const dispatch = useDispatch();
-  // const sessionUser = useSelector(state => state.session.user);
   const [review, setReview] = useState('');
-  // const [star, setStar] = useState(0);
+  const [rating, setRating] = useState(0);
   const [errors, setErrors] = useState([]);
   const [disableBtn, setDisable] = useState(true);
-  const [rating, setRating] = useState(0);
   const { closeModal } = useModal();
 
 
@@ -22,7 +22,7 @@ function ReviewFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch("some action to submit reviews")
+    dispatch(thunkCreateReviews(spotId,{review, stars: rating}))
       .then(closeModal)
       .catch(
         async (res) => {
@@ -30,6 +30,7 @@ function ReviewFormModal() {
           if (data && data.errors) setErrors(Object.values(data.errors));
         }
       );
+    dispatch(thunkGetOneSpot(spotId));
   }
 
   const onChange = (e) => {
@@ -46,7 +47,7 @@ function ReviewFormModal() {
           ))}
         </ul>
         <textarea
-          type="text"
+          type="text" placeholder='Leave your review here...'
           value={review} rows={5}
           onChange={(e) => setReview(e.target.value)}
           className = 'dis-block width100'

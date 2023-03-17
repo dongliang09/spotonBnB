@@ -7,14 +7,6 @@
   color: red;
 }
 
-.filled {
-  color: red;
-}
-
-.empty {
-  color: blue
-}
-
 /*============ background-color ================*/
 .bg-trans {
   background-color: transparent;
