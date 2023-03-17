@@ -27,6 +27,13 @@ export const thunkCreateReviews = (spotId, review) => async dispatch => {
   return response;
 };
 
+export const thunkDeleteReviews = (spotId, reviewId) => async dispatch => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: 'DELETE'
+  });
+  return response;
+};
+
 //======================== reducer =================
 const initialState = { spot: {} };
 

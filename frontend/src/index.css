@@ -3,8 +3,22 @@
   text-align: center;
 }
 /*============ customer global className ================*/
+.logo-font {
+  font-family: 'Shadows Into Light', cursive;
+}
+
 .user-err {
   color: red;
+}
+
+.hidden {
+  display: none;
+}
+
+.profile-dropdown {
+  position: absolute;
+  list-style: none;
+  border: 2px solid red;
 }
 
 /*============ background-color ================*/
@@ -16,8 +30,16 @@
   background-color: white;
 }
 
+.bg-wheat {
+  background-color: wheat;
+}
+
 .bg-gray {
   background-color: gray;
+}
+
+.bg-DDDDDD {
+  background-color: #DDDDDD;
 }
 
 .bg-lgcoral {
@@ -49,6 +71,10 @@
 
 .dis-inl-block {
   display: inline-block;
+}
+
+.dis-none {
+  display: none;
 }
 
 /*============ flex ================*/
@@ -123,7 +149,7 @@
   height: 5rem;
 }
 
-/*============ margin ================*/
+/*============ list ================*/
 .list-none {
   list-style: none;
 }
@@ -159,6 +185,10 @@
 
 .mrg-b-5 {
   margin-bottom: 5px;
+}
+
+.mrg-t-5 {
+  margin-top: 5px;
 }
 
 .mrg-t-15 {
@@ -199,9 +229,31 @@
   position: absolute;
 }
 
+/*============ right ================*/
+.right0 {
+  right: 0px;
+}
+
+.right10 {
+  right: 10px;
+}
+
+/*============ text-decoration / underline ================*/
+.txt-decor-none {
+  text-decoration: none;
+}
+/*============ top ================*/
+.top15 {
+  top: 15px;
+}
+
 /*============ width ================*/
 .width80 {
   width: 80%;
+}
+
+.width98 {
+  width: 98%;
 }
 
 .width100 {
@@ -214,6 +266,14 @@
 
 .width300p {
   width: 300px
+}
+
+.width98vw {
+  width: 98vw;
+}
+
+.width100vw {
+  width: 100vw;
 }
 
 .width-max-1000 {

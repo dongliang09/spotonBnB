@@ -6,16 +6,15 @@ import ProfileButton from './ProfileButton';
 // import LoginFormModal from '../LoginFormModal';
 // import SignupFormModal from '../SignupFormModal';
 // import * as sessionActions from '../../store/session';
-import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <div className='navContainer1'>
-      <ul className=' flx-center-space mrg15 navContainer'>
-        <li>
-          <NavLink exact to="/">Home</NavLink>
+    <div className='width98vw'>
+      <ul className=' flx-center-space  list-none'>
+        <li className='logo-font font25 txt-decor-none'>
+          <NavLink exact to="/" className={"txt-decor-none"}>SpotOnBnB</NavLink>
         </li>
         {isLoaded && (
           <li>

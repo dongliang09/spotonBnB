@@ -74,12 +74,20 @@ export const thunkUpdateSpot = (spotId, spotData) => async dispatch => {
 };
 
 export const thunkDeleteSpot = (spotId) => async dispatch => {
-  const response = await csrfFetch(`/api/spots/${spotId}`,{
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: 'DELETE'
   });
   if (response.ok) {
     dispatch(thunkCurrentUserSpot());
   }
+  return response;
+};
+
+export const thunkCreateSpotImg = (spotId, data) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  });
   return response;
 };
 

@@ -39,11 +39,11 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "bg-DDDDDD mrg-t-5 right10 profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
-      <button onClick={openMenu} className='font15 bor-rad-20 bg-white pad15 pos-rel'>
+      <button onClick={openMenu} className='font15 bor-rad-20 pad15 pos-rel mrg-r-15'>
         <i className="fas fa-bars mrg-r-5"></i>
         <i className="fas fa-user-circle" />
       </button>
