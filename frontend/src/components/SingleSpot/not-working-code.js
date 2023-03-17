@@ -21,11 +21,9 @@ function SingleSpot() {
     const [price, setPrice] = useState(0);
     const [rating, setRating] = useState(0.00);
     const [numReview, setNumReview] = useState(0);
-    console.log(oneSpot)
     // const checkOneSpotNotExist = Object.values(oneSpot).length === 0;
     // const checkSpotImageNotExist = checkOneSpotNotExist ? true :
     //   Object.values(oneSpot.SpotImages).length === 0;
-    // console.log(checkSpotImageNotExist)
     // const previewUrl = checkSpotImageNotExist ? defaultImgSrc : oneSpot.SpotImages.find(element => {
     //   //find return the first element
     //   return element.preview === true
@@ -70,7 +68,6 @@ function SingleSpot() {
       findPreview(); //set preview
     }, [dispatch])
 
-    console.log("render")
 
     return (
       <div className="oneSpotContainer">

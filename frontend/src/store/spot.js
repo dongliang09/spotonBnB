@@ -29,7 +29,6 @@ export const clearAllSpot = () => {
 export const thunkGetAllSpots = () => async dispatch => {
   const response = await csrfFetch('/api/spots');
   const data = await response.json();
-  // console.log(data)
   dispatch(setAllSpots(data.Spots));
   return response;
 };
@@ -37,7 +36,6 @@ export const thunkGetAllSpots = () => async dispatch => {
 export const thunkGetOneSpot = (spotId) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}`);
   const data = await response.json();
-  // console.log(data)
   dispatch(setOneSpot(data));
   return response;
 };
@@ -58,7 +56,6 @@ export const thunkCreateSpot = (spotData) => async dispatch => {
 export const thunkCurrentUserSpot = () => async dispatch => {
   const response = await csrfFetch('/api/spots/current');
   const data = await response.json();
-  // console.log(data)
   dispatch(setAllSpots(data.Spots));
   return data;
 };

@@ -11,7 +11,6 @@ function ManageSpotPage () {
   const sessionUser = useSelector(state => state.session.user);
   const userSpotObj = useSelector(state=>state.spots.allSpots);
   const userSpot = Object.values(userSpotObj);
-  // console.log("userSpot", userSpot)
 
   useEffect(()=> {
     dispatch(thunkCurrentUserSpot());

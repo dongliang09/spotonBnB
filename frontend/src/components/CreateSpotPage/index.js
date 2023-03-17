@@ -32,8 +32,6 @@ function CreateSpotPage({formType}) {
   // upon successful submit,
   // jump to the spot detail page for new spot
 
-  console.log("editSpot", editSpot)
-
   async function checkInputError(e) {
     e.preventDefault();
     if (Object.values(error).length === 0) {
