@@ -83,6 +83,14 @@ export const thunkDeleteSpot = (spotId) => async dispatch => {
   return response;
 };
 
+export const thunkCreateSpotImg = (spotId, data) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  });
+  return response;
+};
+
 //======================== reducer =================
 const initialState = { allSpots: {},  singleSpot:{}};
 
