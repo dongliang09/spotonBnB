@@ -5,6 +5,7 @@ import { thunkGetOneSpot } from '../../store/spot';
 import { thunkGetReviews } from '../../store/review';
 import OpenModalButton from '../OpenModalButton/';
 import ReviewFormModal from "../ReviewModal";
+import DeleteReviewModal from './DeleteReviewModal';
 import './SingleSpot.css'
 
 function SingleSpot() {
@@ -92,6 +93,10 @@ function SingleSpot() {
               <h3 className="mrg-b-5">{element.User===undefined ? null :element.User.firstName}</h3>
               <h4 className="mrg-t-b-0">{month[new Date(element.createdAt).getMonth()]} {new Date(element.createdAt).getFullYear()}</h4>
               <p>{element.review}</p>
+              {sessionUser && element.userId === sessionUser.id && <OpenModalButton
+                buttonText="Delete"
+                modalComponent={<DeleteReviewModal spotId={element.spotId} reviewId={element.id}/>}
+              />}
             </div>)}
 
 
