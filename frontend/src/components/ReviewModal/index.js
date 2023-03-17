@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as sessionActions from '../../store/session';
+import StarRating from './StarRating';
 import { useDispatch } from 'react-redux';
 import { useModal } from "../../context/Modal";
 
@@ -7,16 +7,17 @@ function ReviewFormModal() {
   const dispatch = useDispatch();
   // const sessionUser = useSelector(state => state.session.user);
   const [review, setReview] = useState('');
-  const [star, setStar] = useState(0);
+  // const [star, setStar] = useState(0);
   const [errors, setErrors] = useState([]);
   const [disableBtn, setDisable] = useState(true);
+  const [rating, setRating] = useState(0);
   const { closeModal } = useModal();
 
 
   useEffect(()=> {
-    if (review.length > 9 && star > 0) setDisable(false);
+    if (review.length > 9 && rating > 0) setDisable(false);
     else setDisable(true);
-  }, [review, star])
+  }, [review, rating])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,8 +32,12 @@ function ReviewFormModal() {
       );
   }
 
+  const onChange = (e) => {
+    setRating(e);
+  };
+
   return (
-    <div className='flx-col-center width-content pad15'>
+    <div className='flx-col-center width-content pad15 mrg15'>
       <h1>How was your stay?</h1>
       <form onSubmit={handleSubmit} className = 'txt-center width100'>
         <ul>
@@ -46,8 +51,14 @@ function ReviewFormModal() {
           onChange={(e) => setReview(e.target.value)}
           className = 'dis-block width100'
         />
+        <div>
+        <div className='flx-center'>
+            <StarRating disabled={false} onChange={onChange} rating={rating}/>
+            <div className='flx-col-mid'>Stars</div>
+        </div>
+        </div>
         <button type="submit" disabled={disableBtn}
-          className="mrg-t-15">
+          className="">
             Submit Your Review
         </button>
       </form>
