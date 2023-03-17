@@ -15,8 +15,15 @@ const setReviews = (reviews) => {
 export const thunkGetReviews = (spotId) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
   const data = await response.json();
-  // console.log(data)
   dispatch(setReviews(data.Reviews));
+  return response;
+};
+
+export const thunkCreateReviews = (spotId, review) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: 'POST',
+    body: JSON.stringify(review)
+  });
   return response;
 };
 

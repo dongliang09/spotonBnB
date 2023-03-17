@@ -410,7 +410,8 @@ router.get('/:spotId/reviews', async (req, res) => {
         },
         include: [
             {model: User}, {model: ReviewImage}
-        ]
+        ],
+        order: [['updatedAt', 'DESC']]
     })
 
     res.json({

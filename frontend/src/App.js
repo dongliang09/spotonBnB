@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import SingleSpot from './components/SingleSpot';
 import CreateSpotPage from './components/CreateSpotPage';
+import ManageSpotPage from './components/ManageSpotPage';
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -27,7 +28,13 @@ function App() {
             <LandingPage />
           </Route>
           <Route exact path="/spots/new">
-            <CreateSpotPage />
+            <CreateSpotPage formType={"create"}/>
+          </Route>
+          <Route exact path="/spots/current">
+            <ManageSpotPage />
+          </Route>
+          <Route path="/spots/:spotId/edit">
+            <CreateSpotPage formType={"edit"}/>
           </Route>
           <Route path="/spots/:spotId">
             <SingleSpot />

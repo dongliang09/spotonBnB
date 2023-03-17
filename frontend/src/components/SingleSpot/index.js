@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetOneSpot } from '../../store/spot';
@@ -18,14 +18,11 @@ function SingleSpot() {
     const defaultImgSrc = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                     'August', 'September', 'October', 'November', 'December'];
-    // console.log("spotReview", spotReview)
 
     useEffect(()=> {
       dispatch(thunkGetOneSpot(spotId));
       dispatch(thunkGetReviews(spotId));
     }, [dispatch])
-
-    // console.log("render", spotReviewVal.find(element => element.userId === sessionUser.id))
 
     return (
       <div className="oneSpotContainer mrg-auto">
@@ -79,11 +76,11 @@ function SingleSpot() {
                   oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}</h1>
 
           {oneSpot && oneSpot.Owner && sessionUser && oneSpot.Owner.id !== sessionUser.id &&
-              !(spotReviewVal.find(element => element.userId === sessionUser.id)) &&
+              !(spotReview.find(element => element.userId === sessionUser.id)) &&
               <p>
                 <OpenModalButton
                   buttonText="Post Your Review"
-                  modalComponent={<ReviewFormModal />}
+                  modalComponent={<ReviewFormModal spotId={spotId}/>}
                 />
               </p>}
 
