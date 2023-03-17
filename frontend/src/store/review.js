@@ -24,9 +24,6 @@ export const thunkCreateReviews = (spotId, review) => async dispatch => {
     method: 'POST',
     body: JSON.stringify(review)
   });
-  if (response.ok) {
-    dispatch(thunkGetReviews(spotId));
-  }
   return response;
 };
 

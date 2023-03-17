@@ -13,8 +13,8 @@ function SingleSpot() {
     const sessionUser = useSelector(state => state.session.user);
     const oneSpot = useSelector(state=>state.spots.singleSpot);
     const spotReviewObj = useSelector(state=>state.reviews.spot);
-    const spotReview = Object.values(spotReviewObj);
-    // const spotReview = spotReviewVal.sort((a,b)=>( new Date(b.updatedAt) - new Date(a.updatedAt)));
+    const spotReviewVal = Object.values(spotReviewObj);
+    const spotReview = spotReviewVal.sort((a,b)=>( new Date(b.updatedAt) - new Date(a.updatedAt)));
     const defaultImgSrc = 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png';
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                     'August', 'September', 'October', 'November', 'December'];

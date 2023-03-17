@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import StarRating from './StarRating';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useModal } from "../../context/Modal";
-import { thunkCreateReviews } from '../../store/review';
+import StarRating from './StarRating';
+import { thunkCreateReviews, thunkGetReviews } from '../../store/review';
 import { thunkGetOneSpot } from '../../store/spot';
 
 function ReviewFormModal({spotId}) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
   const [errors, setErrors] = useState([]);
@@ -19,10 +21,10 @@ function ReviewFormModal({spotId}) {
     else setDisable(true);
   }, [review, rating])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
-    dispatch(thunkCreateReviews(spotId,{review, stars: rating}))
+    await dispatch(thunkCreateReviews(spotId,{review, stars: rating}))
       .then(closeModal)
       .catch(
         async (res) => {
@@ -30,7 +32,9 @@ function ReviewFormModal({spotId}) {
           if (data && data.errors) setErrors(Object.values(data.errors));
         }
       );
-    dispatch(thunkGetOneSpot(spotId));
+    await dispatch(thunkGetOneSpot(spotId));
+    await dispatch(thunkGetReviews(spotId));
+    history.push(`/spots/${spotId}`);
   }
 
   const onChange = (e) => {
