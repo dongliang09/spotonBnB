@@ -47,9 +47,12 @@ export const thunkCreateSpot = (spotData) => async dispatch => {
     method: 'POST',
     body: JSON.stringify(spotData)
   });
-  const data = await response.json();
-  dispatch(thunkGetOneSpot(data.id));
-  return data.id;
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(thunkGetOneSpot(data.id));
+    return data.id;
+  }
+  return response;
 };
 
 export const thunkCurrentUserSpot = () => async dispatch => {
@@ -65,18 +68,22 @@ export const thunkUpdateSpot = (spotId, spotData) => async dispatch => {
     method: 'PUT',
     body: JSON.stringify(spotData)
   });
-  const data = await response.json();
-  dispatch(thunkGetOneSpot(data.id));
-  return data.id;
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(thunkGetOneSpot(data.id));
+    return data.id;
+  }
+  return response;
 };
 
 export const thunkDeleteSpot = (spotId) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}`,{
     method: 'DELETE'
   });
-  const data = await response.json();
-  dispatch(thunkCurrentUserSpot());
-  return data;
+  if (response.ok) {
+    dispatch(thunkCurrentUserSpot());
+  }
+  return response;
 };
 
 //======================== reducer =================
