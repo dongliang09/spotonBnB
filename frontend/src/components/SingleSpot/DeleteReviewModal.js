@@ -24,7 +24,7 @@ function DeleteReviewModal({spotId, reviewId}) {
       <div className = 'flx-col-center width100'>
         <p>Are you sure you want to delete this review?</p>
         <button className="height25rem width100 bg-lgcoral color-white mrg-t-15"
-          onClick={()=>confirmDelete(spotId, reviewId)}>
+          onClick={()=>confirmDelete()}>
             Yes (Delete Review)
         </button>
         <button className=" height25rem width100 bg-gray color-white mrg-t-15"

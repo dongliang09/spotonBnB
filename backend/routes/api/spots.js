@@ -281,7 +281,17 @@ router.post('/', requireAuth, validateCreateSpot, async (req, res) => {
 
 });
 
-router.post('/:spotId/images', requireAuth, async (req, res) => {
+const validatePreview = [
+    check('url')
+      .exists({ checkFalsy: true })
+      .withMessage('url is required'),
+    check('url')
+      .isURL()
+      .withMessage('url should be working url'),
+    handleValidationErrors
+];
+
+router.post('/:spotId/images', requireAuth, validatePreview, async (req, res) => {
     // Require proper authorization: Spot must belong to the current user
     const currentId = req.user.id;
     const { url, preview } = req.body;
