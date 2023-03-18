@@ -29,7 +29,7 @@ function SingleSpot() {
         <h1>{oneSpot.name}</h1>
         <h3>{oneSpot.city}, {oneSpot.state}, {oneSpot.country}</h3>
         <div className="grid-50-50">
-          <div className="width500p height400p">
+          <div className="width500p height400p flx-col-mid">
             <img className="width100"
               src ={ oneSpot.SpotImages === undefined ? defaultImgSrc :
                 oneSpot.SpotImages.find(element => element.preview === true) === undefined ? defaultImgSrc :
@@ -41,8 +41,9 @@ function SingleSpot() {
               { oneSpot.SpotImages === undefined ? null :
                 oneSpot.SpotImages.filter(element => element.preview === false)
                   .map(element=>(
-                    <div className="mrg-r-5" key={element.id}>
-                      <img src={element.url} className="width100" alt="other images"/>
+                    <div className="height200p mrg-r-5" key={element.id}>
+                      <img src={element.url} className="width100" alt="other images"
+                        onError={(e)=>{e.target.src = defaultImgSrc}}/>
                     </div>))}
           </div>
         </div>
@@ -58,10 +59,13 @@ function SingleSpot() {
               <div>
                 <strong className="font15">${oneSpot.price}</strong> night
               </div>
-              <div className="">
+              <div className="flx-mid">
+              <div>
                 <i className="fas fa-star"></i> {oneSpot.avgStarRating === null ?
                   "New" : Number(oneSpot.avgStarRating).toFixed(2)} {oneSpot.numReviews === 0 ? null :
                     oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}
+              </div>
+
               </div>
             </div>
             <div className="flx-center mrg-auto">
