@@ -44,7 +44,7 @@ function LoginFormModal() {
     <div className='flx-col-center pad15'>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
+        <ul className="list-none">
           {errors.map((error, idx) => (
             <li key={idx} className='user-err'>{error}</li>
           ))}
@@ -69,8 +69,10 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit" disabled={disableBtn}>Log In</button>
-        <div className='flx-col-center mrg-t-15'>
+        <div className='flx-center mrg15'>
+          <button type="submit" disabled={disableBtn}>Log In</button>
+        </div>
+        <div className='flx-col-center mrg-t-15 gap10p'>
           <button onClick={()=>{
               setCredential("Demo-lition");
               setPassword("password");
