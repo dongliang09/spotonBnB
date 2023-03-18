@@ -206,7 +206,7 @@ function CreateSpotPage({formType}) {
   if (formType==="edit" && editSpot.ownerId !== sessionUser.id) return <Redirect to="/spots/current" />
   return (
     <div className="flx-col-center">
-      <button onClick={() => oneKeyTestInfo()} >Demo Info</button>
+      {/* <button onClick={() => oneKeyTestInfo()} >Demo Info</button> */}
 
       <h1>{formType === "edit" ? "Update Your Spot" : "Create a New Spot"}</h1>
 
