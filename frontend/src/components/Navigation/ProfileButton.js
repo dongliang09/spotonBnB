@@ -49,15 +49,15 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="flx-col-center">
             <li>{user.username}</li>
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
             <li><Link to="/spots/current">Manage Spots</Link></li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button onClick={logout} className="bg-lgcoral color-white">Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
           <>
               <OpenModalMenuItem

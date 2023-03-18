@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateSpot, thunkGetOneSpot, thunkUpdateSpot } from '../../store/spot';
+import { thunkCreateSpot, thunkGetOneSpot, thunkUpdateSpot, thunkCreateSpotImg } from '../../store/spot';
 
 function CreateSpotPage({formType}) {
   const dispatch = useDispatch();
@@ -24,6 +24,7 @@ function CreateSpotPage({formType}) {
   const [otherImg3, setOtherImg3] = useState("");
   const [otherImg4, setOtherImg4] = useState("");
   const [error, setError] = useState({});
+  const [imgError, setImgError] = useState([]);
   const [submitted, setSubmitted] = useState(false);
 
   //hard code long and lat at the moment
@@ -41,9 +42,69 @@ function CreateSpotPage({formType}) {
       let resultId;
       if (formType === "create") {
         resultId = await dispatch(thunkCreateSpot({
-        address, city, state, country, name, description, price,
-        lat: 0, lng: 0
+            address, city, state, country, name, description, price,
+            lat: 0, lng: 0
         }))
+        await dispatch(thunkCreateSpotImg(resultId, {
+            url: preview, preview: true
+        }))
+        .catch(
+            async (res) => {
+              const data = await res.json();
+              console.log(data)
+              if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
+            }
+          );
+
+        if(otherImg1.length !== 0) {
+            await dispatch(thunkCreateSpotImg(resultId, {
+                url: otherImg1, preview: false
+            }))
+            .catch(
+                async (res) => {
+                  const data = await res.json();
+                  console.log(data)
+                  if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
+                }
+              );
+        }
+        if(otherImg2.length !== 0) {
+            await dispatch(thunkCreateSpotImg(resultId, {
+                url: otherImg2, preview: false
+            }))
+            .catch(
+                async (res) => {
+                  const data = await res.json();
+                  console.log(data)
+                  if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
+                }
+              );
+        }
+        if(otherImg3.length !== 0) {
+            await dispatch(thunkCreateSpotImg(resultId, {
+                url: otherImg3, preview: false
+            }))
+            .catch(
+                async (res) => {
+                  const data = await res.json();
+                  console.log(data)
+                  if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
+                }
+              );
+        }
+        if(otherImg4.length !== 0) {
+            await dispatch(thunkCreateSpotImg(resultId, {
+                url: otherImg4, preview: false
+            }))
+            .catch(
+                async (res) => {
+                  const data = await res.json();
+                  console.log(data)
+                  if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
+                }
+              );
+        }
+
         setError({});
         setCountry("");
         setAddress("");
@@ -97,13 +158,13 @@ function CreateSpotPage({formType}) {
     if (name.length === 0) errors.name = "Name is required";
     if (price.length === 0) errors.price = "Price is required";
     if (preview.length === 0) errors.preview = "Preview image is required";
-    if (otherImg1.length > 0 && (otherImg1.indexOf(".png") === -1 || otherImg1.indexOf(".jpg") === -1 || otherImg1.indexOf(".jpeg") === -1))
+    if (otherImg1.length > 0 && !(otherImg1.endsWith(".png") || otherImg1.endsWith(".jpg") || otherImg1.endsWith(".jpeg")))
         errors.otherImg1 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (otherImg2.length > 0 && (otherImg2.indexOf(".png") === -1 || otherImg2.indexOf(".jpg") === -1 || otherImg2.indexOf(".jpeg") === -1))
+    if (otherImg2.length > 0 && !(otherImg2.endsWith(".png") || otherImg2.endsWith(".jpg") || otherImg2.endsWith(".jpeg")))
         errors.otherImg2 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (otherImg3.length > 0 && (otherImg3.indexOf(".png") === -1 || otherImg3.indexOf(".jpg") === -1 || otherImg3.indexOf(".jpeg") === -1))
+    if (otherImg3.length > 0 && !(otherImg3.endsWith(".png") || otherImg3.endsWith(".jpg") || otherImg3.endsWith(".jpeg")))
         errors.otherImg3 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (otherImg4.length > 0 && (otherImg4.indexOf(".png") === -1 || otherImg4.indexOf(".jpg") === -1 || otherImg4.indexOf(".jpeg") === -1))
+    if (otherImg4.length > 0 && !(otherImg4.endsWith(".png") || otherImg4.endsWith(".jpg") || otherImg4.endsWith(".jpeg")))
         errors.otherImg4 = "Image URL must end in .png, .jpg, or .jpeg";
     setError(errors);
   },[country, address, city, state, description, name, price, preview, otherImg1, otherImg2, otherImg3, otherImg4])
@@ -142,7 +203,7 @@ function CreateSpotPage({formType}) {
 
   //handle illegal enter
   if (!sessionUser) return <Redirect to="/" />
-  if (editSpot.ownerId !== sessionUser.id) return <Redirect to="/spots/current" />
+  if (formType==="edit" && editSpot.ownerId !== sessionUser.id) return <Redirect to="/spots/current" />
   return (
     <div className="flx-col-center">
       {/* <button onClick={() => oneKeyTestInfo()} >Demo Info</button> */}
@@ -150,6 +211,12 @@ function CreateSpotPage({formType}) {
       <h1>{formType === "edit" ? "Update Your Spot" : "Create a New Spot"}</h1>
 
       <form onSubmit={(e)=>checkInputError(e)}>
+
+        <ul>
+          {imgError.map((error, idx) => (
+            <li key={idx} className='user-err'>{error}</li>
+          ))}
+        </ul>
 
         <h3>Where's your place located?</h3>
         <p>Guests will only get your exact address once they booked a reservation.</p>

@@ -6,7 +6,6 @@ import { thunkGetReviews } from '../../store/review';
 import OpenModalButton from '../OpenModalButton/';
 import ReviewFormModal from "../ReviewModal";
 import DeleteReviewModal from './DeleteReviewModal';
-import './SingleSpot.css'
 
 function SingleSpot() {
     const { spotId } = useParams();
@@ -26,28 +25,30 @@ function SingleSpot() {
     }, [dispatch])
 
     return (
-      <div className="oneSpotContainer mrg-auto">
+      <div className="width-max-1000 mrg-auto">
         <h1>{oneSpot.name}</h1>
         <h3>{oneSpot.city}, {oneSpot.state}, {oneSpot.country}</h3>
         <div className="grid-50-50">
-          <div className="oneSpotPreviewImgDiv">
+          <div className="width500p height400p flx-col-mid">
             <img className="width100"
               src ={ oneSpot.SpotImages === undefined ? defaultImgSrc :
                 oneSpot.SpotImages.find(element => element.preview === true) === undefined ? defaultImgSrc :
                   oneSpot.SpotImages.find(element => element.preview === true).url}
+              onError={(e)=>{e.target.src = defaultImgSrc}}
               alt='spot preview'/>
           </div>
-          <div className="oneSpotOtherImgs flx mrg5">
+          <div className="grid-2x2 width500p mrg5">
               { oneSpot.SpotImages === undefined ? null :
                 oneSpot.SpotImages.filter(element => element.preview === false)
                   .map(element=>(
-                    <div className="notPreviewContainer mrg-r-5" key={element.id}>
-                      <img src={element.url} className="width100" alt="other images"/>
+                    <div className="height200p mrg-r-5" key={element.id}>
+                      <img src={element.url} className="width100" alt="other images"
+                        onError={(e)=>{e.target.src = defaultImgSrc}}/>
                     </div>))}
           </div>
         </div>
-        <div className="grid oneSpotInfo">
-          <div>
+        <div className="grid grid-5-2">
+          <div className="mrg-r-15">
             <h1>Hosted by { oneSpot.Owner===undefined ?
               null : oneSpot.Owner.firstName} { oneSpot.Owner===undefined ?
                 null :oneSpot.Owner.lastName}</h1>
@@ -58,14 +59,18 @@ function SingleSpot() {
               <div>
                 <strong className="font15">${oneSpot.price}</strong> night
               </div>
-              <div className="">
+              <div className="flx-mid">
+              <div>
                 <i className="fas fa-star"></i> {oneSpot.avgStarRating === null ?
                   "New" : Number(oneSpot.avgStarRating).toFixed(2)} {oneSpot.numReviews === 0 ? null :
                     oneSpot.numReviews === 1 ? "· 1 Review" : `· ${oneSpot.numReviews} reviews`}
               </div>
+
+              </div>
             </div>
             <div className="flx-center mrg-auto">
-              <button className="reserveBtn" onClick={()=>alert('Feature coming soon')}>Reserve</button>
+              <button className="width80 height25rem color-white bor-rad-5 bg-lgcoral font-weight600"
+                onClick={()=>alert('Feature coming soon')}>Reserve</button>
             </div>
           </div>
 
