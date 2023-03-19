@@ -31,8 +31,48 @@ module.exports = {
       preview: true
     },
     {
+      spotId: 3,
+      url: "https://randompicturegenerator.com/img/national-park-generator/ged4a87053c3da47721249ae18a64f6a86bc93aa983668c9c8c0315e5bb1711cf07db98b44f1a08fd3db2d1499ebdc76e_640.jpg",
+      preview: true
+    },
+    {
+      spotId: 3,
+      url: "https://randompicturegenerator.com/img/national-park-generator/g5142e8cc14a284a4d301d4982fa39e2950dfbbfb1c1bf791caddce01a33d1a3ef2367e396312b055ce5af7b6e34148c1_640.jpg",
+      preview: false
+    },
+    {
+      spotId: 3,
+      url: "https://randompicturegenerator.com/img/national-park-generator/gb0e971dc6754dbb6e493da43a2145613a9e3f853acbf4791dd03c9e6e21679762fab286a342c24e83aace80f5cccbfaf_640.jpg",
+      preview: false
+    },
+    {
+      spotId: 3,
+      url: "https://randompicturegenerator.com/img/national-park-generator/g44d930863a337b3fead5a74fee69599288b82f73b00c301a6f24aa57eb59513bc0c13d2ce91308742e1f7c2fe71eb796_640.jpg",
+      preview: false
+    },
+    {
       spotId: 4,
       url: "https://jameskaiser.com/wp-content/uploads/2014/12/yosemite-national-park-hotels-in-park.jpg",
+      preview: true
+    },
+    {
+      spotId: 4,
+      url: "https://randomwordgenerator.com/img/picture-generator/54e7d043435ba914f1dc8460962e33791c3ad6e04e507441722872d5934dc2_640.jpg",
+      preview: false
+    },
+    {
+      spotId: 4,
+      url: "https://randomwordgenerator.com/img/picture-generator/54e7d043435ba914f1dc8460962e33791c3ad6e04e507441722872d5934dc2_640.jpg",
+      preview: false
+    },
+    {
+      spotId: 4,
+      url: "https://randomwordgenerator.com/img/picture-generator/54e7d043435ba914f1dc8460962e33791c3ad6e04e507441722872d5934dc2_640.jpg",
+      preview: false
+    },
+    {
+      spotId: 4,
+      url: "https://randomwordgenerator.com/img/picture-generator/54e7d043435ba914f1dc8460962e33791c3ad6e04e507441722872d5934dc2_640.jpg",
       preview: false
     }], {});
   },
