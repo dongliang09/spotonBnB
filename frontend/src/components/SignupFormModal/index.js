@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -14,9 +14,15 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [disableBtn, setDisable] = useState(true);
   const { closeModal } = useModal();
 
-  // if (sessionUser) return <Redirect to="/" />;
+  useEffect(()=> {
+    if (email && username && firstName && lastName&& password && confirmPassword &&
+        username.length > 3 && password.length > 5 && (password === confirmPassword))
+        setDisable(false);
+    else setDisable(true);
+  }, [email, username, firstName, lastName, password, confirmPassword])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,8 +42,8 @@ function SignupFormModal() {
     <div className='flx-col-center pad15 pad-l-r-3rem'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        <ul className="list-none">
+          {errors.map((error, idx) => <li key={idx} className='user-err'>{error}</li>)}
         </ul>
         <label>
           Email
@@ -94,7 +100,7 @@ function SignupFormModal() {
           />
         </label>
         <div className='flx-col-center mrg-t-15'>
-          <button type="submit">Sign Up</button>
+          <button type="submit" disabled={disableBtn}>Sign Up</button>
         </div>
       </form>
     </div>

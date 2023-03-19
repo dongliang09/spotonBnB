@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 // import OpenModalButton from '../OpenModalButton';
@@ -9,6 +9,7 @@ import SignupFormModal from '../SignupFormModal';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -37,9 +38,10 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    history.push("/");
   };
 
-  const ulClassName = "bg-DDDDDD mrg-t-5 right10 profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "txt-center bg-white z-idx-99 mrg-t-5 pad15 right10 pos-abs list-none bor-sol-lggray" + (showMenu ? "" : " hidden");
 
   return (
     <>
@@ -49,15 +51,14 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <div className="flx-col-center">
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+          <>
+            <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
-            <li><Link to="/spots/current">Manage Spots</Link></li>
+            <li><Link to="/spots/current" className="txt-decor-none">Manage Spots</Link></li>
             <li>
               <button onClick={logout} className="bg-lgcoral color-white">Log Out</button>
             </li>
-          </div>
+          </>
         ) : (
           <>
               <OpenModalMenuItem

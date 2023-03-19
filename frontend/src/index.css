@@ -15,12 +15,6 @@
   display: none;
 }
 
-.profile-dropdown {
-  position: absolute;
-  list-style: none;
-  border: 2px solid red;
-}
-
 /*============ background-color ================*/
 .bg-trans {
   background-color: transparent;
@@ -47,6 +41,11 @@
 }
 
 /*============ border-radius ================*/
+.bor-sol-lggray {
+  border: 3px solid lightslategray;
+}
+
+/*============ border-radius ================*/
 .bor-rad-5 {
   border-radius: 5px;
 }
@@ -66,6 +65,10 @@
 /*============ color ================*/
 .color-white {
   color:white;
+}
+
+.cursor-pointer:hover{
+  cursor: pointer;
 }
 
 /*============ display ================*/
@@ -136,6 +139,16 @@
 .font-weight600 {
   font-weight: 600;
 }
+
+/*============ gap ================*/
+.gap3p {
+  gap: 3px;
+}
+
+.gap10p {
+  gap: 10px;
+}
+
 /*============ grid ================*/
 .grid {
   display: grid;
@@ -347,4 +360,9 @@
 
 .width-max-1000 {
   max-width: 1000px;
+}
+
+/*============ z-index ================*/
+.z-idx-99 {
+  z-index: 99;
 }

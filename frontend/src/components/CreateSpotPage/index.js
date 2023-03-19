@@ -32,6 +32,23 @@ function CreateSpotPage({formType}) {
 
   // upon successful submit,
   // jump to the spot detail page for new spot
+  function cleanupState () {
+    setError({});
+    setCountry("");
+    setAddress("");
+    setCity("");
+    setState("");
+    setDescription("");
+    setName("");
+    setPrice("");
+    setPreview("");
+    setOtherImgArr([]);
+    setOtherImg1("");
+    setOtherImg2("");
+    setOtherImg3("");
+    setOtherImg4("");
+    setSubmitted(false);
+  }
 
   async function checkInputError(e) {
     e.preventDefault();
@@ -45,6 +62,13 @@ function CreateSpotPage({formType}) {
             address, city, state, country, name, description, price,
             lat: 0, lng: 0
         }))
+        .catch(
+          async (res) => {
+            const data = await res.json();
+            console.log(data)
+            if (data && data.errors) setError(data.errors);
+          }
+        );
         await dispatch(thunkCreateSpotImg(resultId, {
             url: preview, preview: true
         }))
@@ -105,22 +129,11 @@ function CreateSpotPage({formType}) {
               );
         }
 
-        setError({});
-        setCountry("");
-        setAddress("");
-        setCity("");
-        setState("");
-        setDescription("");
-        setName("");
-        setPrice("");
-        setPreview("");
-        setOtherImgArr([]);
-        setOtherImg1("");
-        setOtherImg2("");
-        setOtherImg3("");
-        setOtherImg4("");
-        setSubmitted(false)
-        history.push(`/spots/${resultId}`);
+        if (Object.values(imgError).length === 0) {
+          cleanupState()
+          history.push(`/spots/${resultId}`);
+        }
+
       } else {
         dispatch(thunkUpdateSpot(spotId, {
             address, city, state, country, name, description, price,
@@ -173,20 +186,7 @@ function CreateSpotPage({formType}) {
     if (formType === "edit")
         dispatch(thunkGetOneSpot(spotId));
     return (() => { //clean up input fields before mouting ?
-      setCountry("");
-      setAddress("");
-      setCity("");
-      setState("");
-      setDescription("");
-      setName("");
-      setPrice("");
-      setPreview("");
-      setOtherImgArr([]);
-      setOtherImg1("");
-      setOtherImg2("");
-      setOtherImg3("");
-      setOtherImg4("");
-      setError({});
+      cleanupState();
     })
   }, [])
 
@@ -198,7 +198,6 @@ function CreateSpotPage({formType}) {
       setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas condimentum tincidunt venenatis. Donec sit amet diam at dui efficitur suscipit ut in nunc. In eget posuere orci.");
       setName("Happiness1");
       setPrice(5);
-      setPreview("https://randompicturegenerator.com/img/national-park-generator/geb0a8f4616b69766ef8aa70c081ed3a1d5e7237b0f5bbffd077d7349335c0eecc3c9b37dade08481fc1a4ad849593885_640.jpg");
   }
 
   //handle illegal enter
@@ -206,6 +205,7 @@ function CreateSpotPage({formType}) {
   if (formType==="edit" && editSpot.ownerId !== sessionUser.id) return <Redirect to="/spots/current" />
   return (
     <div className="flx-col-center">
+
       {/* <button onClick={() => oneKeyTestInfo()} >Demo Info</button> */}
 
       <h1>{formType === "edit" ? "Update Your Spot" : "Create a New Spot"}</h1>
@@ -213,7 +213,12 @@ function CreateSpotPage({formType}) {
       <form onSubmit={(e)=>checkInputError(e)}>
 
         <ul>
-          {imgError.map((error, idx) => (
+          {submitted && imgError.map((error, idx) => (
+            <li key={idx} className='user-err'>{error}</li>
+          ))}
+        </ul>
+        <ul>
+          {submitted && Object.values(error).map((error, idx) => (
             <li key={idx} className='user-err'>{error}</li>
           ))}
         </ul>
