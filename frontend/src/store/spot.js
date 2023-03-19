@@ -56,8 +56,9 @@ export const thunkCreateSpot = (spotData) => async dispatch => {
 export const thunkCurrentUserSpot = () => async dispatch => {
   const response = await csrfFetch('/api/spots/current');
   const data = await response.json();
-  dispatch(setAllSpots(data.Spots));
-  return data;
+  if (response.ok) {
+    dispatch(setAllSpots(data.Spots));
+  }return data;
 };
 
 export const thunkUpdateSpot = (spotId, spotData) => async dispatch => {
