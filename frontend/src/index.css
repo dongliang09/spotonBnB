@@ -218,6 +218,10 @@
   height: fit-content;
 }
 
+.height-max-200p {
+  max-height: 200px;
+}
+
 /*============ list ================*/
 .list-none {
   list-style: none;
