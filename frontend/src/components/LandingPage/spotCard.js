@@ -24,8 +24,8 @@ function SpotCard({spot}) {
           }}/>
       </div>
       <div className="flx-center-space">
-        <div className="flx">
-          {spot.city},{spot.state}
+        <div className="flx width-max-250p">
+          {spot.city}, {spot.state}
         </div>
         <div><i className="fas fa-star"></i> {avgRating}</div>
       </div>
