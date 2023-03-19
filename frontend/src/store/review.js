@@ -1,11 +1,18 @@
 import { csrfFetch } from './csrf';
 
 const SET_REVIEWS = 'spots/setReviews';
+const CLEAR_REVIEWS = 'spots/clearReviews';
 
 const setReviews = (reviews) => {
   return {
     type: SET_REVIEWS,
     payload: reviews
+  };
+};
+
+export const clearReviews = () => {
+  return {
+    type: CLEAR_REVIEWS
   };
 };
 
@@ -43,6 +50,10 @@ const reviewReducer = (state = initialState, action) => {
     case SET_REVIEWS:
       newState = {...state};
       newState.spot = normalizeData(action.payload);
+      return newState;
+    case CLEAR_REVIEWS:
+      newState = {...state};
+      newState.spot = initialState.spot;
       return newState;
     default:
       return state;
