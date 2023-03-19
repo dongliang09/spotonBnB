@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetOneSpot } from '../../store/spot';
-import { thunkGetReviews } from '../../store/review';
+import { clearOneSpot, thunkGetOneSpot } from '../../store/spot';
+import { clearReviews, thunkGetReviews } from '../../store/review';
 import OpenModalButton from '../OpenModalButton/';
 import ReviewFormModal from "../ReviewModal";
 import DeleteReviewModal from './DeleteReviewModal';
@@ -22,6 +22,10 @@ function SingleSpot() {
     useEffect(()=> {
       dispatch(thunkGetOneSpot(spotId));
       dispatch(thunkGetReviews(spotId));
+      return () => {
+        dispatch(clearOneSpot());
+        dispatch(clearReviews());
+      };
     }, [dispatch])
 
     return (

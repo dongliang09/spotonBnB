@@ -168,6 +168,7 @@ function CreateSpotPage({formType}) {
     if (city.length === 0) errors.city = "City is required";
     if (state.length === 0) errors.state = "State is required";
     if (description.length < 30) errors.description = "Description needs a minimum of 30 characters";
+    if (description.length > 3000) errors.description = "Description only accepts maximum of 3000 characters";
     if (name.length === 0) errors.name = "Name is required";
     if (price.length === 0) errors.price = "Price is required";
     if (preview.length === 0) errors.preview = "Preview image is required";

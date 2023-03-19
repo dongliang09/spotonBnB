@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const SET_ALL_SPOTS = 'spots/setAllSpots';
 const SET_ONE_SPOT = 'spots/setOneSpot';
 const CLEAR_ALL_SPOT = 'spots/clearAllSpots';
+const CLEAR_ONE_SPOT = 'spots/clearOneSpot';
 
 export const setAllSpots = (spots) => {
   return {
@@ -21,6 +22,12 @@ export const setOneSpot = (spot) => {
 export const clearAllSpot = () => {
   return {
     type: CLEAR_ALL_SPOT
+  };
+};
+
+export const clearOneSpot = () => {
+  return {
+    type: CLEAR_ONE_SPOT
   };
 };
 
@@ -109,6 +116,10 @@ const spotReducer = (state = initialState, action) => {
     case CLEAR_ALL_SPOT:
       newState = {...state};
       newState.allSpots = initialState.allSpots;
+      return newState;
+    case CLEAR_ONE_SPOT:
+      newState = {...state};
+      newState.singleSpot = initialState.singleSpot;
       return newState;
     default:
       return state;
