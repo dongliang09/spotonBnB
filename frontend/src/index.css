@@ -218,6 +218,10 @@
   height: fit-content;
 }
 
+.height-max-200p {
+  max-height: 200px;
+}
+
 /*============ list ================*/
 .list-none {
   list-style: none;
@@ -356,6 +360,22 @@
 
 .width100vw {
   width: 100vw;
+}
+
+.width-max-150p {
+  max-width: 150px;
+}
+
+.width-max-200p {
+  max-width: 200px;
+}
+
+.width-max-250p {
+  max-width: 250px;
+}
+
+.width-max-300p {
+  max-width: 300px;
 }
 
 .width-max-1000 {

@@ -46,7 +46,7 @@ function SingleSpot() {
                 oneSpot.SpotImages.filter(element => element.preview === false)
                   .map(element=>(
                     <div className="height200p mrg-r-5" key={element.id}>
-                      <img src={element.url} className="width100" alt="other images"
+                      <img src={element.url} className="width100 height-max-200p" alt="other images"
                         onError={(e)=>{e.target.src = defaultImgSrc}}/>
                     </div>))}
           </div>
