@@ -151,7 +151,7 @@ function CreateSpotPage({formType}) {
         setDescription(editSpot.description);
         setName(editSpot.name);
         setPrice(editSpot.price);
-        //   setPreview(editSpot.SpotImages."something find preview true");
+        setPreview(editSpot.SpotImages.find(element=>element.preview === true).url);
     }
   }, [editSpot])
 
@@ -230,7 +230,7 @@ function CreateSpotPage({formType}) {
         <label htmlFor="create-address">Street Address</label>
         {submitted && error.address &&
             <span className="user-err"> {error.address}</span>}
-        <input id="create-address" placeholder="Address" className="dis-block"
+        <input id="create-address" placeholder="Street Address" className="dis-block"
             value={address} onChange={(e)=>setAddress(e.target.value)}/>
 
         <label htmlFor="create-city">City</label>
