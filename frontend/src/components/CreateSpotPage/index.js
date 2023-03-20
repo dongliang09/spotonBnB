@@ -65,7 +65,6 @@ function CreateSpotPage({formType}) {
         .catch(
           async (res) => {
             const data = await res.json();
-            console.log(data)
             if (data && data.errors) setError(data.errors);
           }
         );
@@ -75,7 +74,6 @@ function CreateSpotPage({formType}) {
         .catch(
             async (res) => {
               const data = await res.json();
-              console.log(data)
               if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
             }
           );
@@ -87,7 +85,6 @@ function CreateSpotPage({formType}) {
             .catch(
                 async (res) => {
                   const data = await res.json();
-                  console.log(data)
                   if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
                 }
               );
@@ -99,7 +96,6 @@ function CreateSpotPage({formType}) {
             .catch(
                 async (res) => {
                   const data = await res.json();
-                  console.log(data)
                   if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
                 }
               );
@@ -111,7 +107,6 @@ function CreateSpotPage({formType}) {
             .catch(
                 async (res) => {
                   const data = await res.json();
-                  console.log(data)
                   if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
                 }
               );
@@ -123,7 +118,6 @@ function CreateSpotPage({formType}) {
             .catch(
                 async (res) => {
                   const data = await res.json();
-                  console.log(data)
                   if (data && data.errors) setImgError([...imgError, Object.values(data.errors)]);
                 }
               );
