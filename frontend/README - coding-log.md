@@ -17,6 +17,9 @@ Once that is figured out, everything went smoothly
 Taking account for if user logged in, if spot belong to user, if user has posted review yet, that is a long conditionalal render
 
 
+### other feature
+redirect user to home page if user tried to access manage spots page
+
 ### To do list
 comment out csrf/restore in backend
 Spot Detail page, image can't display if url is wrong

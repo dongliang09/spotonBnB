@@ -77,7 +77,7 @@ function LoginFormModal() {
               setCredential("Demo-lition");
               setPassword("password");
             }}>
-            Demo User
+            Log in as Demo User
           </button>
           {/* <button onClick={()=>{
               setCredential("FakeUser1");
