@@ -270,7 +270,7 @@ function CreateSpotPage({formType}) {
         <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
         <label htmlFor="create-price">$</label>
         <input id="create-price" placeholder="price per night (USD)"
-            type="number" min="0.01"
+            type="number" min="0"
             value={price} onChange={(e)=>setPrice(e.target.value)}/>
         {submitted && error.price &&
             <span className="user-err dis-block"> {error.price}</span>}
