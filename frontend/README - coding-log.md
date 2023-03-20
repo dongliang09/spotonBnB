@@ -18,7 +18,9 @@ Taking account for if user logged in, if spot belong to user, if user has posted
 
 
 ### other feature
-redirect user to home page if user tried to access manage spots page
+redirect user to home page if user not log in and user tried to access manage spots page
+redirect user to home page if user not log in and user tried to create new spot
+
 
 ### To do list
 comment out csrf/restore in backend
