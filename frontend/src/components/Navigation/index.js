@@ -14,7 +14,9 @@ function Navigation({ isLoaded }){
     <div className='width98vw'>
       <ul className=' flx-center-space  list-none'>
         <li className='logo-font font25 txt-decor-none'>
-          <NavLink exact to="/" className={"txt-decor-none"}>SpotOnBnB</NavLink>
+          <NavLink exact to="/" className={"txt-decor-none"}>
+            <i className="fas fa-building"></i> SpotOnBnB
+          </NavLink>
         </li>
         {isLoaded && (
           <li>

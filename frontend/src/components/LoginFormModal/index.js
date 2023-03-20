@@ -79,12 +79,12 @@ function LoginFormModal() {
             }}>
             Demo User
           </button>
-          <button onClick={()=>{
+          {/* <button onClick={()=>{
               setCredential("FakeUser1");
               setPassword("password2");
             }}>
             Demo User 2
-          </button>
+          </button> */}
           {/* <button onClick={()=>{
               setCredential("aaaaaa");
               setPassword("aaaaaa");

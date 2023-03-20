@@ -15,6 +15,10 @@
   display: none;
 }
 
+#modal-content {
+  border-radius: 10px;
+}
+
 /*============ background-color ================*/
 .bg-trans {
   background-color: transparent;
