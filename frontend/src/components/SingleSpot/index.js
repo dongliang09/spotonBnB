@@ -6,6 +6,7 @@ import { clearReviews, thunkGetReviews } from '../../store/review';
 import OpenModalButton from '../OpenModalButton/';
 import ReviewFormModal from "../ReviewModal";
 import DeleteReviewModal from './DeleteReviewModal';
+import BookingForm from "./BookingForm";
 
 function SingleSpot() {
     const { spotId } = useParams();
@@ -72,10 +73,8 @@ function SingleSpot() {
 
               </div>
             </div>
-            <div className="flx-center mrg-auto">
-              <button className="width80 height25rem color-white bor-rad-5 bg-lgcoral font-weight600"
-                onClick={()=>alert('Feature coming soon')}>Reserve</button>
-            </div>
+
+            <BookingForm />
           </div>
 
         </div>

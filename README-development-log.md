@@ -34,3 +34,12 @@ create spot, need to add error handler for fetch request
 create spot, send request to preview image
 
 After clicking manage Spot, profile dropdown should be hidden
+
+
+### Booking
+20230531
+there is a difference on between bookings depending on if you own the spot.
+For safty reason, there is no id for booking if you don't own the spot, therefore, in the redux state, can't use id as key for each object when we try to normalize the data. Instead, I use start date as the key.
+
+need to block some of the dates because they have bookings already
+isDayBlocked ?
