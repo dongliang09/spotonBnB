@@ -26,6 +26,20 @@ export const thunkGetAllBookings = (spotId) => async dispatch => {
   return response;
 };
 
+export const thunkCreateBooking = (spotId, bookingData) => async dispatch => {
+  // console.log(bookingData)
+  const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+    method: 'POST',
+    body: JSON.stringify(bookingData)
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(thunkGetAllBookings(spotId));
+    return
+  }
+  return response;
+};
+
 //======================== reducer =================
 const initialState = { allBookings: {} };
 

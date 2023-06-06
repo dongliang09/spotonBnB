@@ -1,7 +1,9 @@
 /* TODO Add site wide styles */
-.txt-center {
-  text-align: center;
+button:hover {
+  cursor: pointer;
 }
+
+
 /*============ customer global className ================*/
 .logo-font {
   font-family: 'Shadows Into Light', cursive;
@@ -44,9 +46,17 @@
   background-color: lightcoral;
 }
 
-/*============ border-radius ================*/
+/*============ border ================*/
+.bor-0p {
+  border: 0px;
+}
+
 .bor-sol-lggray {
   border: 3px solid lightslategray;
+}
+
+.bor-1p-sol-gray {
+  border: 1px solid gray;
 }
 
 /*============ border-radius ================*/
@@ -64,6 +74,15 @@
 
 .bor-rad-20 {
   border-radius: 20px;
+}
+
+.bor-rad-50per {
+  border-radius: 50%;
+}
+
+/*============ box-shadow ================*/
+.boxShadow-0-1-5-1-gray {
+  box-shadow: 0px 2px 5px 1px gray;
 }
 
 /*============ color ================*/
@@ -114,6 +133,11 @@
   align-items: center;
 }
 
+.flx-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .flx-col-center {
   display: flex;
   flex-direction: column;
@@ -153,6 +177,10 @@
   gap: 10px;
 }
 
+.gap115rem {
+  gap: 1.15rem;
+}
+
 /*============ grid ================*/
 .grid {
   display: grid;
@@ -169,6 +197,7 @@
 }
 
 .grid-5-2 {
+  display: grid;
   grid-template-columns: 5fr 2fr;
 }
 
@@ -293,6 +322,10 @@
   margin: auto 15px auto;
 }
 /*============ padding ================*/
+.pad5 {
+  padding: 5px;
+}
+
 .pad15 {
   padding: 15px;
 }
@@ -318,6 +351,11 @@
 
 .right10 {
   right: 10px;
+}
+
+/*============ text-align======*/
+.txt-center {
+  text-align: center;
 }
 
 /*============ text-decoration / underline ================*/

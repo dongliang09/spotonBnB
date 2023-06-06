@@ -74,7 +74,7 @@ function SingleSpot() {
               </div>
             </div>
 
-            <BookingForm />
+            <BookingForm dailyPrice={oneSpot.price}/>
           </div>
 
         </div>
