@@ -5,6 +5,7 @@ import { thunkGetAllBookings, thunkCreateBooking } from "../../store/booking";
 import 'react-dates/initialize';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+// import './react-dates-override.css'
 
 // react-dates https://github.com/react-dates/react-dates
 // demo https://react-dates.github.io/react-dates/?path=/story/daterangepicker-drp--default
@@ -88,7 +89,9 @@ function BookingForm({dailyPrice}) {
         />
         <div className="pad15 flx-center-space cursor-pointer" onClick={()=>setIsGuestExpand(!isGuestExpand)}>
           <div>
-            {adultNum + childNum} Guest {infantNum === 0 ? null : ", "+infantNum + (infantNum===1?" infant":" infants")}
+            { adultNum + childNum }
+            { adultNum + childNum === 1 ? " Guest" : " Guests" }
+            {infantNum === 0 ? null : ", " + infantNum + (infantNum===1?" infant":" infants")}
           </div>
           <div>
             { isGuestExpand ? <i className="fas fa-chevron-up"></i> : <i className="fas fa-chevron-down"></i> }
@@ -145,7 +148,7 @@ function BookingForm({dailyPrice}) {
           </div>
         </div>
 
-        <button className="width80 height25rem color-white bor-rad-5 bg-lgcoral font-weight600">
+        <button className="width100 height25rem color-white bor-rad-5 bg-lgcoral font-weight600">
           Reserve
         </button>
       </form>

@@ -1,4 +1,8 @@
 /* TODO Add site wide styles */
+* {
+  box-sizing: border-box;
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -20,6 +24,13 @@ button:hover {
 #modal-content {
   border-radius: 10px;
 }
+
+/* #singleSpotOtherPreviewImgs > img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+} */
+
 
 /*============ background-color ================*/
 .bg-trans {
@@ -150,6 +161,14 @@ button:hover {
   justify-content: center;
 }
 /*============ font-size ================*/
+.font115 {
+  font-size: 1.15rem;
+}
+
+.font125 {
+  font-size: 1.25rem;
+}
+
 
 .font15 {
   font-size: 1.5rem;
@@ -166,6 +185,11 @@ button:hover {
 /*============ font-weight ================*/
 .font-weight600 {
   font-weight: 600;
+}
+
+/*============ object-fit ================*/
+.obj-fit-cover {
+  object-fit: cover;
 }
 
 /*============ gap ================*/
@@ -211,16 +235,72 @@ button:hover {
   grid-template-columns: 6fr 4fr;
 }
 
+.grid-7-4 {
+  display: grid;
+  grid-template-columns: 7fr 4fr;
+}
+
 .grid-2x2 {
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
 }
 
+.grid-2x2-img{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+  "previewImg0 previewImg1"
+  "previewImg2 previewImg3"
+}
+
+.previewImg0 {
+  grid-area: previewImg0;
+  width:200px;
+  height: 145px;
+}
+
+.previewImg1 {
+  grid-area: previewImg1;
+  width:200px;
+  height: 145px;
+}
+
+.previewImg2 {
+  grid-area: previewImg2;
+  width:200px;
+  height: 145px;
+}
+
+.previewImg3 {
+  grid-area: previewImg3;
+  width:200px;
+  height: 145px;
+}
+
+.previewImg4 {
+  grid-area: previewImg4;
+  width:200px;
+  height: 150px;
+}
+
+.previewImg6 {
+  grid-area: previewImg6
+}
+
 /*============ height ================*/
+
+.height150p {
+  height: 150px;
+}
 
 .height200p {
   height: 200px;
+}
+
+.height300p {
+  height: 300px;
 }
 
 .height400p {
@@ -249,6 +329,14 @@ button:hover {
 
 .height-fit {
   height: fit-content;
+}
+
+.height-max-100 {
+  max-height: 100%;
+}
+
+.height-max-150p {
+  max-height: 100px;
 }
 
 .height-max-200p {

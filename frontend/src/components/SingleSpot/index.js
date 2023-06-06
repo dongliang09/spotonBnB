@@ -7,6 +7,7 @@ import OpenModalButton from '../OpenModalButton/';
 import ReviewFormModal from "../ReviewModal";
 import DeleteReviewModal from './DeleteReviewModal';
 import BookingForm from "./BookingForm";
+import ThisPlaceOffer from "./ThisPlaceOffer";
 
 function SingleSpot() {
     const { spotId } = useParams();
@@ -33,33 +34,32 @@ function SingleSpot() {
       <div className="width-max-1000 mrg-auto">
         <h1>{oneSpot.name}</h1>
         <h3>{oneSpot.city}, {oneSpot.state}, {oneSpot.country}</h3>
-        <div className="grid-50-50">
-          <div className="width500p height400p flx-col-mid">
-            <img className="width100"
-              src ={ oneSpot.SpotImages === undefined ? defaultImgSrc :
-                oneSpot.SpotImages.find(element => element.preview === true) === undefined ? defaultImgSrc :
-                  oneSpot.SpotImages.find(element => element.preview === true).url}
-              onError={(e)=>{e.target.src = defaultImgSrc}}
-              alt='spot preview'/>
-          </div>
-          <div className="grid-2x2 width500p mrg5">
+        <div className="grid-50-50 gap10p">
+          <img className="width100 height300p obj-fit-cover bor-rad-15"
+            src ={ oneSpot.SpotImages === undefined ? defaultImgSrc :
+              oneSpot.SpotImages.find(element => element.preview === true) === undefined ? defaultImgSrc :
+                oneSpot.SpotImages.find(element => element.preview === true).url}
+            onError={(e)=>{e.target.src = defaultImgSrc}}
+            alt='spot preview'/>
+          <div id="singleSpotOtherPreviewImgs" className="grid-2x2-img gap10p width500p height300p">
               { oneSpot.SpotImages === undefined ? null :
                 oneSpot.SpotImages.filter(element => element.preview === false)
-                  .map(element=>(
-                    <div className="height200p mrg-r-5" key={element.id}>
-                      <img src={element.url} className="width100 height-max-200p" alt="other images"
+                  .map((element, idx)=>(
+                      <img src={element.url}
+                        key={element.id} className={"previewImg" +idx +" width100 height100 obj-fit-cover bor-rad-15"} alt="other images "
                         onError={(e)=>{e.target.src = defaultImgSrc}}/>
-                    </div>))}
+                    ))}
           </div>
         </div>
-        <div className="grid grid-5-2">
+        <div className="grid-7-4 mrg-t-5 ">
           <div className="mrg-r-15">
             <h1>Hosted by { oneSpot.Owner===undefined ?
               null : oneSpot.Owner.firstName} { oneSpot.Owner===undefined ?
                 null :oneSpot.Owner.lastName}</h1>
-            <p>{oneSpot.description}</p>
+            <p className="font115">{oneSpot.description}</p>
+            <ThisPlaceOffer />
           </div>
-          <div>
+          <div  className="pad15 mrg15 boxShadow-0-1-5-1-gray bor-rad-15 height-fit">
             <div className="flx-center-space mrg10">
               <div>
                 <strong className="font15">${oneSpot.price}</strong> night
