@@ -101,6 +101,10 @@ button:hover {
   color:white;
 }
 
+.color-lgcoral {
+  color:lightcoral;
+}
+
 .cursor-pointer:hover{
   cursor: pointer;
 }
@@ -277,16 +281,6 @@ button:hover {
   grid-area: previewImg3;
   width:200px;
   height: 145px;
-}
-
-.previewImg4 {
-  grid-area: previewImg4;
-  width:200px;
-  height: 150px;
-}
-
-.previewImg6 {
-  grid-area: previewImg6
 }
 
 /*============ height ================*/

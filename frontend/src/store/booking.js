@@ -37,7 +37,6 @@ export const thunkCreateBooking = (spotId, bookingData) => async dispatch => {
     dispatch(thunkGetAllBookings(spotId));
     return response
   } else {
-    console.log("bad");
     return response
   }
 };

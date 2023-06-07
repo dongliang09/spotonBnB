@@ -28,6 +28,7 @@ function BookingForm({dailyPrice}) {
   const [focusedInput, setFocusedInput] = useState(null);
   const [error, setError] = useState(null)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isBookingSuccessed, setIsBookingSuccessed] = useState(false)
 
   const [isGuestExpand, setIsGuestExpand] = useState(false)
   const [adultNum, setAdultNum] = useState(1)
@@ -47,9 +48,12 @@ function BookingForm({dailyPrice}) {
     e.preventDefault()
     let startTime = startDate.format().substring(0,10)
     let endTime = endDate.format().substring(0,10)
-    // console.log(startTime)
+    setIsBookingSuccessed(false)
+    setError(null)
     try {
       await dispatch(thunkCreateBooking(spotId, {startDate:startTime, endDate:endTime}))
+      setIsBookingSuccessed(true)
+      setIsSubmitted(true)
     } catch (error) {
       setIsSubmitted(true)
       let err = await error.json()
@@ -80,6 +84,7 @@ function BookingForm({dailyPrice}) {
   return (
     <div>
       {isSubmitted && error !== null && <div className="user-err pad15">{error}</div>}
+      {isSubmitted && isBookingSuccessed && <div className="color-lgcoral pad15">You successfully booked this spot!</div>}
       <form onSubmit={(e)=>submitBooking(e)}>
         <DateRangePicker
           startDate={startDate}
