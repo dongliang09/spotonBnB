@@ -2,7 +2,7 @@ import React from "react";
 
 function ThisPlaceOffer() {
   return (
-    <div className="font115 pad15">
+    <div className="font115">
       <hr />
       <h2>What this place offers</h2>
       <p><i className="fas fa-wifi"></i> Wifi</p>

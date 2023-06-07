@@ -35,9 +35,11 @@ export const thunkCreateBooking = (spotId, bookingData) => async dispatch => {
   if (response.ok) {
     const data = await response.json();
     dispatch(thunkGetAllBookings(spotId));
-    return
+    return response
+  } else {
+    console.log("bad");
+    return response
   }
-  return response;
 };
 
 //======================== reducer =================

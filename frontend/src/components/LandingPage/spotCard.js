@@ -17,13 +17,13 @@ function SpotCard({spot}) {
     // <Link to={`/spots/${spot.id}`} >
     <div className="spotCard" onClick={spotDetail}>
       <div className="spotCardImgContainer">
-        <img className="width100"
+        <img className="width100 height-max-100 obj-fit-cover bor-rad-15"
           src={imgSrc} alt={spot.name}
           onError={ () => {
             setImgSrc(defaultImgSrc)
           }}/>
       </div>
-      <div className="flx-center-space">
+      <div className="flx-center-space pad-t-10p ">
         <div className="flx width-max-250p">
           {spot.city}, {spot.state}
         </div>

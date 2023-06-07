@@ -27,6 +27,7 @@ function BookingForm({dailyPrice}) {
   // startDate and endDate are stored as Moment
   const [focusedInput, setFocusedInput] = useState(null);
   const [error, setError] = useState(null)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const [isGuestExpand, setIsGuestExpand] = useState(false)
   const [adultNum, setAdultNum] = useState(1)
@@ -47,7 +48,13 @@ function BookingForm({dailyPrice}) {
     let startTime = startDate.format().substring(0,10)
     let endTime = endDate.format().substring(0,10)
     // console.log(startTime)
-    await dispatch(thunkCreateBooking(spotId, {startDate:startTime, endDate:endTime}))
+    try {
+      await dispatch(thunkCreateBooking(spotId, {startDate:startTime, endDate:endTime}))
+    } catch (error) {
+      setIsSubmitted(true)
+      let err = await error.json()
+      setError(err.message)
+    }
   }
 
   // this function is used to DateRangePicker's property isDayBlocked
@@ -72,6 +79,7 @@ function BookingForm({dailyPrice}) {
 
   return (
     <div>
+      {isSubmitted && error !== null && <div className="user-err pad15">{error}</div>}
       <form onSubmit={(e)=>submitBooking(e)}>
         <DateRangePicker
           startDate={startDate}
@@ -86,6 +94,7 @@ function BookingForm({dailyPrice}) {
           focusedInput={focusedInput}
           onFocusChange={(focusedInput)=> setFocusedInput(focusedInput)}
           required={true}
+          // noBorder
         />
         <div className="pad15 flx-center-space cursor-pointer" onClick={()=>setIsGuestExpand(!isGuestExpand)}>
           <div>

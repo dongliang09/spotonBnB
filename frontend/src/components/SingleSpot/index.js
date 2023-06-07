@@ -52,7 +52,7 @@ function SingleSpot() {
           </div>
         </div>
         <div className="grid-7-4 mrg-t-5 ">
-          <div className="mrg-r-15">
+          <div className="mrg-r-15 pad15">
             <h1>Hosted by { oneSpot.Owner===undefined ?
               null : oneSpot.Owner.firstName} { oneSpot.Owner===undefined ?
                 null :oneSpot.Owner.lastName}</h1>
