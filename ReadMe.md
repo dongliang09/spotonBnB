@@ -30,3 +30,10 @@ After log in, you can create/update/delete spots and create/delete reviews/ratin
 - Run ```npm start``` in the frontend directory to start the server.
 Note that the package.json now defines a proxy of http://localhost:8000. This will effectively forward any unrecognized requests to the port (8000) on which your backend is listening.
 Open http://localhost:3000 to see the frontend.
+
+# Struggle
+
+## Booking
+* The package react-dates is using moment.js, so I need to convert momemnt to built-in javaScript new Date()
+* const timestamp = new Date();
+* const momentTimestamp = moment(timestamp);

@@ -14,26 +14,26 @@ module.exports = {
     await queryInterface.bulkInsert(options, [{
       spotId: 1,
       userId: 1,
-      startDate: new Date("2023-01-01"),
-      endDate: new Date("2023-01-04"),
+      startDate: new Date("2023-06-01"),
+      endDate: new Date("2023-06-04"),
     },
     {
       spotId: 1,
       userId: 2,
-      startDate: new Date("2023-01-10"),
-      endDate: new Date("2023-01-20"),
+      startDate: new Date("2023-06-10"),
+      endDate: new Date("2023-06-20"),
     },
     {
       spotId: 2,
       userId: 1,
-      startDate: new Date("2023-02-01"),
-      endDate: new Date("2023-02-04"),
+      startDate: new Date("2023-07-01"),
+      endDate: new Date("2023-07-04"),
     },
     {
       spotId: 2,
       userId: 2,
-      startDate: new Date("2023-02-10"),
-      endDate: new Date("2023-02-14"),
+      startDate: new Date("2023-07-10"),
+      endDate: new Date("2023-07-14"),
     },
     {
       spotId: 3,
@@ -44,8 +44,8 @@ module.exports = {
     {
       spotId: 3,
       userId: 1,
-      startDate: new Date("2023-01-21"),
-      endDate: new Date("2023-01-30"),
+      startDate: new Date("2023-06-21"),
+      endDate: new Date("2023-06-30"),
     }], {});
 
   },

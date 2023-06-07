@@ -34,3 +34,19 @@ create spot, need to add error handler for fetch request
 create spot, send request to preview image
 
 After clicking manage Spot, profile dropdown should be hidden
+
+
+### Booking
+20230531
+there is a difference on between bookings depending on if you own the spot.
+For safty reason, there is no id for booking if you don't own the spot, therefore, in the redux state, can't use id as key for each object when we try to normalize the data. Instead, I use start date as the key.
+
+need to block some of the dates because they have bookings already
+isDayBlocked ?
+
+
+## Image on spot detail page
+define the layout with grid, the 4 pictures of the right side gave me the most trouble. The picture went outside the grid cells.
+The one on the left side was fine when I set the width 100% and max-height 100% and object-fit:cover.
+I thought 4 pictures would do the same when I apply those properties.
+The solution is that set the grid area, each grid area will also have width 100% and max-height 100% and object-fit:cover
