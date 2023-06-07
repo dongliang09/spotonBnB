@@ -18,8 +18,9 @@
   color: white;
   padding: 0.5rem;
   border-radius: 5px;
-  bottom: 300px;
-  text-align: center;
+  bottom: 225px;
+  left: 0px
+  /* text-align: center; */
 }
 
 .spotCard:hover .spotCardTooltip{
