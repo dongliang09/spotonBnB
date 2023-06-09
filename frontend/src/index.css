@@ -301,6 +301,10 @@ button:hover {
   height: 400px;
 }
 
+.height450p {
+  height: 450px;
+}
+
 .height500p {
   height: 500px;
 }
@@ -393,7 +397,12 @@ button:hover {
 }
 
 .mrg-t-b-10 {
-  margin: 10px auto;
+  margin-top: 10px auto;
+}
+
+.mrg-t-b-13 {
+  margin-top: 13px;
+  margin-bottom: 13px;
 }
 
 .mrg-t-b-15 {

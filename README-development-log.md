@@ -50,3 +50,8 @@ define the layout with grid, the 4 pictures of the right side gave me the most t
 The one on the left side was fine when I set the width 100% and max-height 100% and object-fit:cover.
 I thought 4 pictures would do the same when I apply those properties.
 The solution is that set the grid area, each grid area will also have width 100% and max-height 100% and object-fit:cover
+
+## use fontAwesome icon on google map API
+the document says I can put the url of the img on the icon property, but I I just want to use the fontAwesome icon without installing any new dependency.
+I saw one example importing an icon from a dependency, that is close to what I want, but not there yet.
+At the end, I figure out I just need to replace the path with the one on SVG from fontAwesome website
