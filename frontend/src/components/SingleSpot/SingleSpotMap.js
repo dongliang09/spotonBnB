@@ -31,6 +31,10 @@ function SingleSpotMap({lat, lng, city, state, country}) {
           />
         </GoogleMap>
       </LoadScript>
+
+      <div className="mrg-t-b-13">
+        <strong>Notes:</strong> You might see "This page can't load Google Maps correctly." because it is for development purpose
+      </div>
     </div>
   )
 }

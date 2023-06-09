@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0px;
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -51,6 +55,10 @@ button:hover {
 
 .bg-DDDDDD {
   background-color: #DDDDDD;
+}
+
+.bg-gray-f3f2f0 {
+  background-color: #f3f2f0;
 }
 
 .bg-lgcoral {
@@ -148,6 +156,11 @@ button:hover {
   align-items: center;
 }
 
+.flx-space-around {
+  display: flex;
+  justify-content: space-around;
+}
+
 .flx-col {
   display: flex;
   flex-direction: column;
@@ -242,6 +255,11 @@ button:hover {
 .grid-7-4 {
   display: grid;
   grid-template-columns: 7fr 4fr;
+}
+
+.grid-1-1-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .grid-2x2 {
@@ -387,6 +405,10 @@ button:hover {
   margin-top: 15px;
 }
 
+.mrg-t-35 {
+  margin-top: 35px;
+}
+
 .mrg-t-b-auto {
   margin-top: auto;
   margin-bottom: auto;
@@ -419,6 +441,10 @@ button:hover {
 
 .pad15 {
   padding: 15px;
+}
+
+.pad25 {
+  padding: 25px;
 }
 
 .pad-t-10p {

@@ -10,6 +10,7 @@ import BookingForm from "./BookingForm";
 import ThisPlaceOffer from "./ThisPlaceOffer";
 import SingleSpotMap from "./SingleSpotMap";
 import ThingstoKnow from "./ThingstoKnow";
+import AboutFooter from "../AboutFooter";
 
 function SingleSpot() {
     const { spotId } = useParams();
@@ -114,6 +115,8 @@ function SingleSpot() {
 
           <ThingstoKnow />
         </div>
+
+        <AboutFooter />
       </div>
     )
 }
