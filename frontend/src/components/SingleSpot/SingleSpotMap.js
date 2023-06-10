@@ -2,7 +2,7 @@ import React from "react";
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 
 function SingleSpotMap({lat, lng, city, state, country}) {
-
+  console.log("lat", typeof(lat))
   return(
     <div className="font115">
       <hr />
@@ -14,7 +14,7 @@ function SingleSpotMap({lat, lng, city, state, country}) {
       >
         <GoogleMap
           mapContainerClassName="width100 height450p"
-          center={{lat, lng}}
+          center={{lat:Number(lat), lng:Number(lng)}}
           zoom={13}
         >
           <Marker

@@ -49,7 +49,7 @@ function ProfileButton({ user }) {
         <i className="fas fa-bars mrg-r-5"></i>
         <i className="fas fa-user-circle" />
       </button>
-      <div className={ulClassName} ref={ulRef}>
+      <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div>
             <li className="mrg-b-5">Hello, {user.firstName}</li>
@@ -73,7 +73,7 @@ function ProfileButton({ user }) {
               />
           </>
         )}
-      </div>
+      </ul>
     </>
   );
 }
