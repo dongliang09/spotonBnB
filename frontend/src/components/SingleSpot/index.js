@@ -8,6 +8,9 @@ import ReviewFormModal from "../ReviewModal";
 import DeleteReviewModal from './DeleteReviewModal';
 import BookingForm from "./BookingForm";
 import ThisPlaceOffer from "./ThisPlaceOffer";
+import SingleSpotMap from "./SingleSpotMap";
+import ThingstoKnow from "./ThingstoKnow";
+import AboutFooter from "../AboutFooter";
 
 function SingleSpot() {
     const { spotId } = useParams();
@@ -107,8 +110,13 @@ function SingleSpot() {
               />}
             </div>)}
 
+          <SingleSpotMap lat={oneSpot.lat} lng={oneSpot.lng}
+            city={oneSpot.city} state={oneSpot.state} country={oneSpot.country}/>
 
+          <ThingstoKnow />
         </div>
+
+        <AboutFooter />
       </div>
     )
 }

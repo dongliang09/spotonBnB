@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0px;
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -51,6 +55,10 @@ button:hover {
 
 .bg-DDDDDD {
   background-color: #DDDDDD;
+}
+
+.bg-gray-f3f2f0 {
+  background-color: #f3f2f0;
 }
 
 .bg-lgcoral {
@@ -146,6 +154,11 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.flx-space-around {
+  display: flex;
+  justify-content: space-around;
 }
 
 .flx-col {
@@ -244,6 +257,11 @@ button:hover {
   grid-template-columns: 7fr 4fr;
 }
 
+.grid-1-1-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .grid-2x2 {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -299,6 +317,10 @@ button:hover {
 
 .height400p {
   height: 400px;
+}
+
+.height450p {
+  height: 450px;
 }
 
 .height500p {
@@ -383,6 +405,10 @@ button:hover {
   margin-top: 15px;
 }
 
+.mrg-t-35 {
+  margin-top: 35px;
+}
+
 .mrg-t-b-auto {
   margin-top: auto;
   margin-bottom: auto;
@@ -393,7 +419,12 @@ button:hover {
 }
 
 .mrg-t-b-10 {
-  margin: 10px auto;
+  margin-top: 10px auto;
+}
+
+.mrg-t-b-13 {
+  margin-top: 13px;
+  margin-bottom: 13px;
 }
 
 .mrg-t-b-15 {
@@ -412,8 +443,17 @@ button:hover {
   padding: 15px;
 }
 
+.pad25 {
+  padding: 25px;
+}
+
 .pad-t-10p {
   padding-top: 10px
+}
+
+.pad-t-b-10p {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .pad-l-r-3rem {
@@ -439,6 +479,14 @@ button:hover {
   right: 10px;
 }
 
+.right15 {
+  right: 15px;
+}
+
+.right25 {
+  right: 25px;
+}
+
 /*============ text-align======*/
 .txt-center {
   text-align: center;
@@ -451,6 +499,10 @@ button:hover {
 /*============ top ================*/
 .top15 {
   top: 15px;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
 }
 
 /*============ width ================*/
@@ -470,8 +522,24 @@ button:hover {
   width: fit-content;
 }
 
+.width100p {
+  width: 100px
+}
+
+.width200p {
+  width: 200px
+}
+
+.width250p {
+  width: 250px
+}
+
 .width300p {
   width: 300px
+}
+
+.width350p {
+  width: 350px
 }
 
 .width450p {

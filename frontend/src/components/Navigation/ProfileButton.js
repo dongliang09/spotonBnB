@@ -41,24 +41,24 @@ function ProfileButton({ user }) {
     history.push("/");
   };
 
-  const ulClassName = "txt-center bg-white z-idx-99 mrg-t-5 pad15 right10 pos-abs list-none bor-sol-lggray" + (showMenu ? "" : " hidden");
+  const ulClassName = "txt-center bg-white white-space-nowrap right15 z-idx-99 mrg-t-5 pad15 pos-abs list-none boxShadow-0-1-5-1-gray bor-rad-10" + (showMenu ? "" : " hidden");
 
   return (
     <>
-      <button onClick={openMenu} className='font15 bor-rad-20 pad15 pos-rel mrg-r-15'>
+      <button onClick={openMenu} className='font15 bor-rad-20 pad15 pos-rel mrg-r-15 boxShadow-0-1-5-1-gray bor-0p bg-white'>
         <i className="fas fa-bars mrg-r-5"></i>
         <i className="fas fa-user-circle" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <div className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>Hello, {user.firstName}</li>
-            <li>{user.email}</li>
-            <li><Link to="/spots/current" className="txt-decor-none">Manage Spots</Link></li>
-            <li>
+          <div>
+            <li className="mrg-b-5">Hello, {user.firstName}</li>
+            <li className="mrg-b-5">{user.email}</li>
+            <li className="mrg-b-5"><Link to="/spots/current" className="txt-decor-none">Manage Spots</Link></li>
+            <li className="mrg-b-5">
               <button onClick={logout} className="bg-lgcoral color-white">Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
           <>
               <OpenModalMenuItem
@@ -73,7 +73,7 @@ function ProfileButton({ user }) {
               />
           </>
         )}
-      </ul>
+      </div>
     </>
   );
 }

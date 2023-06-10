@@ -16,7 +16,7 @@ function OpenModalMenuItem({
   };
 
   return (
-    <li onClick={onClick} className="cursor-pointer">{itemText}</li>
+    <li onClick={onClick} className="cursor-pointer mrg-b-5">{itemText}</li>
   );
 }
 
