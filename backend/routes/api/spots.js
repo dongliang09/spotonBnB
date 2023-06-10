@@ -481,7 +481,7 @@ router.post('/:spotId/reviews', requireAuth, validateCreateReview, async (req, r
     res.status(201).json(reviewFound);
 });
 
-router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+router.get('/:spotId/bookings', async (req, res) => {
 
     const currentUserId = req.user.id;
 
