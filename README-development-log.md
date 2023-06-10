@@ -55,3 +55,4 @@ The solution is that set the grid area, each grid area will also have width 100%
 the document says I can put the url of the img on the icon property, but I I just want to use the fontAwesome icon without installing any new dependency.
 I saw one example importing an icon from a dependency, that is close to what I want, but not there yet.
 At the end, I figure out I just need to replace the path with the one on SVG from fontAwesome website
+lat and lng must be number type
