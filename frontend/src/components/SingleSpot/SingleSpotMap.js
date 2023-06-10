@@ -4,7 +4,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 function SingleSpotMap({lat, lng, spotId, city, state, country}) {
 
   return(
-    <div className="font115">
+    <div className="font115" >
       <hr />
       <h2 ><i className="fas fa-home"></i> Where you will be</h2>
       <div className="mrg-t-b-13">{city}, {state}, {country}</div>
@@ -12,13 +12,13 @@ function SingleSpotMap({lat, lng, spotId, city, state, country}) {
       <LoadScript
         googleMapsApiKey={process.env.googleMapsApiKey}
       >
-        <GoogleMap
+        <GoogleMap id={"singleSpotMap"+spotId}
           mapContainerClassName="width100 height450p"
           center={{lat:Number(lat), lng:Number(lng)}}
           zoom={13}
         >
           <Marker
-            position={{lat, lng}}
+            position={{lat:Number(lat), lng:Number(lng)}}
             icon={{
               path: "M8 12l-4.7023 2.4721.898-5.236L.3916 5.5279l5.2574-.764L8 0l2.3511 4.764 5.2574.7639-3.8043 3.7082.898 5.236z",
               fillColor: "yellow",
