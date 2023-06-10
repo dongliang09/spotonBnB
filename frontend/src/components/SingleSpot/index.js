@@ -110,7 +110,7 @@ function SingleSpot() {
               />}
             </div>)}
 
-          <SingleSpotMap lat={oneSpot.lat} lng={oneSpot.lng}
+          <SingleSpotMap lat={oneSpot.lat} lng={oneSpot.lng} spotId={spotId}
             city={oneSpot.city} state={oneSpot.state} country={oneSpot.country}/>
 
           <ThingstoKnow />
