@@ -451,6 +451,11 @@ button:hover {
   padding-top: 10px
 }
 
+.pad-t-b-10p {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .pad-l-r-3rem {
   padding-left: 3rem;
   padding-right: 3rem;
@@ -474,6 +479,14 @@ button:hover {
   right: 10px;
 }
 
+.right15 {
+  right: 15px;
+}
+
+.right25 {
+  right: 25px;
+}
+
 /*============ text-align======*/
 .txt-center {
   text-align: center;
@@ -486,6 +499,10 @@ button:hover {
 /*============ top ================*/
 .top15 {
   top: 15px;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
 }
 
 /*============ width ================*/
@@ -505,8 +522,24 @@ button:hover {
   width: fit-content;
 }
 
+.width100p {
+  width: 100px
+}
+
+.width200p {
+  width: 200px
+}
+
+.width250p {
+  width: 250px
+}
+
 .width300p {
   width: 300px
+}
+
+.width350p {
+  width: 350px
 }
 
 .width450p {

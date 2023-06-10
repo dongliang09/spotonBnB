@@ -26,7 +26,17 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
+
+    let SignupErrors = []
+    if (password.length < 6) {
+      SignupErrors.push(["Password must be 6 or more characters"])
+    }
+    if (password !== confirmPassword) {
+      SignupErrors.push(["Confirm Password field must be the same as the Password field"])
+    }
+    setErrors(SignupErrors)
+
+    if (errors.length === 0 && password === confirmPassword) {
       setErrors([]);
       return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
         .then(closeModal)
@@ -35,72 +45,75 @@ function SignupFormModal() {
           if (data && data.errors) setErrors(Object.values(data.errors));
         });
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
+    return
   };
 
   return (
     <div className='flx-col-center pad15 pad-l-r-3rem'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <ul className="list-none">
-          {errors.map((error, idx) => <li key={idx} className='user-err'>{error}</li>)}
+        <div>* required fields</div>
+        <ul className="width250p">
+          {errors.map((error, idx) => <li key={idx} className='user-err '>{error}</li>)}
         </ul>
         <label>
-          Email
+          Email*
           <input
-            type="text" className = 'dis-block'
+            type="text" className = 'dis-block width100 pad5 bor-rad-5'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
         <label>
-          Username
+          Username*
           <input
-            type="text" className = 'dis-block'
+            type="text" className = 'dis-block width100 pad5 bor-rad-5'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
         </label>
         <label>
-          First Name
+          First Name*
           <input
-            type="text" className = 'dis-block'
+            type="text" className = 'dis-block width100 pad5 bor-rad-5'
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
         </label>
         <label>
-          Last Name
+          Last Name*
           <input
-            type="text" className = 'dis-block'
+            type="text" className = 'dis-block width100 pad5 bor-rad-5'
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
         </label>
         <label>
-          Password
+          Password* (6 or more characters)
           <input
-            type="password" className = 'dis-block'
+            type="password" className = 'dis-block width100 pad5 bor-rad-5'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
         <label>
-          Confirm Password
+          Confirm Password* (6 or more characters)
           <input
-            type="password" className = 'dis-block'
+            type="password" className = 'dis-block width100 pad5 bor-rad-5'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </label>
         <div className='flx-col-center mrg-t-15'>
-          <button type="submit" disabled={disableBtn}>Sign Up</button>
+          <button type="submit" className="bg-white pad5 bor-rad-5 width200p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600">
+            Sign Up
+          </button>
         </div>
       </form>
     </div>
