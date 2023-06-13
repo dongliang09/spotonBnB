@@ -83,8 +83,9 @@ function BookingForm({dailyPrice}) {
 
   return (
     <div>
-      {isSubmitted && error !== null && <div className="user-err pad15">{error}</div>}
-      {isSubmitted && isBookingSuccessed && <div className="color-lgcoral pad15">You successfully booked this spot!</div>}
+      {isSubmitted && error !== null && <div className="user-err pad15 font-weight600">{error}</div>}
+      {isSubmitted && isBookingSuccessed && <div className="user-pass pad15 font-weight600">
+        You successfully booked this spot!</div>}
       <form onSubmit={(e)=>submitBooking(e)}>
         <DateRangePicker
           startDate={startDate}

@@ -21,6 +21,10 @@ button:hover {
   color: red;
 }
 
+.user-pass {
+  color: blue;
+}
+
 .hidden {
   display: none;
 }
@@ -407,6 +411,10 @@ button:hover {
 
 .mrg-t-35 {
   margin-top: 35px;
+}
+
+.mrg-t-275rem {
+  margin-top: 2.75rem;
 }
 
 .mrg-t-b-auto {

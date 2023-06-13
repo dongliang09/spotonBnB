@@ -483,7 +483,7 @@ router.post('/:spotId/reviews', requireAuth, validateCreateReview, async (req, r
 
 router.get('/:spotId/bookings', async (req, res) => {
 
-    const currentUserId = req.user.id;
+    // const currentUserId = req.user.id;
 
     const spot = await Spot.findByPk(req.params.spotId);
 
@@ -494,23 +494,23 @@ router.get('/:spotId/bookings', async (req, res) => {
         })
     }
 
-    const spotOwnerId = spot.ownerId;
+    // const spotOwnerId = spot.ownerId;
     let bookings;
 
-    if (currentUserId === spotOwnerId) {
-        bookings = await Booking.findAll({
-            where: {
-                spotId: spot.id
-            },
-            include: {model: User}
-        })
-    } else {
+    // if (currentUserId === spotOwnerId) {
+    //     bookings = await Booking.findAll({
+    //         where: {
+    //             spotId: spot.id
+    //         },
+    //         include: {model: User}
+    //     })
+    // } else {
         bookings = await Booking.scope("nonOwnerBooking").findAll({
             where: {
                 spotId: spot.id
             }
         })
-    }
+    // }
 
     res.json({
         "Bookings": bookings
@@ -577,7 +577,7 @@ router.post('/:spotId/bookings', requireAuth, validateCreateBooking, async (req,
 
     if (spot.ownerId === currentUserId) {
         return res.status(403).json({
-            "message": "Forbidden",
+            "message": "You can't book your own spot.",
             "statusCode": 403
         })
     }
