@@ -62,7 +62,7 @@ function SingleSpot() {
             <p className="font115">{oneSpot.description}</p>
             <ThisPlaceOffer />
           </div>
-          <div  className="pad15 mrg15 boxShadow-0-1-5-1-gray bor-rad-15 height-fit">
+          <div  className="pad15 mrg15 boxShadow-0-1-5-1-gray bor-rad-15 height-fit mrg-t-275rem">
             <div className="flx-center-space mrg10">
               <div>
                 <strong className="font15">${oneSpot.price}</strong> night
