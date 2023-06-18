@@ -92,6 +92,7 @@ function SingleSpot() {
               <p>
                 <OpenModalButton
                   buttonText="Post Your Review"
+                  buttonStyle="bg-white pad5 bor-rad-5 width200p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600"
                   modalComponent={<ReviewFormModal spotId={spotId}/>}
                 />
               </p>}

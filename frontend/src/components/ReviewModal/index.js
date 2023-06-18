@@ -12,29 +12,41 @@ function ReviewFormModal({spotId}) {
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
   const [errors, setErrors] = useState([]);
-  const [disableBtn, setDisable] = useState(true);
+  // const [disableBtn, setDisable] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { closeModal } = useModal();
 
 
-  useEffect(()=> {
-    if (review.length > 9 && rating > 0) setDisable(false);
-    else setDisable(true);
-  }, [review, rating])
+  // useEffect(()=> {
+  //   if (review.length > 9 && rating > 0) setDisable(false);
+  //   else setDisable(true);
+  // }, [review, rating])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([]);
-    await dispatch(thunkCreateReviews(spotId,{review, stars: rating}))
-      .then(closeModal)
-      .catch(
-        async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(Object.values(data.errors));
-        }
-      );
-    await dispatch(thunkGetOneSpot(spotId));
-    await dispatch(thunkGetReviews(spotId));
-    history.push(`/spots/${spotId}`);
+
+    let currentError = []
+    if (review.length < 10) {
+      currentError.push("Review must be at least 10 characters")
+    }
+    if (rating === 0) {
+      currentError.push("Please select a rating")
+    }
+    setErrors(currentError);
+
+    if (review.length >= 10 && rating > 0) {
+      await dispatch(thunkCreateReviews(spotId,{review, stars: rating}))
+        .then(closeModal)
+        .catch(
+          async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(Object.values(data.errors));
+          }
+        );
+      await dispatch(thunkGetOneSpot(spotId));
+      await dispatch(thunkGetReviews(spotId));
+      history.push(`/spots/${spotId}`);
+    }
   }
 
   const onChange = (e) => {
@@ -47,11 +59,11 @@ function ReviewFormModal({spotId}) {
       <form onSubmit={handleSubmit} className = 'txt-center width100'>
         <ul>
           {errors.map((error, idx) => (
-            <li key={idx} className='user-err'>{error}</li>
+            <li key={idx} className='user-err txt-init'>{error}</li>
           ))}
         </ul>
         <textarea
-          type="text" placeholder='Leave your review here...'
+          type="text" placeholder='Leave your review here...Please write at least 10 characters'
           value={review} rows={5}
           onChange={(e) => setReview(e.target.value)}
           className = 'dis-block width100'
@@ -62,8 +74,8 @@ function ReviewFormModal({spotId}) {
             <div className='flx-col-mid'>Stars</div>
         </div>
         </div>
-        <button type="submit" disabled={disableBtn}
-          className="">
+        <button type="submit"
+          className="bg-white pad5 bor-rad-5 width200p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600">
             Submit Your Review
         </button>
       </form>
