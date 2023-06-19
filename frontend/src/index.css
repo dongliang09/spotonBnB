@@ -126,6 +126,10 @@ button:hover {
   box-shadow: 0px 2px 5px 1px gray;
 }
 
+.boxShadow-0-1-5-1-ccc6c6 {
+  box-shadow: 0px 2px 5px 1px #ccc6c6;
+}
+
 /*============ color ================*/
 .color-white {
   color:white;

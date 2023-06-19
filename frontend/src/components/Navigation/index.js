@@ -22,7 +22,11 @@ function Navigation({ isLoaded }){
           <li>
             <ul className='flx list-none'>
               {sessionUser&& (<li className='mrg-t-b-auto-r-15'>
-                <NavLink exact to="/spots/new">Create a New Spot</NavLink>
+                <NavLink exact to="/spots/new">
+                  <button className='bg-white pad5 bor-rad-5 width200p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600'>
+                    Create a New Spot
+                  </button>
+                </NavLink>
               </li>)}
               <li className='pos-rel'>
                 <ProfileButton user={sessionUser} />
