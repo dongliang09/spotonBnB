@@ -30,6 +30,9 @@
 .spotContainer {
   display: flex;
   flex-wrap: wrap;
+  max-width: 1450px;
+  margin-left: auto;
+  margin-right: auto;
   /*need to change responsive width min 1 one image width, max 4 columns*/
 }
 

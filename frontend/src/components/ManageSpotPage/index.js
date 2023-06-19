@@ -20,8 +20,8 @@ function ManageSpotPage () {
   if (!sessionUser) return <Redirect to="/" />
 
   return (
-    <div className='width-max-1500 mrg-t-b-auto'>
-      <h1>Manage Your Spots</h1>
+    <div className='width-max-1300 mrg-l-r-auto'>
+      <h1 className='txt-center'>Manage Your Spots</h1>
       {!userSpot.length && <Link to="/spots/new">
           <button className='bg-white pad5 bor-rad-5 width250p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600'>
             Create a New Spot

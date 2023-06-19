@@ -460,6 +460,12 @@ button:hover {
 .mrg-t-b-auto-r-15 {
   margin: auto 15px auto;
 }
+
+.mrg-l-r-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /*============ padding ================*/
 .pad5 {
   padding: 5px;
@@ -606,6 +612,10 @@ button:hover {
 
 .width-max-1000 {
   max-width: 1000px;
+}
+
+.width-max-1300 {
+  max-width: 1300px;
 }
 
 .width-max-1500 {
