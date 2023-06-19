@@ -34,6 +34,14 @@ export const thunkCreateReviews = (spotId, review) => async dispatch => {
   return response;
 };
 
+export const thunkUpdateReviews = (reviewId, review) => async dispatch => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: 'PUT',
+    body: JSON.stringify(review)
+  });
+  return response;
+};
+
 export const thunkDeleteReviews = (spotId, reviewId) => async dispatch => {
   const response = await csrfFetch(`/api/reviews/${reviewId}`, {
     method: 'DELETE'

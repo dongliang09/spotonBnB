@@ -3,10 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useModal } from "../../context/Modal";
 import StarRating from './StarRating';
-import { thunkCreateReviews, thunkGetReviews } from '../../store/review';
+import { thunkCreateReviews, thunkGetReviews, thunkUpdateReviews } from '../../store/review';
 import { thunkGetOneSpot } from '../../store/spot';
 
-function ReviewFormModal({spotId}) {
+function ReviewFormModal({ spotId, formType, reviewContent}) {
+
+  // spotId, formType, and review passed to this component when edit a review
+
   const dispatch = useDispatch();
   const history = useHistory();
   const [review, setReview] = useState('');
@@ -17,10 +20,16 @@ function ReviewFormModal({spotId}) {
   const { closeModal } = useModal();
 
 
-  // useEffect(()=> {
-  //   if (review.length > 9 && rating > 0) setDisable(false);
-  //   else setDisable(true);
-  // }, [review, rating])
+  useEffect(()=> {
+    if (formType === "edit") {
+      setReview(reviewContent.review)
+      setRating(reviewContent.stars)
+    }
+    return (() => { //clean up input fields before mouting
+      setRating(0);
+      setReview("")
+    })
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,17 +44,29 @@ function ReviewFormModal({spotId}) {
     setErrors(currentError);
 
     if (review.length >= 10 && rating > 0) {
-      await dispatch(thunkCreateReviews(spotId,{review, stars: rating}))
-        .then(closeModal)
-        .catch(
-          async (res) => {
-            const data = await res.json();
-            if (data && data.errors) setErrors(Object.values(data.errors));
-          }
-        );
-      await dispatch(thunkGetOneSpot(spotId));
-      await dispatch(thunkGetReviews(spotId));
-      history.push(`/spots/${spotId}`);
+      if (formType !== "edit") {
+        await dispatch(thunkCreateReviews(spotId,{review, stars: rating}))
+          .then(closeModal)
+          .catch(
+            async (res) => {
+              const data = await res.json();
+              if (data && data.errors) setErrors(Object.values(data.errors));
+            }
+          );
+        await dispatch(thunkGetOneSpot(spotId));
+        await dispatch(thunkGetReviews(spotId));
+        history.push(`/spots/${spotId}`);
+      } else {
+        await dispatch(thunkUpdateReviews(reviewContent.id, {review, stars:rating}))
+          .catch(
+            async (res) => {
+              const data = await res.json();
+              if (data && data.errors) setErrors(Object.values(data.errors));
+            }
+          );
+        await dispatch(thunkGetReviews(spotId));
+        closeModal()
+      }
     }
   }
 

@@ -608,12 +608,8 @@ button:hover {
   max-width: 1000px;
 }
 
-.visible-hidden-not-hover {
-  visibility:hidden
-}
-
-.visible-hidden-not-hover:hover {
-  visibility:visible
+.width-max-1500 {
+  max-width: 1500px;
 }
 
 /*============ z-index ================*/
