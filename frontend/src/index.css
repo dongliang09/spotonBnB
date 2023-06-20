@@ -478,6 +478,10 @@ button:hover {
   margin-right: auto;
 }
 
+/*==========overflow-wrap ============*/
+.overflowW-breakW {
+  overflow-wrap: break-word;
+}
 /*============ padding ================*/
 .pad5 {
   padding: 5px;

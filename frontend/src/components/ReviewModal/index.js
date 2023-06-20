@@ -38,12 +38,15 @@ function ReviewFormModal({ spotId, formType, reviewContent}) {
     if (review.length < 10) {
       currentError.push("Review must be at least 10 characters")
     }
+    if (review.length > 254) {
+      currentError.push("Review must be at most 254 characters")
+    }
     if (rating === 0) {
       currentError.push("Please select a rating")
     }
     setErrors(currentError);
 
-    if (review.length >= 10 && rating > 0) {
+    if (review.length >= 10 && review.length <= 254 && rating > 0) {
       if (formType !== "edit") {
         await dispatch(thunkCreateReviews(spotId,{review, stars: rating}))
           .then(closeModal)
