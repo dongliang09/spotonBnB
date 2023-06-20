@@ -10,7 +10,9 @@ After log in, you can create/update/delete spots and create/delete reviews/ratin
 
 # Screenshot of Project
 
-![Landing Page](./landingPage.PNG)
+![Landing Page](https://github.com/dongliang09/spotonBnB/assets/67977179/e6a926d7-787c-47c6-a916-330a8a46fdcc)
+![My Spot Page](https://github.com/dongliang09/spotonBnB/assets/67977179/69506d28-6cf6-465b-8432-1f054761d8d8)
+![My Booking Page](https://github.com/dongliang09/spotonBnB/assets/67977179/c331b9e9-9d0d-4a7b-a626-d68f9a7a9edb)
 
 # Setup
 
@@ -33,7 +35,13 @@ Open http://localhost:3000 to see the frontend.
 
 # Struggle
 
-## Booking
+### Booking
 * The package react-dates is using moment.js, so I need to convert momemnt to built-in javaScript new Date()
 * const timestamp = new Date();
 * const momentTimestamp = moment(timestamp);
+
+### Use fontAwesome icon as Marker on google map API
+* The document says I can put the url of the img on the icon property, but I I just want to use the fontAwesome icon without installing any new dependency or putting any image in my project.
+* I saw one example importing an icon from a dependency, that is close to what I want, but not there yet.
+* At the end, I figure out I just need to replace the path with the one on SVG from fontAwesome website
+* Also latitude and longitude must be number type
