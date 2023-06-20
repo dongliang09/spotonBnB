@@ -131,6 +131,10 @@ button:hover {
 }
 
 /*============ color ================*/
+.color-black {
+  color:black;
+}
+
 .color-white {
   color:white;
 }
@@ -453,7 +457,7 @@ button:hover {
 }
 
 .mrg-t-b-10 {
-  margin-top: 10px auto;
+  margin: 10px auto;
 }
 
 .mrg-t-b-13 {
