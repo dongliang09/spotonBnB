@@ -1,5 +1,6 @@
 import React from "react";
 import OpenModalButton from "../OpenModalButton";
+import DeleteBookingModal from "./DeleteBookingModal";
 
 function BookingCard({booking, bookingType}) {
   return (
@@ -24,9 +25,11 @@ function BookingCard({booking, bookingType}) {
           <button className="bg-white pad5 bor-rad-5 width100p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600 mrg-r-5">
             Update
           </button>
-          <button className="bg-white pad5 bor-rad-5 width100p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600">
-            Delete
-          </button>
+          <OpenModalButton
+            buttonText="Delete"
+            buttonStyle="bg-white pad5 bor-rad-5 width100p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600"
+            modalComponent={<DeleteBookingModal bookingId={booking.id}/>}
+          />
         </div>}
       </div>
     </div>

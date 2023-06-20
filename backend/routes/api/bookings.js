@@ -28,8 +28,9 @@ router.get('/current', requireAuth, async (req, res) => {
     for (let i = 0; i < bookingList.length; i++) {
         let currentBooking = bookingList[i];
         let currentSpotId = currentBooking.Spot.id;
-        const preview = await SpotImage.findByPk(currentSpotId, {
+        const preview = await SpotImage.findOne({
             where: {
+                spotId: currentSpotId,
                 preview: true
             }
         })

@@ -57,6 +57,16 @@ export const thunkCreateBooking = (spotId, bookingData) => async dispatch => {
   }
 };
 
+export const thunkDeleteBookings = (bookingId) => async dispatch => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: 'DELETE'
+  });
+  if (response.ok) {
+    dispatch(thunkUserBookings());
+  }
+  return response;
+};
+
 //======================== reducer =================
 const initialState = { allBookings: {}, userBooking: {} };
 

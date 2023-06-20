@@ -13,19 +13,24 @@ function ManageBookingPage () {
 
   const currentTime = (new Date()).getTime()
 
-  const pastBookings = userBookings.filter(booking => { // current time > endate
+  // pastBookings : current time > endate
+  const pastBookings = userBookings.filter(booking => {
     let bookingEndDate =  new Date(booking.endDate).getTime()
     return currentTime > bookingEndDate
-  })
-  const currentBooking = userBookings.filter(booking => { // start< currenttime < end
+  }).sort((a,b)=> new Date(a.startDate).getTime()- new Date(b.startDate).getTime())
+
+  // currentBooking: start< currenttime < end
+  const currentBooking = userBookings.filter(booking => {
     let bookingStartDate =  new Date(booking.startDate).getTime()
     let bookingEndDate =  new Date(booking.endDate).getTime()
     return bookingStartDate < currentTime && currentTime < bookingEndDate
-  })
-  const futureBooking = userBookings.filter(booking => { //currentTime < start
+  }).sort((a,b)=> new Date(a.startDate).getTime()- new Date(b.startDate).getTime())
+
+  // futureBooking : currentTime < start
+  const futureBooking = userBookings.filter(booking => {
     let bookingStartDate =  new Date(booking.startDate).getTime()
     return currentTime < bookingStartDate
-  })
+  }).sort((a,b)=> new Date(a.startDate).getTime()- new Date(b.startDate).getTime())
 
   useEffect(()=> {
     dispatch(thunkUserBookings());
