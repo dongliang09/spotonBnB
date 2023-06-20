@@ -28,9 +28,9 @@ function UpdateBookingModal({booking}) {
     // await dispatch(thunkGetAllBookings(booking.spotId))
   }, [])
 
-  useEffect(()=>{ async ()=>{
+  useEffect(()=>{ (async ()=>{
     await dispatch(thunkGetAllBookings(booking.spotId))
-  }
+  })() // anonymous async function call
   }, [dispatch])
 
   const confirmUpdate = async (e) => {
