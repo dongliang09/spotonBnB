@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { clearAllBookings, thunkUserBookings } from '../../store/booking';
-import OpenModalButton from '../OpenModalButton';
 import BookingCard from './BookingCard';
 
 function ManageBookingPage () {
@@ -34,7 +33,7 @@ function ManageBookingPage () {
 
   useEffect(()=> {
     dispatch(thunkUserBookings());
-    return () => dispatch(clearAllBookings());
+    // return () => dispatch(clearAllBookings());
   }, [dispatch])
 
   if (!sessionUser) return <Redirect to="/" />

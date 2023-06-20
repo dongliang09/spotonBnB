@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import UpdateBookingModal from "./UpdateBookingModal";
 // import BookingForm from "../SingleSpot/BookingForm";
 import DeleteBookingModal from "./DeleteBookingModal";
 
+// import { useDispatch, useSelector } from 'react-redux';
+// import { thunkGetAllBookings, thunkUpdateBooking } from '../../store/booking';
+
 function BookingCard({booking, bookingPeriod}) {
 
   //bookingPeriod is only for future bookings
 
+  // const allBookings = Object.values(useSelector(state=> state.bookings.allBookings))
+  // const relatedBooking = allBookings.filter(element=> Number(element.spotId) === Number(booking.id))
+
+
   return (
     <div className="flx mrg15 gap10p">
       <div className="width300p height200p">
-        <img src={booking.Spot.previewImage}
-          className="width100 height-max-100 obj-fit-cover bor-rad-15"/>
+        <Link to={`/spots/${booking.id}`}>
+          <img src={booking.Spot.previewImage}
+            className="width100 height-max-100 obj-fit-cover bor-rad-15"/>
+        </Link>
       </div>
       <div className="flx-col gap10p pad25">
-        <div className="font115"><strong>{booking.Spot.name}</strong></div>
+        <div className="font115 ">
+          <Link to={`/spots/${booking.id}`} className="txt-decor-none color-black">
+            <strong >{booking.Spot.name}</strong>
+          </Link>
+        </div>
         <div className="color-gray">{
           new Date(booking.startDate).toLocaleDateString('en-us',
             { year:"numeric", month:"short", day:"numeric"})} - {
