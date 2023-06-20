@@ -92,6 +92,7 @@ function SingleSpot() {
               <p>
                 <OpenModalButton
                   buttonText="Post Your Review"
+                  buttonStyle="bg-white pad5 bor-rad-5 width200p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600"
                   modalComponent={<ReviewFormModal spotId={spotId}/>}
                 />
               </p>}
@@ -104,10 +105,19 @@ function SingleSpot() {
               <h3 className="mrg-b-5">{element.User===undefined ? null :element.User.firstName}</h3>
               <h4 className="mrg-t-b-0">{month[new Date(element.createdAt).getMonth()]} {new Date(element.createdAt).getFullYear()}</h4>
               <p>{element.review}</p>
-              {sessionUser && element.userId === sessionUser.id && <OpenModalButton
-                buttonText="Delete"
-                modalComponent={<DeleteReviewModal spotId={element.spotId} reviewId={element.id}/>}
-              />}
+              {sessionUser && element.userId === sessionUser.id && <div className="">
+                  <OpenModalButton
+                    buttonText="Update"
+                    buttonStyle="bg-white pad5 bor-rad-5 width100p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600 mrg-r-5"
+                    modalComponent={<ReviewFormModal spotId={element.spotId} formType="edit" reviewContent={element}/>}
+                  />
+                  <OpenModalButton
+                    buttonText="Delete"
+                    buttonStyle="bg-white pad5 bor-rad-5 width100p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600"
+                    modalComponent={<DeleteReviewModal spotId={element.spotId} reviewId={element.id}/>}
+                  />
+                </div>
+              }
             </div>)}
 
           <SingleSpotMap lat={oneSpot.lat} lng={oneSpot.lng} spotId={spotId}

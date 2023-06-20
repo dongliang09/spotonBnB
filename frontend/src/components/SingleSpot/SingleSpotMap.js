@@ -4,10 +4,18 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 function SingleSpotMap({lat, lng, spotId, city, state, country}) {
 
   return(
-    <div className="font115" >
+    <div className="font115 mrg-t-b-13" >
       <hr />
-      <h2 ><i className="fas fa-home"></i> Where you will be</h2>
-      <div className="mrg-t-b-13">{city}, {state}, {country}</div>
+      <h2 ><i className="fas fa-home"></i> Where you will be </h2>
+      <div className="mrg-t-b-13 pos-rel">
+        <span className="mrg-r-5">{city}, {state}, {country}</span>
+        <span className="tooltip-parent">
+          <i className="fas fa-info-circle"></i>
+          <span className="tooltip-children tooltip-children-bottom width300p">
+            Please ignore Google Map error, if you can see the location.
+          </span>
+        </span>
+      </div>
 
       <LoadScript
         googleMapsApiKey={process.env.googleMapsApiKey}
@@ -32,9 +40,6 @@ function SingleSpotMap({lat, lng, spotId, city, state, country}) {
         </GoogleMap>
       </LoadScript>
 
-      <div className="mrg-t-b-13">
-        <strong>Notes:</strong> You might see "This page can't load Google Maps correctly." because it is for development purpose
-      </div>
     </div>
   )
 }

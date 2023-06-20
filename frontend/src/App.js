@@ -9,6 +9,8 @@ import CreateSpotPage from './components/CreateSpotPage';
 import ManageSpotPage from './components/ManageSpotPage';
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import ManageBookingPage from "./components/ManageBookingPage";
+import NotFoundPage from "./components/NotFoundPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +40,12 @@ function App() {
           </Route>
           <Route path="/spots/:spotId">
             <SingleSpot />
+          </Route>
+          <Route exact path="/bookings/current">
+            <ManageBookingPage />
+          </Route>
+          <Route path="*">
+            <NotFoundPage />
           </Route>
         </Switch>
       )}

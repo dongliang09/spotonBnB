@@ -20,17 +20,26 @@ function ManageSpotPage () {
   if (!sessionUser) return <Redirect to="/" />
 
   return (
-    <div>
-      <h1>Manage Your Spots</h1>
-      {!userSpot.length && <button><Link to="/spots/new">Create a New Spot</Link></button>}
+    <div className='width-max-1300 mrg-l-r-auto'>
+      <h1 className='txt-center'>Manage Your Spots</h1>
+      {!userSpot.length && <Link to="/spots/new">
+          <button className='bg-white pad5 bor-rad-5 width250p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600'>
+            Create a New Spot
+          </button>
+        </Link>}
       <div className='spotContainer'>
         {userSpot.map(element =>
           <div key={element.id}>
             <SpotCard spot={element} />
-            <div>
-              <button><Link to={`/spots/${element.id}/edit`}>Update</Link></button>
+            <div className="mrg15">
+              <Link to={`/spots/${element.id}/edit`}>
+                <button className='bg-white pad5 bor-rad-5 width100p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600 mrg-r-5'>
+                  Update
+                </button>
+              </Link>
               <OpenModalButton
                 buttonText="Delete"
+                buttonStyle="bg-white pad5 bor-rad-5 width100p bg-lgcoral color-white bor-0p pad-t-b-10p font-weight600"
                 modalComponent={<DeleteSpotModal spotId={element.id}/>}
               />
             </div>
