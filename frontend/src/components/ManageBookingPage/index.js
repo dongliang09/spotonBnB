@@ -33,7 +33,7 @@ function ManageBookingPage () {
 
   useEffect(()=> {
     dispatch(thunkUserBookings());
-    // return () => dispatch(clearAllBookings());
+    return () => dispatch(clearAllBookings());
   }, [dispatch])
 
   if (!sessionUser) return <Redirect to="/" />

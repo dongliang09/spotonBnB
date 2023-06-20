@@ -104,7 +104,7 @@ function SingleSpot() {
           {spotReview.map(element=> <div key={element.id}>
               <h3 className="mrg-b-5">{element.User===undefined ? null :element.User.firstName}</h3>
               <h4 className="mrg-t-b-0">{month[new Date(element.createdAt).getMonth()]} {new Date(element.createdAt).getFullYear()}</h4>
-              <p>{element.review}</p>
+              <p className="overflowW-breakW">{element.review}</p>
               {sessionUser && element.userId === sessionUser.id && <div className="">
                   <OpenModalButton
                     buttonText="Update"

@@ -1,9 +1,9 @@
 import React, { useState, useEffect }  from "react";
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkGetAllBookings, thunkCreateBooking } from "../../store/booking";
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 // import './react-dates-override.css'
 
@@ -84,8 +84,14 @@ function BookingForm({ dailyPrice }) {
   return (
     <div>
       {isSubmitted && error !== null && <div className="user-err pad15 font-weight600">{error}</div>}
-      {isSubmitted && isBookingSuccessed && <div className="user-pass pad15 font-weight600">
-        You successfully booked this spot!</div>}
+      {isSubmitted && isBookingSuccessed && <Link to="/bookings/current" className="txt-decor-none">
+        <div className="user-pass pad15 font-weight600">
+          <div>
+            You successfully booked this spot!
+          </div>
+          <div className="color-lgcoral">Go to My Booking</div>
+        </div>
+      </Link>}
       <form onSubmit={(e)=>submitBooking(e)}>
         <DateRangePicker
           startDate={startDate}
