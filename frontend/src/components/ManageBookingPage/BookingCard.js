@@ -1,20 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import UpdateBookingModal from "./UpdateBookingModal";
-// import BookingForm from "../SingleSpot/BookingForm";
 import DeleteBookingModal from "./DeleteBookingModal";
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { thunkGetAllBookings, thunkUpdateBooking } from '../../store/booking';
 
 function BookingCard({booking, bookingPeriod}) {
 
   //bookingPeriod is only for future bookings
-
-  // const allBookings = Object.values(useSelector(state=> state.bookings.allBookings))
-  // const relatedBooking = allBookings.filter(element=> Number(element.spotId) === Number(booking.id))
-
 
   return (
     <div className="flx mrg15 gap10p">

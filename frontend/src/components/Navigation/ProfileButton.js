@@ -55,10 +55,10 @@ function ProfileButton({ user }) {
             <li className="mrg-b-5">Hello, {user.firstName}</li>
             <li className="mrg-b-5">{user.email}</li>
             <hr />
-            <li className="mrg-b-5"><Link to="/spots/current" className="txt-decor-none">Manage Spots</Link></li>
-            <li className="mrg-b-5"><Link to="/bookings/current" className="txt-decor-none">Manage Bookings</Link></li>
+            <li className="mrg-b-5"><Link to="/spots/current" className="txt-decor-none">My Spots</Link></li>
+            <li className="mrg-b-5"><Link to="/bookings/current" className="txt-decor-none">My Bookings</Link></li>
             <li className="mrg-b-5">
-              <button onClick={logout} className="bg-lgcoral color-white">Log Out</button>
+              <button onClick={logout} className="bg-lgcoral color-white bor-0p bor-rad-15 pad-t-b-5p pad-l-r-25p">Log Out</button>
             </li>
           </div>
         ) : (

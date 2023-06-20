@@ -25,7 +25,6 @@ function UpdateBookingModal({booking}) {
   useEffect(()=>{
     setStartDate(moment(new Date(booking.startDate)))
     setEndDate(moment(new Date(booking.endDate)))
-    // await dispatch(thunkGetAllBookings(booking.spotId))
   }, [])
 
   useEffect(()=>{ (async ()=>{

@@ -495,9 +495,19 @@ button:hover {
   padding-top: 10px
 }
 
+.pad-t-b-5p {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .pad-t-b-10p {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.pad-l-r-25p {
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 .pad-l-r-3rem {

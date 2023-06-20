@@ -56,3 +56,7 @@ the document says I can put the url of the img on the icon property, but I I jus
 I saw one example importing an icon from a dependency, that is close to what I want, but not there yet.
 At the end, I figure out I just need to replace the path with the one on SVG from fontAwesome website
 lat and lng must be number type
+
+## showing block days on update booking
+each BookingCard component will have different spotId and different set of bookings related to that spot, so it is not possible to update the redux state for every spot for getting the bookings for individual spot.
+Therefore, need to dispatch a thunk action to get all bookings related to that spot when we click on the update buttoon or the update modal, that means we need to useEffect. Since we need to await for the response to come back, we need to use async function call inside useEffect. I use anonymous async function call inside regaular function call to achieve the goal of getting data of booked days.
