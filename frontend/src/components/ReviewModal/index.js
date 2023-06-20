@@ -8,7 +8,7 @@ import { thunkGetOneSpot } from '../../store/spot';
 
 function ReviewFormModal({ spotId, formType, reviewContent}) {
 
-  // spotId, formType, and review passed to this component when edit a review
+  // spotId, formType, and reviewContent passed to this component when edit a review
 
   const dispatch = useDispatch();
   const history = useHistory();

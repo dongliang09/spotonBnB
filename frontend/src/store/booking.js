@@ -43,7 +43,6 @@ export const thunkGetAllBookings = (spotId) => async dispatch => {
 };
 
 export const thunkCreateBooking = (spotId, bookingData) => async dispatch => {
-  // console.log(bookingData)
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
     method: 'POST',
     body: JSON.stringify(bookingData)
