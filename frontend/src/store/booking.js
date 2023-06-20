@@ -57,6 +57,19 @@ export const thunkCreateBooking = (spotId, bookingData) => async dispatch => {
   }
 };
 
+export const thunkUpdateBooking = (bookingId, bookingData) => async dispatch => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: 'PUT',
+    body: JSON.stringify(bookingData)
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(thunkUserBookings());
+    return data;
+  }
+  return response;
+};
+
 export const thunkDeleteBookings = (bookingId) => async dispatch => {
   const response = await csrfFetch(`/api/bookings/${bookingId}`, {
     method: 'DELETE'

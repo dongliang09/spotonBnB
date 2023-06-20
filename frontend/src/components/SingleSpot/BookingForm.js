@@ -17,7 +17,7 @@ import 'react-dates/lib/css/_datepicker.css';
 // we just need to substring from index 0 to index 9
 // startDate.format().substring(0,10) => 2023-05-31
 
-function BookingForm({dailyPrice}) {
+function BookingForm({ dailyPrice }) {
   const dispatch = useDispatch()
   const { spotId } = useParams()
   const allBookings = Object.values(useSelector(state=> state.bookings.allBookings))

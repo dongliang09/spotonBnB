@@ -46,21 +46,21 @@ function ManageBookingPage () {
         <div>
           <h2>Past Trips</h2>
           {pastBookings.map(element=>
-            <BookingCard booking={element}/>
+            <BookingCard booking={element} key={element.id}/>
           )}
         </div>
 
         <div>
           <h2>Current Trips</h2>
           {currentBooking.map(element=>
-            <BookingCard booking={element}/>
+            <BookingCard booking={element} key={element.id}/>
           )}
         </div>
 
         <div>
           <h2>Future Trips</h2>
           {futureBooking.map(element=>
-            <BookingCard booking={element} bookingType="future"/>
+            <BookingCard booking={element} bookingPeriod="future" key={element.id}/>
           )}
         </div>
       </div>
