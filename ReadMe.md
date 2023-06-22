@@ -35,6 +35,13 @@ Open http://localhost:3000 to see the frontend.
 
 # Struggle
 
+### Image went outside of grid cell
+* On spot detail page, I defined the layout with grid, the 4 pictures of the right side gave me the most trouble. The picture went outside the grid cells.
+* The one on the left side was fine when I set the width 100% and max-height 100% and object-fit:cover.
+* I thought 4 pictures would do the same when I apply those properties.
+* The solution is to set the grid area, each grid area will also have width 100% and max-height 100% and object-fit:cover
+
+
 ### Booking
 * The package react-dates is using moment.js, so I need to convert momemnt to built-in javaScript new Date()
 * const timestamp = new Date();
