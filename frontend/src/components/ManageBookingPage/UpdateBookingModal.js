@@ -27,9 +27,12 @@ function UpdateBookingModal({booking}) {
     setEndDate(moment(new Date(booking.endDate)))
   }, [])
 
-  useEffect(()=>{ (async ()=>{
-    await dispatch(thunkGetAllBookings(booking.spotId))
-  })() // anonymous async function call
+  useEffect(()=>{
+      dispatch(thunkGetAllBookings(booking.spotId))
+      // seem like we don't need async await
+      // ()=>{ (async ()=>{
+      //   await dispatch(thunkGetAllBookings(booking.spotId))
+      // })() // anonymous async function call
   }, [dispatch])
 
   const confirmUpdate = async (e) => {

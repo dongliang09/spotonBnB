@@ -11,7 +11,7 @@ function BookingCard({booking, bookingPeriod}) {
   return (
     <div className="flx mrg15 gap10p">
       <div className="width300p height200p">
-        <Link to={`/spots/${booking.id}`}>
+        <Link to={`/spots/${booking.spotId}`}>
           <img src={booking.Spot.previewImage}
             className="width100 height-max-100 obj-fit-cover bor-rad-15"/>
         </Link>
