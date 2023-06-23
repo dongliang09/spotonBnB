@@ -9,30 +9,36 @@ import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
+import LoadingCircle from '../LoadingCircle/LoadingCircle';
+
 function UpdateBookingModal({booking}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { closeModal } = useModal();
 
   const allBookings = Object.values(useSelector(state=> state.bookings.allBookings))
-  const relatedBooking = allBookings.filter(element=> Number(element.spotId) === Number(booking.id))
+  // const relatedBooking = allBookings.filter(element=> Number(element.spotId) === Number(booking.id))
 
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [focusedInput, setFocusedInput] = useState(null);
   const [error, setError] = useState(null)
 
+  const [isBookingLoaded, setIsBookingLoaded] = useState(false)
+
   useEffect(()=>{
     setStartDate(moment(new Date(booking.startDate)))
     setEndDate(moment(new Date(booking.endDate)))
   }, [])
 
-  useEffect(()=>{
-      dispatch(thunkGetAllBookings(booking.spotId))
+  useEffect(
+      // ()=>{
+      // dispatch(thunkGetAllBookings(booking.spotId))
       // seem like we don't need async await
-      // ()=>{ (async ()=>{
-      //   await dispatch(thunkGetAllBookings(booking.spotId))
-      // })() // anonymous async function call
+      ()=>{ (async ()=>{
+        await dispatch(thunkGetAllBookings(booking.spotId))
+        setIsBookingLoaded(true)
+      })() // anonymous async function call
   }, [dispatch])
 
   const confirmUpdate = async (e) => {
@@ -53,9 +59,10 @@ function UpdateBookingModal({booking}) {
   function alreadyBooked(momentDate) {
     let isOutsideBookings = true
     let date = new Date(momentDate.format()).getTime()
-    for (let i = 0; i < relatedBooking.length; i++) {
-      let startDate = new Date(relatedBooking[i].startDate).getTime()
-      let endDate = new Date(relatedBooking[i].endDate).getTime() + 24 * 60 * 60 * 1000;
+
+    for (let i = 0; i < allBookings.length; i++) {
+      let startDate = new Date(allBookings[i].startDate).getTime()
+      let endDate = new Date(allBookings[i].endDate).getTime() + 24 * 60 * 60 * 1000;
       // 1 day is 24 hours * 60 min * 60 secs * 1000 ms
       if ( startDate <= date && date <= endDate) {
         isOutsideBookings = false
@@ -68,7 +75,7 @@ function UpdateBookingModal({booking}) {
     <div className='flx-col-center width-content pad15'>
       <h1>Update Schedule</h1>
       { error !== null && <div className="user-err pad15 font-weight600 width300p ">{error}</div>}
-      <div className = ''>
+      {isBookingLoaded && <div className = ''>
         <form onSubmit={(e)=>confirmUpdate(e)}>
           <DateRangePicker
             startDate={startDate}
@@ -79,7 +86,7 @@ function UpdateBookingModal({booking}) {
               setStartDate(startDate)
               setEndDate(endDate)
             }}
-            isDayBlocked={alreadyBooked}
+            isDayBlocked={(e)=>alreadyBooked(e)}
             focusedInput={focusedInput}
             onFocusChange={(focusedInput)=> setFocusedInput(focusedInput)}
             required={true}
@@ -96,7 +103,11 @@ function UpdateBookingModal({booking}) {
             </button>
           </div>
         </form>
-      </div>
+      </div>}
+      {!isBookingLoaded &&
+        <div className=' height125p width100 txt-center pos-rel'>
+          <LoadingCircle />
+        </div> }
 
     </div>
   );

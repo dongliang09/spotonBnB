@@ -337,6 +337,14 @@ button:hover {
 
 /*============ height ================*/
 
+.height100p {
+  height: 100px;
+}
+
+.height125p {
+  height: 125px;
+}
+
 .height150p {
   height: 150px;
 }
