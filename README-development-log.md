@@ -61,3 +61,4 @@ lat and lng must be number type
 each BookingCard component will have different spotId and different set of bookings related to that spot, so it is not possible to update the redux state for every spot for getting the bookings for individual spot.
 Therefore, need to dispatch a thunk action to get all bookings related to that spot when we click on the update buttoon or the update modal, that means we need to useEffect. Since we need to await for the response to come back, we need to use async function call inside useEffect. I use anonymous async function call inside regaular function call to achieve the goal of getting data of booked days.
 only working on localhost, not but depolyment right now
+only working for the first update-button calender
