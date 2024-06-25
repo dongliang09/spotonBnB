@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test dotenv mocha ./test/*",
+    "test": "NODE_ENV=test dotenv mocha ./test/testSuitesForRoutes/*",
     "sequelize": "sequelize",
     "sequelize-cli": "sequelize-cli",
     "start": "per-env",
