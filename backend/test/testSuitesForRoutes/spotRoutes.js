@@ -33,6 +33,9 @@ chai.request(url)
   .get('/')
   .set('Cookie', 'cookieName=cookieValue;otherName=otherValue')
   .then(...)
+
+hide error track stack ?
+https://stackoverflow.com/questions/51032718/can-i-hide-failure-details-in-mocha-output
 */
 
 let xsrftoken = "";
@@ -62,6 +65,16 @@ describe ('login', () => {
     })
   })
 
+  // should return 401 require authentication
+  it("get current user's spots without authenticaion", (done) => {
+    chai.request(app).get('/api/spots/current')
+      .end((err, res) => {
+        res.should.have.status(401);
+        expect(res.body.message).to.equal("Authentication required");
+        done();
+    })
+  })
+
   it('login with user information', (done) => {
     chai.request(app).post('/api/session')
       .set("XSRF-TOKEN", xsrftoken)
@@ -79,13 +92,14 @@ describe ('login', () => {
         res.body['user'].should.have.property('firstName');
         res.body['user'].should.have.property('lastName');
         jwt = res.header['set-cookie'][0].split(";")[0].split("=")[1];
+        // console.log(res.header['set-cookie'], jwt)
         done()
     })
   })
 
-})
+// })
 
-describe ('spot routes', () => {
+// describe ('spot routes', () => {
 
   it('get all spots', (done) => {
     chai.request(app).get('/api/spots').end((err, res) => {
@@ -103,15 +117,7 @@ describe ('spot routes', () => {
   // set up before each to seed some data??
 
 
-  // should return 401 require authentication
-  it("get current user's spots without authenticaion", (done) => {
-    chai.request(app).get('/api/spots/current')
-      .end((err, res) => {
-        res.should.have.status(401);
-        expect(res.body.message).to.equal("Authentication required");
-        done();
-    })
-  })
+
 
   // set up auth before each test?
   // beforeEach((done) => {
@@ -120,6 +126,72 @@ describe ('spot routes', () => {
   //   })
   //   done()
   // })
+
+  it('post spot with wrong latitube and longitube', (done) => {
+    chai.request(app).post('/api/spots')
+      .set("XSRF-TOKEN", xsrftoken)
+      .set("Cookie", `_csrf=${csrftoken};token=${jwt}`)
+      .set('content-type', 'application/json')
+      .send({
+        "address": "234 Disney Lane",
+        "city": "San Francisco",
+        "state": "California",
+        "country": "United States of America",
+        "lat": 537.7645358,
+        "lng": -1822.4730327,
+        "name": "App Academy (Test)",
+        "description": "Place where web developers are created",
+        "price": 234
+      }).end((err, res) => {
+        res.should.have.status(400);
+        res.body.should.be.a('object');
+        res.body.should.have.property('title');
+        expect(res.body['title']).to.equal('Validation Error');
+        res.body.should.have.property('message');
+        expect(res.body['message']).to.equal('Validation Error');
+        res.body.should.have.property('errors');
+        res.body.errors.should.be.a('object');
+        expect(res.body['errors'].lat).to.equal('Latitude is not valid');
+        expect(res.body['errors'].lng).to.equal('Longitude is not valid');
+        done()
+    })
+  })
+
+  it('post spot information', (done) => {
+    chai.request(app).post('/api/spots')
+      .set("XSRF-TOKEN", xsrftoken)
+      .set("Cookie", `_csrf=${csrftoken};token=${jwt}`)
+      .set('content-type', 'application/json')
+      .send({
+        "address": "234 Disney Lane",
+        "city": "San Francisco",
+        "state": "California",
+        "country": "United States of America",
+        "lat": 37.7645358,
+        "lng": -122.4730327,
+        "name": "App Academy (Test)",
+        "description": "Place where web developers are created",
+        "price": 234
+      }).end((err, res) => {
+        res.should.have.status(201);
+        res.body.should.be.a('object');
+        res.body.should.have.property('id');
+        res.body.should.have.property('address');
+        res.body.should.have.property('city');
+        res.body.should.have.property('state');
+        res.body.should.have.property('country');
+        res.body.should.have.property('lat');
+        res.body.should.have.property('lng');
+        res.body.should.have.property('name');
+        res.body.should.have.property('description');
+        res.body.should.have.property('price');
+        // res.body.should.have.property('ownerId');
+        // res.body.should.have.property('createdAt');
+        // res.body.should.have.property('updatedAt');
+        // res.body.should.have.property('avgRating');
+        done()
+    })
+  })
 
   it("get current user's spots", (done) => {
     chai.request(app).get('/api/spots/current')
