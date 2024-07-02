@@ -92,4 +92,28 @@ router.post('/',validateSignup,async (req, res) => {
   );
 
 
+router.delete('/:userId', requireAuth, async (req, res) => {
+
+  let userId = req.params.userId;
+  let currentUserId = req.user.id;
+
+  const userFound = await User.findByPk(userId);
+
+  // try not to leak how many users in database
+  if (!userFound || userFound.id !== currentUserId) {
+    return res.status(403).json({
+        "message": "Forbidden",
+        "statusCode": 403
+    })
+  }
+
+  await userFound.destroy()
+
+  res.json({
+    "message": "Successfully deleted",
+    "statusCode": 200
+  })
+
+})
+
 module.exports = router;

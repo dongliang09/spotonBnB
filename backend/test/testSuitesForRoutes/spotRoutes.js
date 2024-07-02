@@ -42,7 +42,7 @@ let xsrftoken = "";
 let csrftoken = "";
 let jwt = "";
 
-describe ('login', () => {
+describe ('spots routes', () => {
 
   chai.request(app).get('/api/csrf/restore').end((err, res) => {
     xsrftoken = res.body['XSRF-Token']
@@ -75,7 +75,7 @@ describe ('login', () => {
     })
   })
 
-  it('login with user information', (done) => {
+  it('POST /api/session, login with user information', (done) => {
     chai.request(app).post('/api/session')
       .set("XSRF-TOKEN", xsrftoken)
       .set("Cookie", `_csrf=${csrftoken}`)
@@ -127,7 +127,7 @@ describe ('login', () => {
   //   done()
   // })
 
-  it('post spot with wrong latitube and longitube', (done) => {
+  it('POST /api/spots, post spot with wrong latitube and longitube', (done) => {
     chai.request(app).post('/api/spots')
       .set("XSRF-TOKEN", xsrftoken)
       .set("Cookie", `_csrf=${csrftoken};token=${jwt}`)

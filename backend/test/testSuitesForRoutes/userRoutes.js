@@ -10,39 +10,16 @@ chai.should();
 chai.use(chaiHttp);
 
 /*
-POST    /api/session : login
-GET     /api/spots : get all spots on first page without authentication, but can see all
-GET     /api/spots/current : require authentication
-GET     /api/spots/:sptId
-POST    /api/spots
-POST    /api/spots/:spotId/images
-PUT     /api/spots/:sptId
-DELETE  /api/spots/:sptId
-GET     /api/spots/:spotId/reviews
-POST    /api/spots/:spotId/reviews
-GET     /api/spots/:spotId/bookings
-POST    /api/spots/:spotId/bookings
-*/
-
-/*
-postman set up cookies xsrftoken in the environment in route /api/csrf/restore
-pm.environment.set('xsrftoken', pm.cookies.get('XSRF-TOKEN'))
-
-example
-chai.request(url)
-  .get('/')
-  .set('Cookie', 'cookieName=cookieValue;otherName=otherValue')
-  .then(...)
-
-hide error track stack ?
-https://stackoverflow.com/questions/51032718/can-i-hide-failure-details-in-mocha-output
+POST    /api/users : sign up with body validation, sign up correctly, with existing email / username
+DELETE  /api/users/:userId
 */
 
 let xsrftoken = "";
 let csrftoken = "";
 let jwt = "";
+let id = -1;
 
-describe ('login', () => {
+describe ('user routes', () => {
 
   chai.request(app).get('/api/csrf/restore').end((err, res) => {
     xsrftoken = res.body['XSRF-Token']
@@ -50,7 +27,7 @@ describe ('login', () => {
   })
 
   // need to clear database
-  it('sign up user with body validation', (done) => {
+  it('POST /api/users, sign up user with body validation', (done) => {
     chai.request(app).post('/api/users')
       .set("XSRF-TOKEN", xsrftoken)
       .set("Cookie", `_csrf=${csrftoken}`)
@@ -78,7 +55,7 @@ describe ('login', () => {
     })
   })
 
-  it('sign up user correctly', (done) => {
+  it('POST /api/users, sign up user correctly', (done) => {
     chai.request(app).post('/api/users')
       .set("XSRF-TOKEN", xsrftoken)
       .set("Cookie", `_csrf=${csrftoken}`)
@@ -104,12 +81,13 @@ describe ('login', () => {
         expect(user['email']).to.equal("john.smith3@gmail.com");
         user.should.have.property('username');
         expect(user['username']).to.equal("JohnSmith3");
-        jwt = user['token']
+        jwt = user['token'];
+        id = user['id'];
         done()
     })
   })
 
-  it('user already exists with email', (done) => {
+  it('POST /api/users, user already exists with email', (done) => {
     chai.request(app).post('/api/users')
       .set("XSRF-TOKEN", xsrftoken)
       .set("Cookie", `_csrf=${csrftoken}`)
@@ -133,7 +111,7 @@ describe ('login', () => {
     })
   })
 
-  it('user already exists with username', (done) => {
+  it('POST /api/users, user already exists with username', (done) => {
     chai.request(app).post('/api/users')
       .set("XSRF-TOKEN", xsrftoken)
       .set("Cookie", `_csrf=${csrftoken}`)
@@ -157,7 +135,33 @@ describe ('login', () => {
     })
   })
 
-  //mocha test/testSuitesForRoutes/userRoutes.js
+  it('DELETE /api/users/:userId, delete user with wrong userId', (done) => {
+    chai.request(app).delete(`/api/users/${id + 100}`)
+      .set("XSRF-TOKEN", xsrftoken)
+      .set("Cookie", `_csrf=${csrftoken};token=${jwt}`)
+      .end((err, res) => {
+        res.should.have.status(403);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        expect(res.body['message']).to.equal("Forbidden");
+        done()
+    })
+  })
+
+  it('DELETE /api/users/:userId, delete user with correctly', (done) => {
+    chai.request(app).delete(`/api/users/${id}`)
+      .set("XSRF-TOKEN", xsrftoken)
+      .set("Cookie", `_csrf=${csrftoken};token=${jwt}`)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message');
+        expect(res.body['message']).to.equal("Successfully deleted");
+        done()
+    })
+  })
+
+  //NODE_ENV=test dotenv mocha ./test/testSuitesForRoutes/userRoutes.js
 
 
 
